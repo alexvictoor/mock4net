@@ -21,7 +21,7 @@ namespace Mock4Net.Core
             _url = url;
             _headers = headers.ToDictionary(kv => kv.Key.ToLower(), kv => kv.Value.ToLower());
             _verb = verb.ToLower();
-            _body = body.Trim();
+            _body = body==null ? "" : body.Trim();
         }
 
         public string Url

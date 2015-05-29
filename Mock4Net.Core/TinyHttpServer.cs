@@ -11,7 +11,7 @@ namespace Mock4Net.Core.Http
     public class TinyHttpServer
     {
         private readonly Action<HttpListenerContext> _httpHandler;
-        private HttpListener _listener;
+        private readonly HttpListener _listener;
         private CancellationTokenSource _cts;
 
         public TinyHttpServer(string urlPrefix, Action<HttpListenerContext> httpHandler)

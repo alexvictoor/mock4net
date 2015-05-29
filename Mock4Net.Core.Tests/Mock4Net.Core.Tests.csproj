@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HttpListenerRequestMapperTest.cs" />
     <Compile Include="RouteBuilderTest.cs" />
     <Compile Include="TinyHttpServerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
