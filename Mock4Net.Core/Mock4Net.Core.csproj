@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="FluentMockServer.cs" />
     <Compile Include="HttpListenerRequestMapper.cs" />
+    <Compile Include="HttpListenerResponseMapper.cs" />
     <Compile Include="RequestBodySpec.cs" />
     <Compile Include="RequestHeaderSpec.cs" />
     <Compile Include="RequestUrlSpec.cs" />

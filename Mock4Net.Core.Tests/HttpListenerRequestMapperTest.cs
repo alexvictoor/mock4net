@@ -93,7 +93,7 @@ namespace Mock4Net.Core.Tests
             {
             }
 
-            public static MapperServer Start()
+            public new static MapperServer Start()
             {
                 var port = Ports.FindFreeTcpPort();
                 UrlPrefix = "http://localhost:" + port + "/";
@@ -106,7 +106,7 @@ namespace Mock4Net.Core.Tests
                 return server;
             }
 
-            public void Stop()
+            public new void Stop()
             {
                 base.Stop();
                 LastRequest = null;
