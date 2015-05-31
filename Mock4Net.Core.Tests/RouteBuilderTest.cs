@@ -28,6 +28,18 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
+        public void Should_build_a_route_that_handles_a_request_if_url_prefix_matches()
+        {
+            // given
+            var builder = new RouteBuilder(route => _route = route, "/foo*");
+            // when
+            builder.AnyVerb().Respond(); // set _route
+            // then
+            var request = new Request("/foo/bar", "blabla", "whatever", new Dictionary<string, string>());
+            Check.That(_route.IsRequestHandled(request)).IsTrue();
+        }
+
+        [Test]
         public void Should_build_a_route_that_doesnt_handle_a_request_if_url_doesnt_match()
         {
             // given
