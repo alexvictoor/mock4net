@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FluentMockServerTest.cs" />
     <Compile Include="HttpListenerResponseMapperTest.cs" />
     <Compile Include="HttpListenerRequestMapperTest.cs" />
     <Compile Include="RouteBuilderTest.cs" />
