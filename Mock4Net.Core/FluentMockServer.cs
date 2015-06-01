@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -14,6 +15,7 @@ namespace Mock4Net.Core
 
         private readonly TinyHttpServer _httpServer;
         private readonly IList<Route> _routes = new List<Route>(); 
+        private readonly IList<Request> _requestLogs = new List<Request>(); 
         private readonly HttpListenerRequestMapper _requestMapper = new HttpListenerRequestMapper();
         private readonly HttpListenerResponseMapper _responseMapper = new HttpListenerResponseMapper();
         private readonly int _port;
@@ -30,6 +32,11 @@ namespace Mock4Net.Core
             get { return _port; }
         }
 
+        public IEnumerable<Request> RequestLogs
+        {
+            get { return new ReadOnlyCollection<Request>(_requestLogs); }
+        }
+
         private void RegisterRoute(Route route)
         {
             lock (((ICollection)_routes).SyncRoot)
@@ -38,10 +45,18 @@ namespace Mock4Net.Core
             }
         }
 
+        private void LogRequest(Request request)
+        {
+            lock (((ICollection)_requestLogs).SyncRoot)
+            {
+                _requestLogs.Add(request);
+            }
+        }
+
         private void HandleRequest(HttpListenerContext ctx)
         {
             var request = _requestMapper.Map(ctx.Request);
-
+            _requestLogs.Add(request);
             var targetRoute = _routes.FirstOrDefault(route => route.IsRequestHandled(request));
             if (targetRoute == null)
             {

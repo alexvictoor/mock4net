@@ -47,6 +47,21 @@ namespace Mock4Net.Core.Tests
             Check.That((int)response.StatusCode).IsEqualTo(404);
         }
 
+        [Test]
+        public async void Should_record_requests_in_the_requestlogs()
+        {
+            // given
+            _server = FluentMockServer.Start();
+            // when
+            await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/foo");
+            // then
+            Check.That(_server.RequestLogs).HasSize(1);
+            var requestLogged = _server.RequestLogs.First();
+            Check.That(requestLogged.Verb).IsEqualTo("get");
+            Check.That(requestLogged.Body).IsEmpty();
+
+        }
+
         [TearDown]
         public void ShutdownServer()
         {
