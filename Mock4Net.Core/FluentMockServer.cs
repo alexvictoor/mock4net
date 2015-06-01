@@ -75,16 +75,6 @@ namespace Mock4Net.Core
             return new RouteBuilder(RegisterRoute, url);
         }
 
-        public void Test()
-        {
-            ForRequest(url: "/toto")
-                .Get()
-                .WithHeader("", "")
-                .WithHeader("","")
-             .Respond()
-                .WithBody("");
-        }
-
         public interface IVerbRequestBuilder
         {
 

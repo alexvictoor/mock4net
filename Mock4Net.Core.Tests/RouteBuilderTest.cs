@@ -113,6 +113,18 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
+        public void Should_build_a_route_that_handles_a_request_if_header_prefix_matches()
+        {
+            // given
+            FluentMockServer.IVerbRequestBuilder builder = new RouteBuilder(route => _route = route, "/foo");
+            // when
+            builder.AnyVerb().WithHeader("X-toto", "bla*").Respond(); // set _route
+            // then
+            var request = new Request("/foo", "put", "whatever", new Dictionary<string, string>() { { "X-toto", "blabla" } });
+            Check.That(_route.IsRequestHandled(request)).IsTrue();
+        }
+
+        [Test]
         public void Should_build_a_route_that_handles_a_request_if_body_matches()
         {
             // given
