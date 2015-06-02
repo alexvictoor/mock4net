@@ -9,12 +9,12 @@ namespace Mock4Net.Core
 {
     public class Route
     {
-        private readonly IEnumerable<ISpecifyRequests> _requestSpecs;
+        private readonly ISpecifyRequests _requestSpec;
         private readonly Response _response;
 
-        public Route(IEnumerable<ISpecifyRequests> requestSpecs, Response response)
+        public Route(ISpecifyRequests requestSpec, Response response)
         {
-            _requestSpecs = requestSpecs;
+            _requestSpec = requestSpec;
             _response = response;
         }
 
@@ -25,7 +25,7 @@ namespace Mock4Net.Core
 
         public bool IsRequestHandled(Request request)
         {
-            return _requestSpecs.All(spec => spec.IsSatisfiedBy(request));
+            return _requestSpec.IsSatisfiedBy(request);
         }
 
 

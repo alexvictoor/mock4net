@@ -39,11 +39,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompositeRequestSpec.cs" />
     <Compile Include="FluentMockServer.cs" />
     <Compile Include="HttpListenerRequestMapper.cs" />
     <Compile Include="HttpListenerResponseMapper.cs" />
     <Compile Include="RequestBodySpec.cs" />
     <Compile Include="RequestHeaderSpec.cs" />
+    <Compile Include="Requests.cs" />
+    <Compile Include="RequestSpecBuilder.cs" />
     <Compile Include="RequestUrlSpec.cs" />
     <Compile Include="Route.cs" />
     <Compile Include="ISpecifyRequests.cs" />

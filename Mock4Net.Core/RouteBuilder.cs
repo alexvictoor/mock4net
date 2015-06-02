@@ -57,7 +57,7 @@ namespace Mock4Net.Core
 
         public FluentMockServer.IStatusCodeResponseBuilder Respond()
         {
-            _registrationCallback(new Route(_specs, _response));
+            _registrationCallback(new Route(new CompositeRequestSpec(_specs), _response));
             return this;
         }
 

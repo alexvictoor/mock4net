@@ -62,6 +62,35 @@ namespace Mock4Net.Core.Tests
 
         }
 
+        [Test]
+        public async void Should_find_a_requests_satisfying_a_request_spec()
+        {
+            // given
+            _server = FluentMockServer.Start();
+            // when
+            await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/foo");
+            await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/bar");
+            // then
+            var result = _server.SearchRequestLogsFor(Requests.WithUrl("/b*")); 
+            Check.That(result).HasSize(1);
+            var requestLogged = result.First();
+            Check.That(requestLogged.Url).IsEqualTo("/bar");
+
+        }
+
+        [Test]
+        public async void Should_reset_the_requestlogs()
+        {
+            // given
+            _server = FluentMockServer.Start();
+            // when
+            await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/foo");
+            _server.ResetRequestLogs();
+            // then
+            Check.That(_server.RequestLogs).IsEmpty();
+
+        }
+
         [TearDown]
         public void ShutdownServer()
         {

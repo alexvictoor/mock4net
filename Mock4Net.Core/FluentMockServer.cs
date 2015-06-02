@@ -34,8 +34,30 @@ namespace Mock4Net.Core
 
         public IEnumerable<Request> RequestLogs
         {
-            get { return new ReadOnlyCollection<Request>(_requestLogs); }
+            get
+            {
+                lock (((ICollection) _requestLogs).SyncRoot)
+                {
+                    return new ReadOnlyCollection<Request>(_requestLogs);
+                }
+            }
         }
+
+        public void ResetRequestLogs()
+        {
+            lock (((ICollection) _requestLogs).SyncRoot)
+            {
+                _requestLogs.Clear();
+            }
+        }
+
+        public IEnumerable<Request> SearchRequestLogsFor(ISpecifyRequests spec)
+        {
+            lock (((ICollection)_requestLogs).SyncRoot)
+            {
+                return _requestLogs.Where(spec.IsSatisfiedBy);
+            }
+        }  
 
         private void RegisterRoute(Route route)
         {
@@ -52,6 +74,7 @@ namespace Mock4Net.Core
                 _requestLogs.Add(request);
             }
         }
+
 
         private void HandleRequest(HttpListenerContext ctx)
         {
@@ -133,5 +156,6 @@ namespace Mock4Net.Core
             void WithBody(string body);
 
         }
+
     }
 }
