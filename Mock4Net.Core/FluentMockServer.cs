@@ -51,7 +51,7 @@ namespace Mock4Net.Core
             }
         }
 
-        public IEnumerable<Request> SearchRequestLogsFor(ISpecifyRequests spec)
+        public IEnumerable<Request> SearchLogsFor(ISpecifyRequests spec)
         {
             lock (((ICollection)_requestLogs).SyncRoot)
             {

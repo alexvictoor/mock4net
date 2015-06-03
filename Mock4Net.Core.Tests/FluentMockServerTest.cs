@@ -77,7 +77,7 @@ namespace Mock4Net.Core.Tests
             await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/foo");
             await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/bar");
             // then
-            var result = _server.SearchRequestLogsFor(Requests.WithUrl("/b*")); 
+            var result = _server.SearchLogsFor(Requests.WithUrl("/b*")); 
             Check.That(result).HasSize(1);
             var requestLogged = result.First();
             Check.That(requestLogged.Url).IsEqualTo("/bar");
