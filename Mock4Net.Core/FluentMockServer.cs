@@ -79,7 +79,7 @@ namespace Mock4Net.Core
         private void HandleRequest(HttpListenerContext ctx)
         {
             var request = _requestMapper.Map(ctx.Request);
-            _requestLogs.Add(request);
+            LogRequest(request);
             var targetRoute = _routes.FirstOrDefault(route => route.IsRequestHandled(request));
             if (targetRoute == null)
             {
@@ -89,7 +89,8 @@ namespace Mock4Net.Core
             }
             else
             {
-                _responseMapper.Map(targetRoute.Response, ctx.Response);    
+                var response = targetRoute.ResponseTo(request);
+                _responseMapper.Map(response, ctx.Response);
             }
             ctx.Response.Close();
         }
@@ -107,55 +108,35 @@ namespace Mock4Net.Core
         {
             _httpServer.Stop();
         }
-        
-        public IVerbRequestBuilder ForRequest(string url = "*")
+
+        public IRespondWithAProvider Given(ISpecifyRequests requestSpec)
         {
-            return new RouteBuilder(RegisterRoute, url);
+            return new RespondWithAProvider(RegisterRoute, requestSpec);
         }
 
-        public interface IVerbRequestBuilder
-        {
 
-            IHeadersRequestBuilder Get();
-            IHeadersRequestBuilder Post();
-            IHeadersRequestBuilder Put();
-            IHeadersRequestBuilder Head();
-            IHeadersRequestBuilder AnyVerb();
-            IHeadersRequestBuilder Verb(string verb);
+        public interface IRespondWithAProvider
+        {
+            void RespondWith(IProvideResponses provider);
         }
 
-        public interface IHeadersRequestBuilder : IBodyRequestBuilder
+        class RespondWithAProvider : IRespondWithAProvider
         {
-            IHeadersRequestBuilder WithHeader(string name, string value);
+            private readonly RegistrationCallback _registrationCallback;
+            private readonly ISpecifyRequests _requestSpec;
+
+            public RespondWithAProvider(RegistrationCallback registrationCallback, ISpecifyRequests requestSpec)
+            {
+                _registrationCallback = registrationCallback;
+                _requestSpec = requestSpec;
+            }
+
+            public void RespondWith(IProvideResponses provider)
+            {
+                _registrationCallback(new Route(_requestSpec, provider));
+            }
         }
 
-        public interface IBodyRequestBuilder : IRequestResponseBuilder
-        {
-            IRequestResponseBuilder WithBody(string body);
-        }
-
-        public interface IRequestResponseBuilder
-        {
-            IStatusCodeResponseBuilder Respond();
-
-        }
-
-        public interface IStatusCodeResponseBuilder : IHeadersResponseBuilder
-        {
-            IHeadersResponseBuilder WithStatusCode(int code);
-        }
-
-        public interface IHeadersResponseBuilder : IBodyResponseBuilder
-        {
-            IHeadersResponseBuilder WithHeader(string name, string value);
-
-        }
-
-        public interface IBodyResponseBuilder
-        {
-            void WithBody(string body);
-
-        }
 
     }
 }

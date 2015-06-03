@@ -21,12 +21,18 @@ namespace Mock4Net.Core.Tests
         {
             // given
             _server = FluentMockServer.Start();
+
             _server
-                .ForRequest("/foo")
-                    .Get()
-                .Respond()
-                    .WithStatusCode(200)
-                    .WithBody(@"{ msg: ""Hello world!""}");
+                .Given(
+                    Requests
+                        .WithUrl("/foo")
+                        .UsingGet())
+                .RespondWith(
+                    Responses
+                        .WithStatusCode(200)
+                        .WithBody(@"{ msg: ""Hello world!""}")
+                    );
+
             // when
             var response 
                 = await new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/foo");

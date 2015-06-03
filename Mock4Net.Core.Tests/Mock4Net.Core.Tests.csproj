@@ -54,7 +54,7 @@
     <Compile Include="FluentMockServerTest.cs" />
     <Compile Include="HttpListenerResponseMapperTest.cs" />
     <Compile Include="HttpListenerRequestMapperTest.cs" />
-    <Compile Include="RouteBuilderTest.cs" />
+    <Compile Include="RequestsTest.cs" />
     <Compile Include="TinyHttpServerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WildcardPatternMatcherTest.cs" />

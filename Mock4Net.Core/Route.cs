@@ -10,17 +10,17 @@ namespace Mock4Net.Core
     public class Route
     {
         private readonly ISpecifyRequests _requestSpec;
-        private readonly Response _response;
+        private readonly IProvideResponses _provider;
 
-        public Route(ISpecifyRequests requestSpec, Response response)
+        public Route(ISpecifyRequests requestSpec, IProvideResponses provider)
         {
             _requestSpec = requestSpec;
-            _response = response;
+            _provider = provider;
         }
 
-        public Response Response
+        public Response ResponseTo(Request request)
         {
-            get { return _response; }
+            return _provider.ProvideResponse(request);
         }
 
         public bool IsRequestHandled(Request request)
