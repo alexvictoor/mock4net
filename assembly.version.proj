@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+ 
+   <PropertyGroup>
+      <MSBuildCommunityTasksPath Condition=" '$(MSBuildCommunityTasksPath)' == '' ">$(SolutionDir)\packages\MSBuildTasks.1.4.0.88\tools</MSBuildCommunityTasksPath>
+      <GeneratedAssemblyInfoFile Condition=" '$(GeneratedAssemblyInfoFile)' == '' ">$(MsBuildProjectDirectory)\Properties\GeneratedAssemblyInfo.cs</GeneratedAssemblyInfoFile>
+      <VersionFile Condition=" '$(VersionFile)' == '' ">$(MsBuildProjectDirectory)\Properties\Version.txt</VersionFile>
+      <VersionSuffixFile Condition=" '$(VersionSuffixFile)' == '' ">$(MsBuildProjectDirectory)\Properties\VersionSuffix.txt</VersionSuffixFile>
+      <AssemblyCopyright Condition="'$(AssemblyCopyright)' == ''"></AssemblyCopyright>
+ 
+      <SetAssemblyVersionEnabled Condition=" Exists('$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets') AND Exists($(VersionFile)) ">true</SetAssemblyVersionEnabled>
+      <SetAssemblyVersionEnabled Condition=" '$(SetAssemblyVersionEnabled)' == '' ">false</SetAssemblyVersionEnabled>
+ 
+      <BuildDependsOn Condition=" '$(SetAssemblyVersionEnabled)' == 'true' ">
+         SetAssemblyVersion;
+         $(BuildDependsOn)
+      </BuildDependsOn>
+ 
+      <CleanDependsOn Condition=" '$(SetAssemblyVersionEnabled)' == 'true' ">
+         $(CleanDependsOn);
+         SetAssemblyVersionClean
+      </CleanDependsOn>
+   </PropertyGroup>
+ 
+   <Import Condition=" '$(SetAssemblyVersionEnabled)' == 'true' "
+      Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets"
+   />
+ 
+   <!-- Workaround for missing task declaration in MSbuildTasks project (pull request already sent) -->
+   <UsingTask Condition="Exists($(MSBuildCommunityTasksLib))"
+      AssemblyFile="$(MSBuildCommunityTasksLib)"
+      TaskName="MSBuild.Community.Tasks.Git.GitBranch"
+   />
+ 
+   <Target Name="SetAssemblyVersion">
+      <PropertyGroup>
+         <Version>$([System.IO.File]::ReadAllText($(VersionFile)))</Version>
+         <VersionSuffix Condition="Exists('$(VersionSuffixFile)')">$([System.IO.File]::ReadAllText($(VersionSuffixFile)))</VersionSuffix>
+         <VersionSuffix Condition=" '$(VersionSuffix)' == '' "></VersionSuffix>
+         <BuildDate>$([System.DateTime]::UtcNow.ToString("yyyy-MM-dd"))</BuildDate>
+         <AssemblyCopyrightText Condition=" '$(AssemblyCopyright)' != '' ">$(AssemblyCopyright) $([System.DateTime]::UtcNow.Year)</AssemblyCopyrightText>
+         <AssemblyCopyrightText Condition=" '$(AssemblyCopyrightText)' == '' "></AssemblyCopyrightText>
+      </PropertyGroup>
+ 
+      <ItemGroup>
+         <Compile Include="$(GeneratedAssemblyInfoFile)" />
+      </ItemGroup>
+
+      <!--
+      weird error on my pc :()
+      <GitVersion LocalPath="$(SolutionDir)">
+         <Output TaskParameter="CommitHash" PropertyName="CommitHash" />
+      </GitVersion>
+   -->
+      <Exec Command="git rev-parse --short --verify  HEAD" ConsoleToMSBuild="true">
+         <Output TaskParameter="ConsoleOutput" PropertyName="CommitHash" />
+      </Exec>
+   
+      <GitBranch LocalPath="$(SolutionDir)">
+         <Output TaskParameter="Branch" PropertyName="GitBranch" />
+      </GitBranch>
+ 
+      <Computer>
+         <Output TaskParameter="Name" PropertyName="BuildMachineName" />
+         <Output TaskParameter="OSPlatform" PropertyName="BuildMachineOSPlatform" />
+         <Output TaskParameter="OSVersion" PropertyName="BuildMachineOSVersion" />
+      </Computer>
+ 
+      <AssemblyInfo
+         CodeLanguage="CS"
+         OutputFile="$(GeneratedAssemblyInfoFile)"
+         AssemblyVersion="$(Version)"
+         AssemblyFileVersion="$(Version)"
+         AssemblyInformationalVersion="$(Version)$(VersionSuffix)-$(GitBranch)-$(BuildDate)-$(CommitHash), built on: $(BuildMachineName), $(BuildMachineOSPlatform) v$(BuildMachineOSVersion)"
+         AssemblyCopyright="$(AssemblyCopyrightText)"
+      />
+   </Target>
+ 
+   <Target Name="SetAssemblyVersionClean" Condition="Exists($(GeneratedAssemblyInfoFile))">
+      <Delete Files="$(GeneratedAssemblyInfoFile)" />
+   </Target>
+ 
+</Project>
