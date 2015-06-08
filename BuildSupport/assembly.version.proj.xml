@@ -3,7 +3,7 @@
  
    <PropertyGroup>
       <MSBuildCommunityTasksPath Condition=" '$(MSBuildCommunityTasksPath)' == '' ">$(SolutionDir)\packages\MSBuildTasks.1.4.0.88\tools</MSBuildCommunityTasksPath>
-      <GeneratedAssemblyInfoFile Condition=" '$(GeneratedAssemblyInfoFile)' == '' ">$(MsBuildProjectDirectory)\Properties\GeneratedAssemblyInfo.cs</GeneratedAssemblyInfoFile>
+      
       <VersionFile Condition=" '$(VersionFile)' == '' ">$(MsBuildProjectDirectory)\Properties\Version.txt</VersionFile>
       <VersionSuffixFile Condition=" '$(VersionSuffixFile)' == '' ">$(MsBuildProjectDirectory)\Properties\VersionSuffix.txt</VersionSuffixFile>
       <AssemblyCopyright Condition="'$(AssemblyCopyright)' == ''"></AssemblyCopyright>
@@ -16,10 +16,6 @@
          $(BuildDependsOn)
       </BuildDependsOn>
  
-      <CleanDependsOn Condition=" '$(SetAssemblyVersionEnabled)' == 'true' ">
-         $(CleanDependsOn);
-         SetAssemblyVersionClean
-      </CleanDependsOn>
    </PropertyGroup>
  
    <Import Condition=" '$(SetAssemblyVersionEnabled)' == 'true' "
@@ -33,18 +29,21 @@
    />
  
    <Target Name="SetAssemblyVersion">
+      <Exec Command="git rev-parse --short --verify  HEAD" ConsoleToMSBuild="true">
+         <Output TaskParameter="ConsoleOutput" PropertyName="CommitHash" />
+      </Exec>
+
+
       <PropertyGroup>
          <Version>$([System.IO.File]::ReadAllText($(VersionFile)))</Version>
          <VersionSuffix Condition="Exists('$(VersionSuffixFile)')">$([System.IO.File]::ReadAllText($(VersionSuffixFile)))</VersionSuffix>
          <VersionSuffix Condition=" '$(VersionSuffix)' == '' "></VersionSuffix>
-         <BuildDate>$([System.DateTime]::UtcNow.ToString("yyyy-MM-dd"))</BuildDate>
+         <BuildDate>$([System.DateTime]::UtcNow.ToString("yyyyMMdd"))</BuildDate>
          <AssemblyCopyrightText Condition=" '$(AssemblyCopyright)' != '' ">$(AssemblyCopyright) $([System.DateTime]::UtcNow.Year)</AssemblyCopyrightText>
          <AssemblyCopyrightText Condition=" '$(AssemblyCopyrightText)' == '' "></AssemblyCopyrightText>
+         <BuildVersion>$(Version)-v$(BuildDate)-$(CommitHash)</BuildVersion>
+
       </PropertyGroup>
- 
-      <ItemGroup>
-         <Compile Include="$(GeneratedAssemblyInfoFile)" />
-      </ItemGroup>
 
       <!--
       weird error on my pc :()
@@ -52,32 +51,27 @@
          <Output TaskParameter="CommitHash" PropertyName="CommitHash" />
       </GitVersion>
    -->
-      <Exec Command="git rev-parse --short --verify  HEAD" ConsoleToMSBuild="true">
-         <Output TaskParameter="ConsoleOutput" PropertyName="CommitHash" />
-      </Exec>
-   
-      <GitBranch LocalPath="$(SolutionDir)">
-         <Output TaskParameter="Branch" PropertyName="GitBranch" />
-      </GitBranch>
+      
  
-      <Computer>
-         <Output TaskParameter="Name" PropertyName="BuildMachineName" />
-         <Output TaskParameter="OSPlatform" PropertyName="BuildMachineOSPlatform" />
-         <Output TaskParameter="OSVersion" PropertyName="BuildMachineOSVersion" />
-      </Computer>
- 
-      <AssemblyInfo
-         CodeLanguage="CS"
-         OutputFile="$(GeneratedAssemblyInfoFile)"
-         AssemblyVersion="$(Version)"
-         AssemblyFileVersion="$(Version)"
-         AssemblyInformationalVersion="$(Version)$(VersionSuffix)-$(GitBranch)-$(BuildDate)-$(CommitHash), built on: $(BuildMachineName), $(BuildMachineOSPlatform) v$(BuildMachineOSVersion)"
-         AssemblyCopyright="$(AssemblyCopyrightText)"
-      />
+      
+     <FileUpdate Files="$(MsBuildProjectDirectory)\Properties\AssemblyInfo.cs"
+            Regex="AssemblyVersion\(&quot;.*&quot;\)\]"
+            ReplacementText="AssemblyVersion(&quot;$(Version)&quot;)]" />
+
+      <FileUpdate Files="$(MsBuildProjectDirectory)\Properties\AssemblyInfo.cs"
+            Regex="AssemblyInformationalVersion\(&quot;.*&quot;\)\]"
+            ReplacementText="AssemblyInformationalVersion(&quot;$(BuildVersion)&quot;)]" />
+
+      <!-- cannot understand why nuget does not take the proper version otherwise -->
+      
+      <FileUpdate Files="$(MsBuildProjectDirectory)\$(AssemblyName).nuspec"
+            Regex="&lt;version&gt;.*&lt;/version&gt;"
+            ReplacementText="&lt;version&gt;$(BuildVersion)&lt;/version&gt;" />
+      
+
+
+
    </Target>
  
-   <Target Name="SetAssemblyVersionClean" Condition="Exists($(GeneratedAssemblyInfoFile))">
-      <Delete Files="$(GeneratedAssemblyInfoFile)" />
-   </Target>
  
 </Project>
