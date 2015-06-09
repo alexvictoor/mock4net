@@ -17,7 +17,7 @@ server
 
 Based on class HttpListener from the .net framework, it is very lightweight and have no external dependencies. 
 
-# Mock4NET API in a nutshell
+# Mock4Net API in a nutshell
 
 ## Start a server
 First thing first, to start a server you just need to call static method *FluentMockServer.Start()*.  
