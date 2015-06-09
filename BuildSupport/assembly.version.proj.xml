@@ -3,6 +3,7 @@
  
    <PropertyGroup>
       <MSBuildCommunityTasksPath Condition=" '$(MSBuildCommunityTasksPath)' == '' ">$(SolutionDir)\packages\MSBuildTasks.1.4.0.88\tools</MSBuildCommunityTasksPath>
+      <GeneratedAssemblyInfoFile Condition=" '$(GeneratedAssemblyInfoFile)' == '' ">$(MsBuildProjectDirectory)\Properties\GeneratedAssemblyInfo.cs</GeneratedAssemblyInfoFile>
       
       <VersionFile Condition=" '$(VersionFile)' == '' ">$(MsBuildProjectDirectory)\Properties\Version.txt</VersionFile>
       <VersionSuffixFile Condition=" '$(VersionSuffixFile)' == '' ">$(MsBuildProjectDirectory)\Properties\VersionSuffix.txt</VersionSuffixFile>
@@ -15,6 +16,11 @@
          SetAssemblyVersion;
          $(BuildDependsOn)
       </BuildDependsOn>
+
+      <CleanDependsOn Condition=" '$(SetAssemblyVersionEnabled)' == 'true' ">
+         $(CleanDependsOn);
+         SetAssemblyVersionClean
+      </CleanDependsOn>
  
    </PropertyGroup>
  
@@ -36,8 +42,6 @@
 
       <PropertyGroup>
          <Version>$([System.IO.File]::ReadAllText($(VersionFile)))</Version>
-         <VersionSuffix Condition="Exists('$(VersionSuffixFile)')">$([System.IO.File]::ReadAllText($(VersionSuffixFile)))</VersionSuffix>
-         <VersionSuffix Condition=" '$(VersionSuffix)' == '' "></VersionSuffix>
          <BuildDate>$([System.DateTime]::UtcNow.ToString("yyyyMMdd"))</BuildDate>
          <AssemblyCopyrightText Condition=" '$(AssemblyCopyright)' != '' ">$(AssemblyCopyright) $([System.DateTime]::UtcNow.Year)</AssemblyCopyrightText>
          <AssemblyCopyrightText Condition=" '$(AssemblyCopyrightText)' == '' "></AssemblyCopyrightText>
@@ -45,32 +49,30 @@
 
       </PropertyGroup>
 
+      <ItemGroup>
+         <Compile Include="$(GeneratedAssemblyInfoFile)" />
+      </ItemGroup>
+
       <!--
       weird error on my pc :()
       <GitVersion LocalPath="$(SolutionDir)">
          <Output TaskParameter="CommitHash" PropertyName="CommitHash" />
       </GitVersion>
    -->
-      
- 
-      
-     <FileUpdate Files="$(MsBuildProjectDirectory)\Properties\AssemblyInfo.cs"
-            Regex="AssemblyVersion\(&quot;.*&quot;\)\]"
-            ReplacementText="AssemblyVersion(&quot;$(Version)&quot;)]" />
+    
+      <AssemblyInfo
+         CodeLanguage="CS"
+         OutputFile="$(GeneratedAssemblyInfoFile)"
+         AssemblyVersion="$(Version)"
+         AssemblyFileVersion="$(Version)"
+         AssemblyInformationalVersion="$(BuildVersion)"
+         AssemblyCopyright="$(AssemblyCopyrightText)"
+      />
 
-      <FileUpdate Files="$(MsBuildProjectDirectory)\Properties\AssemblyInfo.cs"
-            Regex="AssemblyInformationalVersion\(&quot;.*&quot;\)\]"
-            ReplacementText="AssemblyInformationalVersion(&quot;$(BuildVersion)&quot;)]" />
+   </Target>
 
-      <!-- cannot understand why nuget does not take the proper version otherwise -->
-      
-      <FileUpdate Files="$(MsBuildProjectDirectory)\$(AssemblyName).nuspec"
-            Regex="&lt;version&gt;.*&lt;/version&gt;"
-            ReplacementText="&lt;version&gt;$(BuildVersion)&lt;/version&gt;" />
-      
-
-
-
+   <Target Name="SetAssemblyVersionClean" Condition="Exists($(GeneratedAssemblyInfoFile))">
+      <Delete Files="$(GeneratedAssemblyInfoFile)" />
    </Target>
  
  
