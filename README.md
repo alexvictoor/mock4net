@@ -1,7 +1,11 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/h2rb5mjk50u2n8hy?svg=true)](https://ci.appveyor.com/project/alexvictoor/mock4net)
 
 # Mock4Net
-Mock4Net allows to get an HTTP server in a glance. A fluent API allows to specify the behavior of the server and hence easily stub and mock webservices and REST ressources.
+Mock4Net allows to get an HTTP server in a glance. No official release yet but a  prerelease version is available on nuget.org:
+```
+PM> Install-Package Mock4Net.Core -Pre
+```
+A fluent API allows to specify the behavior of the server and hence easily stub and mock webservices and REST ressources.
 ```
 server = FluentMockServer.Start();
 server
