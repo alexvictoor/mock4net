@@ -83,15 +83,19 @@ Obviously you can use your favourite test framework and use Mock4Net within your
   - let Mock4Net choose dynamicaly ports. It might seem common sens, avoid hard coded ports in your tests!
   - clean up the request log or shutdown the server at the end of each test
 
-Below a simple example extracted from Mock4Net internal tests using Nunit and NFluent test assertion lib:
+Below a simple example using Nunit and NFluent test assertion library:
 ```
-private FluentMockServer _server;
+[SetUp]
+public void StartMockServer()
+{
+    _server = FluentMockServer.Start();
+}
 
 [Test]
 public async void Should_respond_to_request()
 {
     // given
-    _server = FluentMockServer.Start();
+    _sut = new SomeComponentDoingHttpCalls();
 
     _server
         .Given(
@@ -106,10 +110,12 @@ public async void Should_respond_to_request()
 
     // when
     var response 
-        = await new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/foo");
+        = _sut.DoSomething();
     
     // then
-    Check.That(response).IsEqualTo(@"{ msg: ""Hello world!""}");
+    Check.That(response).IsEqualTo(EXPECTED_RESULT);
+    // and optionnaly
+    Check.That(_server.SearchLogsFor(Requests.WithUrl("/error*")).IsEmpty();
 }
 
 ...
@@ -123,5 +129,17 @@ public void ShutdownServer()
 
 
 # Mock4Net as a standalone process
+
+TBD
+
+# SSL
+
+TBD
+
+# Simulating Faults and delay
+
+TBD
+
+# Advanced usage
 
 TBD
