@@ -24,7 +24,10 @@ Based on class HttpListener from the .net framework, it is very lightweight and 
 # Mock4Net API in a nutshell
 
 ## Start a server
-First thing first, to start a server you just need to call static method *FluentMockServer.Start()*.  
+First thing first, to start a server it is as easy as calling a static method, and your done!
+```
+server = FluentMockServer.Start();
+```
 You can pass as an argument a port number but if you do not an available port will be chosen for you. 
 An available port will be chosen for you. To know on which port your server is listening, just use the property *Port*.
 
