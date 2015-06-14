@@ -75,8 +75,7 @@ namespace Mock4Net.Core
             }
         }
 
-
-        private void HandleRequest(HttpListenerContext ctx)
+        private async void HandleRequest(HttpListenerContext ctx)
         {
             var request = _requestMapper.Map(ctx.Request);
             LogRequest(request);
@@ -89,7 +88,8 @@ namespace Mock4Net.Core
             }
             else
             {
-                var response = targetRoute.ResponseTo(request);
+                var response = await targetRoute.ResponseTo(request);
+
                 _responseMapper.Map(response, ctx.Response);
             }
             ctx.Response.Close();
@@ -113,7 +113,6 @@ namespace Mock4Net.Core
         {
             return new RespondWithAProvider(RegisterRoute, requestSpec);
         }
-
 
         public interface IRespondWithAProvider
         {

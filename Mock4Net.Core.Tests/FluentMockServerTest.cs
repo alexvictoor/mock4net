@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -69,7 +70,7 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
-        public async void Should_find_a_requests_satisfying_a_request_spec()
+        public async void Should_find_a_request_satisfying_a_request_spec()
         {
             // given
             _server = FluentMockServer.Start();
@@ -95,6 +96,69 @@ namespace Mock4Net.Core.Tests
             // then
             Check.That(_server.RequestLogs).IsEmpty();
 
+        }
+
+        [Test]
+        public async void Should_respond_a_redirect_without_body()
+        {
+            // given
+            _server = FluentMockServer.Start();
+
+            _server
+                .Given(
+                    Requests
+                        .WithUrl("/foo")
+                        .UsingGet())
+                .RespondWith(
+                    Responses
+                        .WithStatusCode(307)
+                        .WithHeader("Location", "/bar")
+                    );
+            _server
+                .Given(
+                    Requests
+                        .WithUrl("/bar")
+                        .UsingGet())
+                .RespondWith(
+                    Responses
+                        .WithStatusCode(200)
+                        .WithBody("REDIRECT SUCCESSFUL")
+                    );
+
+
+            // when
+            var response
+                = await new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/foo");
+            // then
+            Check.That(response).IsEqualTo("REDIRECT SUCCESSFUL");
+        }
+
+        [Test]
+        public async void Should_delay_responses()
+        {
+            // given
+            _server = FluentMockServer.Start();
+
+            _server
+                .Given(
+                    Requests
+                        .WithUrl("/*")
+                    )
+                .RespondWith(
+                    Responses
+                        .WithStatusCode(200)
+                        .WithBody(@"{ msg: ""Hello world!""}")
+                        .AfterDelay(TimeSpan.FromMilliseconds(2000))
+                    );
+
+            // when
+            var watch = new Stopwatch();
+            watch.Start();
+            var response
+                = await new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/foo");
+            watch.Stop();
+            // then
+            Check.That(watch.ElapsedMilliseconds).IsGreaterThan(2000);
         }
 
         [TearDown]

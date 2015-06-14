@@ -39,7 +39,7 @@ namespace Mock4Net.Core.Http
                     while (!_cts.Token.IsCancellationRequested)
                     {
                         HttpListenerContext context = await _listener.GetContextAsync();
-                        _httpHandler.Invoke(context);
+                        _httpHandler(context);
                     }
                 }
             }, _cts.Token);

@@ -18,7 +18,7 @@ namespace Mock4Net.Core
             _provider = provider;
         }
 
-        public Response ResponseTo(Request request)
+        public Task<Response> ResponseTo(Request request)
         {
             return _provider.ProvideResponse(request);
         }

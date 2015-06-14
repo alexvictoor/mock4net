@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Mock4Net.Core
 {
-    public interface IStatusCodeResponseBuilder : IHeadersResponseBuilder
+    /*public interface IStatusCodeResponseBuilder : IHeadersResponseBuilder
     {
         IHeadersResponseBuilder WithStatusCode(int code);
-    }
+    }*/
 
     public interface IHeadersResponseBuilder : IBodyResponseBuilder
     {
@@ -17,9 +17,14 @@ namespace Mock4Net.Core
 
     }
 
-    public interface IBodyResponseBuilder
+    public interface IBodyResponseBuilder : IDelayResponseBuilder
     {
-        IProvideResponses WithBody(string body);
-
+        IDelayResponseBuilder WithBody(string body);
     }
+
+    public interface IDelayResponseBuilder : IProvideResponses
+    {
+        IProvideResponses AfterDelay(TimeSpan delay);
+    }
+
 }

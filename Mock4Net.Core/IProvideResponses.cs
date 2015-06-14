@@ -8,6 +8,6 @@ namespace Mock4Net.Core
 {
     public interface IProvideResponses
     {
-        Response ProvideResponse(Request request);
+        Task<Response> ProvideResponse(Request request);
     }
 }

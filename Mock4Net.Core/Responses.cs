@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Mock4Net.Core
 {
-    public class Responses : IProvideResponses, IHeadersResponseBuilder
+    public class Responses : IHeadersResponseBuilder
     {
         private readonly Response _response;
+        private TimeSpan _delay = TimeSpan.Zero;
 
 
         public Responses(Response response)
@@ -22,20 +23,27 @@ namespace Mock4Net.Core
             return new Responses(response);
         }
 
-        public Response ProvideResponse(Request request)
+        public async Task<Response> ProvideResponse(Request request)
         {
+            await Task.Delay(_delay);
             return _response;
-        }
-
-        public IProvideResponses WithBody(string body)
-        {
-            _response.Body = body;
-            return this;
         }
 
         public IHeadersResponseBuilder WithHeader(string name, string value)
         {
             _response.AddHeader(name, value);
+            return this;
+        }
+
+        public IDelayResponseBuilder WithBody(string body)
+        {
+            _response.Body = body;
+            return this;
+        }
+
+        public IProvideResponses AfterDelay(TimeSpan delay)
+        {
+            _delay = delay;
             return this;
         }
     }
