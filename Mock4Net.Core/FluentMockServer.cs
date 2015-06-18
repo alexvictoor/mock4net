@@ -20,9 +20,10 @@ namespace Mock4Net.Core
         private readonly HttpListenerResponseMapper _responseMapper = new HttpListenerResponseMapper();
         private readonly int _port;
 
-        private FluentMockServer(int port)
+        private FluentMockServer(int port, bool ssl)
         {
-            _httpServer = new TinyHttpServer("http://localhost:" + port + "/", HandleRequest);
+            string protocol = ssl ? "https" : "http";
+            _httpServer = new TinyHttpServer(protocol + "://localhost:" + port + "/", HandleRequest);
             _port = port;
             _httpServer.Start();
         }
@@ -95,13 +96,13 @@ namespace Mock4Net.Core
             ctx.Response.Close();
         }
 
-        public static FluentMockServer Start(int port = 0)
+        public static FluentMockServer Start(int port = 0, bool ssl = false)
         {
             if (port == 0)
             {
                 port = Ports.FindFreeTcpPort();
             }
-            return new FluentMockServer(port);
+            return new FluentMockServer(port, ssl);
         }
 
         public void Stop()
