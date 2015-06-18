@@ -12,7 +12,7 @@ namespace Mock4Net.Core.Tests
     {
 
         [Test]
-        public void Should_Evaluate_Patterns()
+        public void Should_evaluate_patterns()
         {
             // Positive Tests
             Assert.IsTrue(WildcardPatternMatcher.MatchWildcardString("*", ""));
