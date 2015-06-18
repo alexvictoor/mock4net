@@ -147,7 +147,7 @@
                     Responses
                         .WithStatusCode(200)
                         .WithBody(@"{ msg: ""Hello world!""}")
-                        .AfterDelay(TimeSpan.FromMilliseconds(2000))
+                        .AfterDelay(TimeSpan.FromMilliseconds(2010))
                     );
 
             // when
