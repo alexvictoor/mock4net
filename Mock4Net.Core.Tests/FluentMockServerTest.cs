@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using NFluent;
-using NUnit.Framework;
-
-namespace Mock4Net.Core.Tests
+﻿namespace Mock4Net.Core.Tests
 {
+    using System;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+
+    using NFluent;
+
+    using NUnit.Framework;
+
     [TestFixture]
     [Timeout(5000)]
     public class FluentMockServerTest
@@ -148,7 +147,7 @@ namespace Mock4Net.Core.Tests
                     Responses
                         .WithStatusCode(200)
                         .WithBody(@"{ msg: ""Hello world!""}")
-                        .AfterDelay(TimeSpan.FromMilliseconds(2000))
+                        .AfterDelay(TimeSpan.FromMilliseconds(2010))
                     );
 
             // when
@@ -159,6 +158,54 @@ namespace Mock4Net.Core.Tests
             watch.Stop();
             // then
             Check.That(watch.ElapsedMilliseconds).IsGreaterThan(2000);
+        }
+
+        [Test]
+        public async void Should_respond_to_put()
+        {
+            // given
+            _server = FluentMockServer.Start();
+
+            _server
+                .Given(
+                    Requests
+                        .WithUrl("/foo")
+                        .UsingPut())
+                .RespondWith(
+                    Responses
+                        .WithStatusCode(200)
+                        .WithBody(@"{ msg: ""Hello world!""}")
+                    );
+
+            // when
+            var response
+                = await new HttpClient().PutAsync("http://localhost:" + _server.Port + "/foo", new StringContent("Toto"));
+            // then
+            Check.That(response.IsSuccessStatusCode).IsTrue();
+        }
+
+        [Test]
+        public async void Should_respond_to_post()
+        {
+            // given
+            _server = FluentMockServer.Start();
+
+            _server
+                .Given(
+                    Requests
+                        .WithUrl("/foo")
+                        .UsingPost())
+                .RespondWith(
+                    Responses
+                        .WithStatusCode(200)
+                        .WithBody(@"{ msg: ""Hello world!""}")
+                    );
+
+            // when
+            var response
+                = await new HttpClient().PostAsync("http://localhost:" + _server.Port + "/foo", new StringContent("Toto"));
+            // then
+            Check.That(response.IsSuccessStatusCode).IsTrue();
         }
 
         [TearDown]
