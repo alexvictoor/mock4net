@@ -133,7 +133,25 @@ public void ShutdownServer()
 
 # Mock4Net as a standalone process
 
-TBD
+This is quite straight forward to launch a mock server within a console application. Below a simple "main" method that takes as a parameter from the commandline a port number and then start a mock server that will respond "Hello World" on every request:
+```
+        static void Main(string[] args)
+        {
+            var port = Int16.Parse(args[0]);
+            var server = FluentMockServer.Start(port);
+            Console.Out.WriteLine("Server started on port " + port);
+            server
+                .Given(
+                    Requests.WithUrl("/*")
+                ).RespondWith(
+                    Responses
+                        .WithStatusCode(200)
+                        .WithBody("Hello World!")
+                );
+            Console.Out.WriteLine("Press any key to stop the server!");
+            Console.In.Read();
+        }
+```
 
 # SSL
 
