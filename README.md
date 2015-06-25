@@ -28,8 +28,8 @@ First thing first, to start a server it is as easy as calling a static method, a
 ```
 server = FluentMockServer.Start();
 ```
-You can pass as an argument a port number but if you do not an available port will be chosen for you. 
-An available port will be chosen for you. To know on which port your server is listening, just use the property *Port*.
+You can pass as an argument a port number but if you do not an available port will be chosen for you. Hence the above line of code start aserver bounded to locahost a random port.
+To know on which port your server is listening, just use server property *Port*.
 
 ## Configure routes and behaviors
 By default the server returns a dummy message with a 404 status code for all requests. To define a route, you need to specify request for this route and the response you want the server to return. This can be done in a fluent way using classes *Requests* and *Responses* as shown in the example below:
@@ -154,8 +154,11 @@ This is quite straight forward to launch a mock server within a console applicat
 ```
 
 # SSL
-
-TBD
+You can start a standalone mock server listening for HTTPS requests. To do so, there is just a flag to set when creating the server:
+```
+var server = FluentMockServer.Start(port: 8443, ssl: true);
+```
+Obviously you need a certificate registered on your box, properly associated with your application and the port number that will be used. This is not really specific to mock4net, not very straightforward and hence the following stackoverflow thread might come handy: [Httplistener with https support](http://stackoverflow.com/questions/11403333/httplistener-with-https-support)
 
 # Simulating Faults and delay
 
