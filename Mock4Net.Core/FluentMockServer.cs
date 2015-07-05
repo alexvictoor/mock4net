@@ -44,11 +44,15 @@ namespace Mock4Net.Core
             }
         }
 
-        public void ResetRequestLogs()
+        public void Reset()
         {
             lock (((ICollection) _requestLogs).SyncRoot)
             {
                 _requestLogs.Clear();
+            }
+            lock (((ICollection)_routes).SyncRoot)
+            {
+                _routes.Clear();
             }
         }
 

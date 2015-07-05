@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using NFluent;
 using NUnit.Framework;
@@ -86,16 +87,41 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
-        public async void Should_reset_the_requestlogs()
+        public async void Should_reset_requestlogs()
         {
             // given
             _server = FluentMockServer.Start();
             // when
             await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/foo");
-            _server.ResetRequestLogs();
+            _server.Reset();
             // then
             Check.That(_server.RequestLogs).IsEmpty();
 
+        }
+
+        [Test]
+        public async void Should_reset_routes()
+        {
+            // given
+            _server = FluentMockServer.Start();
+
+            _server
+                .Given(
+                    Requests
+                        .WithUrl("/foo")
+                        .UsingGet())
+                .RespondWith(
+                    Responses
+                        .WithStatusCode(200)
+                        .WithBody(@"{ msg: ""Hello world!""}")
+                    );
+
+            // when
+            _server.Reset();
+
+            // then
+            Check.ThatAsyncCode(() => new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/foo"))
+                .ThrowsAny();
         }
 
         [Test]
