@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Mock4Net.Core.Http;
 
@@ -19,6 +20,7 @@ namespace Mock4Net.Core
         private readonly HttpListenerRequestMapper _requestMapper = new HttpListenerRequestMapper();
         private readonly HttpListenerResponseMapper _responseMapper = new HttpListenerResponseMapper();
         private readonly int _port;
+        private TimeSpan _requestProcessingDelay = TimeSpan.Zero;
 
         private FluentMockServer(int port, bool ssl)
         {
@@ -62,7 +64,15 @@ namespace Mock4Net.Core
             {
                 return _requestLogs.Where(spec.IsSatisfiedBy);
             }
-        }  
+        }
+
+        public void AddRequestProcessingDelay(TimeSpan delay)
+        {
+            lock (this)
+            {
+                _requestProcessingDelay = delay;
+            }
+        }
 
         private void RegisterRoute(Route route)
         {
@@ -82,6 +92,10 @@ namespace Mock4Net.Core
 
         private async void HandleRequest(HttpListenerContext ctx)
         {
+            lock (this)
+            {
+                Task.Delay(_requestProcessingDelay).Wait();
+            }
             var request = _requestMapper.Map(ctx.Request);
             LogRequest(request);
             var targetRoute = _routes.FirstOrDefault(route => route.IsRequestHandled(request));
@@ -140,7 +154,5 @@ namespace Mock4Net.Core
                 _registrationCallback(new Route(_requestSpec, provider));
             }
         }
-
-
     }
 }

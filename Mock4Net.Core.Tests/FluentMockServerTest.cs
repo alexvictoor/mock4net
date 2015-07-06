@@ -160,7 +160,7 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
-        public async void Should_delay_responses()
+        public async void Should_delay_responses_for_a_given_route()
         {
             // given
             _server = FluentMockServer.Start();
@@ -183,6 +183,34 @@ namespace Mock4Net.Core.Tests
             var response
                 = await new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/foo");
             watch.Stop();
+            // then
+            Check.That(watch.ElapsedMilliseconds).IsGreaterThan(2000);
+        }
+
+        [Test]
+        public async void Should_delay_responses()
+        {
+            // given
+            _server = FluentMockServer.Start();
+            _server.AddRequestProcessingDelay(TimeSpan.FromMilliseconds(2000));
+            _server
+                .Given(
+                    Requests
+                        .WithUrl("/*")
+                    )
+                .RespondWith(
+                    Responses
+                        .WithStatusCode(200)
+                        .WithBody(@"{ msg: ""Hello world!""}")
+                    );
+
+            // when
+            var watch = new Stopwatch();
+            watch.Start();
+            var response
+                = await new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/foo");
+            watch.Stop();
+
             // then
             Check.That(watch.ElapsedMilliseconds).IsGreaterThan(2000);
         }
