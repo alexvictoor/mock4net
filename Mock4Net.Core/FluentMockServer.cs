@@ -21,6 +21,7 @@ namespace Mock4Net.Core
         private readonly HttpListenerResponseMapper _responseMapper = new HttpListenerResponseMapper();
         private readonly int _port;
         private TimeSpan _requestProcessingDelay = TimeSpan.Zero;
+        private object _syncRoot = new object();
 
         private FluentMockServer(int port, bool ssl)
         {
@@ -68,7 +69,7 @@ namespace Mock4Net.Core
 
         public void AddRequestProcessingDelay(TimeSpan delay)
         {
-            lock (this)
+            lock (_syncRoot)
             {
                 _requestProcessingDelay = delay;
             }
@@ -92,7 +93,7 @@ namespace Mock4Net.Core
 
         private async void HandleRequest(HttpListenerContext ctx)
         {
-            lock (this)
+            lock (_syncRoot)
             {
                 Task.Delay(_requestProcessingDelay).Wait();
             }
