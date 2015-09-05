@@ -160,9 +160,33 @@ var server = FluentMockServer.Start(port: 8443, ssl: true);
 ```
 Obviously you need a certificate registered on your box, properly associated with your application and the port number that will be used. This is not really specific to mock4net, not very straightforward and hence the following stackoverflow thread might come handy: [Httplistener with https support](http://stackoverflow.com/questions/11403333/httplistener-with-https-support)
 
-# Simulating Faults and delay
+# Simulating delays
+A server can be configured with a global delay that will be applied to all requests. To do so you need to call method FluentMockServer.AddRequestProcessingDelay() as below:
+```
+var server = FluentMockServer.Start();
+server.AddRequestProcessingDelay(TimeSpan.FromSeconds(30)); // add a delay of 30s for all requests
+```
+
+Delays can also be configured at route level:
+```
+server
+  .Given(
+    Requests
+      .WithUrl("/slow")
+    )
+  .RespondWith(
+    Responses
+      .WithStatusCode(200)
+      .WithBody(@"{ msg: ""Hello I'am a little bit slow!""}")
+      .AfterDelay(TimeSpan.FromSeconds(10)
+    )
+  );
+```
+
+# Simulating faults
 
 TBD
+
 
 # Advanced usage
 
