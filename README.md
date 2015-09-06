@@ -185,7 +185,7 @@ server
 
 # Simulating faults
 
-TBD
+Currently not done - need to get rid of HttpListener and use lower level TcpListener in order to be able to implement this properly
 
 
 # Advanced usage
