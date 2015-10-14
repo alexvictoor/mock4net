@@ -54,6 +54,7 @@
     <Compile Include="FluentMockServerTest.cs" />
     <Compile Include="HttpListenerResponseMapperTest.cs" />
     <Compile Include="HttpListenerRequestMapperTest.cs" />
+    <Compile Include="RequestTest.cs" />
     <Compile Include="RequestsTest.cs" />
     <Compile Include="TinyHttpServerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

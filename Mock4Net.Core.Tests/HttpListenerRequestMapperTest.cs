@@ -78,6 +78,20 @@ namespace Mock4Net.Core.Tests
 
         }
 
+        [Test]
+        public async void Should_map_params_from_listener_request()
+        {
+            // given
+            var client = new HttpClient();
+            // when 
+            await client.GetAsync(MapperServer.UrlPrefix + "index.html?id=toto");
+            // then
+            Check.That(MapperServer.LastRequest).IsNotNull();
+            Check.That(MapperServer.LastRequest.Path).EndsWith("/index.html");
+            Check.That(MapperServer.LastRequest.GetParameter("id")).HasSize(1);
+
+        }
+
         [TearDown]
         public void StopListenerServer()
         {
