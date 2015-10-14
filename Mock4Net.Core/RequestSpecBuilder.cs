@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mock4Net.Core
 {
-    public interface IVerbRequestBuilder : ISpecifyRequests
+    public interface IVerbRequestBuilder : ISpecifyRequests, IHeadersRequestBuilder
     {
 
         IHeadersRequestBuilder UsingGet();
@@ -17,7 +17,7 @@ namespace Mock4Net.Core
         IHeadersRequestBuilder UsingVerb(string verb);
     }
 
-    public interface IHeadersRequestBuilder : IBodyRequestBuilder, ISpecifyRequests
+    public interface IHeadersRequestBuilder : IBodyRequestBuilder, ISpecifyRequests, IParamsRequestBuilder
     {
         IHeadersRequestBuilder WithHeader(string name, string value);
     }
@@ -25,6 +25,11 @@ namespace Mock4Net.Core
     public interface IBodyRequestBuilder
     {
         ISpecifyRequests WithBody(string body);
+    }
+
+    public interface IParamsRequestBuilder
+    {
+        ISpecifyRequests WithParam(string key, params string[] values);
     }
 
 }

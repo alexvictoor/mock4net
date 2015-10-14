@@ -46,6 +46,8 @@
     <Compile Include="IProvideResponses.cs" />
     <Compile Include="RequestBodySpec.cs" />
     <Compile Include="RequestHeaderSpec.cs" />
+    <Compile Include="RequestParamSpec.cs" />
+    <Compile Include="RequestPathSpec.cs" />
     <Compile Include="Requests.cs" />
     <Compile Include="RequestSpecBuilder.cs" />
     <Compile Include="RequestUrlSpec.cs" />

@@ -13,13 +13,14 @@ namespace Mock4Net.Core
 
         public Request Map(HttpListenerRequest listenerRequest)
         {
-            var url = listenerRequest.Url.PathAndQuery;
+            var path = listenerRequest.Url.AbsolutePath;
+            var query = listenerRequest.Url.Query;
             var verb = listenerRequest.HttpMethod;
             var body = GetRequestBody(listenerRequest);
             var listenerHeaders = listenerRequest.Headers;
             var headers = listenerHeaders.AllKeys.ToDictionary(k => k, k => listenerHeaders[k]);
 
-            return new Request(url, verb, body, headers);
+            return new Request(path, query, verb, body, headers);
         }
 
         private string GetRequestBody(HttpListenerRequest request)

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mock4Net.Core
 {
-    public class Requests : CompositeRequestSpec, IVerbRequestBuilder, IHeadersRequestBuilder
+    public class Requests : CompositeRequestSpec, IVerbRequestBuilder, IHeadersRequestBuilder, IParamsRequestBuilder
     {
         private readonly IList<ISpecifyRequests> _requestSpecs;
 
@@ -20,6 +20,14 @@ namespace Mock4Net.Core
             var specs = new List<ISpecifyRequests>();
             var requests = new Requests(specs);
             specs.Add(new RequestUrlSpec(url));
+            return requests;
+        }
+
+        public static IVerbRequestBuilder WithPath(string path)
+        {
+            var specs = new List<ISpecifyRequests>();
+            var requests = new Requests(specs);
+            specs.Add(new RequestPathSpec(path));
             return requests;
         }
 
@@ -61,6 +69,12 @@ namespace Mock4Net.Core
         public ISpecifyRequests WithBody(string body)
         {
             _requestSpecs.Add(new RequestBodySpec(body));
+            return this;
+        }
+
+        public ISpecifyRequests WithParam(string key, params string[] values)
+        {
+            _requestSpecs.Add(new RequestParamSpec(key, values.ToList()));
             return this;
         }
 
