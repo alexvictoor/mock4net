@@ -13,7 +13,7 @@ namespace Mock4Net.Core
 
         public bool IsSatisfiedBy(Request request)
         {
-            return _body == request.Body.Trim();
+            return WildcardPatternMatcher.MatchWildcardString(_body, request.Body.Trim());
         }
     }
 }
