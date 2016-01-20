@@ -135,6 +135,17 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
+        public void Should_specify_requests_matching_given_body_as_wildcard()
+        {
+            // given
+            var spec = Requests.WithUrl("/foo").UsingAnyVerb().WithBody("H*o wor?d!");
+            // when
+            var request = new Request("/foo", "", "PUT", "Hello world!", new Dictionary<string, string>() { { "X-toto", "tatata" } });
+            // then
+            Check.That(spec.IsSatisfiedBy(request)).IsTrue();
+        }
+
+        [Test]
         public void Should_exclude_requests_not_matching_given_body()
         {
             // given
