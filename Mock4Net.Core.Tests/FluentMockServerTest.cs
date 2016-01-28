@@ -55,7 +55,7 @@ namespace Mock4Net.Core.Tests
                         .UsingGet())
                 .RespondWith(
                     Responses
-                        .WithNotFound()
+                        .WithSuccess()
                         .WithBody(@"{ msg: ""Hello world!""}")
                     );
 
