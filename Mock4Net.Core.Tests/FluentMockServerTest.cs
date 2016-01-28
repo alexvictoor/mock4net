@@ -43,6 +43,56 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
+        public async void Should_use_shortcut_to_200()
+        {
+            // given
+            _server = FluentMockServer.Start();
+
+            _server
+                .Given(
+                    Requests
+                        .WithUrl("/foo")
+                        .UsingGet())
+                .RespondWith(
+                    Responses
+                        .WithNotFound()
+                        .WithBody(@"{ msg: ""Hello world!""}")
+                    );
+
+            // when
+            var response 
+                = await new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/foo");
+            // then
+            Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);
+            Check.That((int)response.StatusCode).IsEqualTo(200);
+        }
+        
+        [Test]
+        public async void Should_use_shortcut_to_404()
+        {
+            // given
+            _server = FluentMockServer.Start();
+
+            _server
+                .Given(
+                    Requests
+                        .WithUrl("/foo")
+                        .UsingGet())
+                .RespondWith(
+                    Responses
+                        .WithNotFound()
+                        .WithBody(@"{ msg: ""Hello world!""}")
+                    );
+
+            // when
+            var response 
+                = await new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/foo");
+            // then
+            Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.NotFound);
+            Check.That((int)response.StatusCode).IsEqualTo(404);
+        }
+        
+        [Test]
         public async void Should_respond_404_for_unexpected_request()
         {
             // given
