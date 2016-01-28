@@ -60,8 +60,8 @@ namespace Mock4Net.Core.Tests
                     );
 
             // when
-            var response 
-                = await new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/foo");
+            var response
+                = await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/foo");
             // then
             Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);
             Check.That((int)response.StatusCode).IsEqualTo(200);
@@ -85,8 +85,8 @@ namespace Mock4Net.Core.Tests
                     );
 
             // when
-            var response 
-                = await new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/foo");
+            var response
+                = await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/foo");
             // then
             Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.NotFound);
             Check.That((int)response.StatusCode).IsEqualTo(404);
