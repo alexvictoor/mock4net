@@ -140,10 +140,9 @@ namespace Mock4Net.Core.Tests
                         .WithStatusCode(200)
                         .WithBody(@"{ msg: ""Hello alpha!""}")
                     );
-
-            // when
+            
             _server.Stop();
-            _server.Start();
+            _server = FluentMockServer.Start();
 
             _server
                 .Given(
@@ -155,7 +154,10 @@ namespace Mock4Net.Core.Tests
                         .WithStatusCode(200)
                         .WithBody(@"{ msg: ""Hello bravo!""}")
                     );
-
+                    
+            // when
+            var response 
+                = await new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/foo");
             // then
             Check.That(response).IsEqualTo(@"{ msg: ""Hello bravo!""}");
         }
