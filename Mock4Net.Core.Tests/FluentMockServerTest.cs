@@ -125,6 +125,42 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
+        public async void Should_update_routes_on_stop_and_start()
+        {
+            // given
+            _server = FluentMockServer.Start();
+
+            _server
+                .Given(
+                    Requests
+                        .WithUrl("/foo")
+                        .UsingGet())
+                .RespondWith(
+                    Responses
+                        .WithStatusCode(200)
+                        .WithBody(@"{ msg: ""Hello alpha!""}")
+                    );
+
+            // when
+            _server.Stop();
+            _server.Start();
+
+            _server
+                .Given(
+                    Requests
+                        .WithUrl("/foo")
+                        .UsingGet())
+                .RespondWith(
+                    Responses
+                        .WithStatusCode(200)
+                        .WithBody(@"{ msg: ""Hello bravo!""}")
+                    );
+
+            // then
+            Check.That(response).IsEqualTo(@"{ msg: ""Hello bravo!""}");
+        }
+
+        [Test]
         public async void Should_respond_a_redirect_without_body()
         {
             // given
