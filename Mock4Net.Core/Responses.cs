@@ -17,6 +17,16 @@ namespace Mock4Net.Core
             this._response = response;
         }
 
+        public static IHeadersResponseBuilder WithSuccess()
+        {
+            return WithStatusCode(200);
+        }
+
+        public static IHeadersResponseBuilder WithNotFound()
+        {
+            return WithStatusCode(404);
+        }
+
         public static IHeadersResponseBuilder WithStatusCode(int code)
         {
             var response = new Response(){StatusCode = code}; 
