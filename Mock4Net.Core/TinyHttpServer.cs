@@ -50,7 +50,6 @@ namespace Mock4Net.Core.Http
         public void Stop()
         {
             _cts.Cancel();
-            _listener.Stop();
         }
     }
 }
