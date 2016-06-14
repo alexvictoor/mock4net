@@ -76,5 +76,10 @@ namespace Mock4Net.Core
         {
             get { return _body; }
         }
+
+        public Dictionary<string, List<string>> Params
+        {
+            get { return _params; }
+        }
     }
 }

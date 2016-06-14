@@ -16,6 +16,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0A69B3
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{A83C8D1B-F717-4A01-9239-3EEFB8F054F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mock4Net.ExamplesBasicHost", "Examples\Mock4Net.Examples.HttpListenerHost\Mock4Net.ExamplesBasicHost.csproj", "{A63B9F64-FB72-4E5E-A1B1-D569ED479B1E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,8 +38,15 @@ Global
 		{02BBF12A-CEF6-47DC-A5C4-A9B09A7EB861}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02BBF12A-CEF6-47DC-A5C4-A9B09A7EB861}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02BBF12A-CEF6-47DC-A5C4-A9B09A7EB861}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A63B9F64-FB72-4E5E-A1B1-D569ED479B1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A63B9F64-FB72-4E5E-A1B1-D569ED479B1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A63B9F64-FB72-4E5E-A1B1-D569ED479B1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A63B9F64-FB72-4E5E-A1B1-D569ED479B1E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A63B9F64-FB72-4E5E-A1B1-D569ED479B1E} = {A83C8D1B-F717-4A01-9239-3EEFB8F054F4}
 	EndGlobalSection
 EndGlobal

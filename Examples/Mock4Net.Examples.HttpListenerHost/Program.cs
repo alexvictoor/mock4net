@@ -13,7 +13,11 @@ namespace Mock4Net.Examples.HttpListenerHost
     {
         static void Main(string[] args)
         {
-            var server = FluentMockServer.Start(new TinyHttpServer(), 888);
+
+            //var httpServer = new TinyHttpServer();
+            var httpServer = new OwinHttpServer();
+
+            var mockServer = FluentMockServer.Start(httpServer, 888);
 
             var requestSpec = Requests.WithUrl("/HelloWorld")
                .UsingGet();
@@ -23,7 +27,7 @@ namespace Mock4Net.Examples.HttpListenerHost
                 .WithBody(@"{ msg: ""Hello world!""}");
 
 
-            server.Given(requestSpec)
+            mockServer.Given(requestSpec)
                 .RespondWith(responseSpec);
 
             Console.ReadKey();
