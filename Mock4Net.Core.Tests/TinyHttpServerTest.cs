@@ -21,8 +21,8 @@ namespace Mock4Net.Core.Tests.Http
             var port = Ports.FindFreeTcpPort();
             bool called = false;
             var urlPrefix = "http://localhost:" + port + "/";
-            var server = new TinyHttpServer(urlPrefix, ctx => called = true);
-            server.Start();
+            var server = new TinyHttpServer();
+            server.Start(urlPrefix, ctx => called = true);
             // when
             var httpClient = new HttpClient();
             httpClient.GetAsync(urlPrefix).Wait(3000);

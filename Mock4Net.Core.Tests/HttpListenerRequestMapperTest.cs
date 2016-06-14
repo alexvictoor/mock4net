@@ -103,7 +103,7 @@ namespace Mock4Net.Core.Tests
             public static volatile Request LastRequest;
             public static string UrlPrefix;
 
-            private MapperServer(string urlPrefix, Action<HttpListenerContext> httpHandler) : base(urlPrefix, httpHandler)
+            private MapperServer()
             {
             }
 
@@ -111,12 +111,12 @@ namespace Mock4Net.Core.Tests
             {
                 var port = Ports.FindFreeTcpPort();
                 UrlPrefix = "http://localhost:" + port + "/";
-                var server = new MapperServer(UrlPrefix, context =>
+                var server = new MapperServer();
+                ((TinyHttpServer)server).Start(UrlPrefix, context =>
                 {
                     LastRequest = new HttpListenerRequestMapper().Map(context.Request);
                     context.Response.Close();
                 });
-                ((TinyHttpServer) server).Start();
                 return server;
             }
 

@@ -7,13 +7,14 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using NFluent;
 using NUnit.Framework;
 
 namespace Mock4Net.Core.Tests
 {
     [TestFixture]
-    [Timeout(5000)]
+    //[Timeout(5000)]
     public class FluentMockServerTest
     {
         private FluentMockServer _server;
@@ -65,6 +66,26 @@ namespace Mock4Net.Core.Tests
             // then
             Check.That(_server.RequestLogs).HasSize(1);
             var requestLogged = _server.RequestLogs.First();
+            Check.That(requestLogged.Verb).IsEqualTo("get");
+            Check.That(requestLogged.Body).IsEmpty();
+
+        }
+
+        [Test]
+        public async void Should_provide_requestlogs_viaHttpGet()
+        {
+            // given
+            _server = FluentMockServer.Start();
+            await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/foo");
+            
+            
+            // when
+            var logResponseBody = await new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/RequestLogs");
+            var requestLogs = JsonConvert.DeserializeObject< IEnumerable<Request>>(logResponseBody);
+
+            // then
+            Check.That(requestLogs).HasSize(1);
+            var requestLogged = requestLogs.First();
             Check.That(requestLogged.Verb).IsEqualTo("get");
             Check.That(requestLogged.Body).IsEmpty();
 

@@ -41,7 +41,6 @@ namespace Mock4Net.Core.Tests
             // when
             new HttpListenerResponseMapper().Map(response, httpListenerResponse);
             // then
-            Check.That(httpListenerResponse.Headers).HasSize(1);
             Check.That(httpListenerResponse.Headers.Keys).Contains("cache-control");
             Check.That(httpListenerResponse.Headers.Get("cache-control")).Contains("no-cache");
         }
@@ -82,12 +81,12 @@ namespace Mock4Net.Core.Tests
             var urlPrefix = "http://localhost:" + port + "/";
             var responseReady = new AutoResetEvent(false);
             HttpListenerResponse response = null;
-            _server = new TinyHttpServer(urlPrefix, context =>
+            _server = new TinyHttpServer();
+            _server.Start(urlPrefix, context =>
             {
                 response = context.Response;
                 responseReady.Set();
             });
-            _server.Start();
             _responseMsgTask = new HttpClient().GetAsync(urlPrefix);
             responseReady.WaitOne();
             return response;
