@@ -1,4 +1,4 @@
-namespace Mock4Net.Core.Models
+namespace Mock4Net.MockServerController.Models
 {
     public enum RequestVerb
     {

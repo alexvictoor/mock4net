@@ -88,8 +88,10 @@
     <Compile Include="Models\Response.cs" />
     <Compile Include="OwinHostedHttpServer.cs" />
     <Compile Include="OwinMockServerControllerApiMiddleware.cs" />
+    <Compile Include="OwinMockServerControllerAuthenticationMiddleware.cs" />
     <Compile Include="OwinSelfHostedHttpServer.cs" />
     <Compile Include="OwinHttpMockServerMiddleware.cs" />
+    <Compile Include="OwinStartup.cs" />
     <Compile Include="RequestBodySpec.cs" />
     <Compile Include="RequestHeaderSpec.cs" />
     <Compile Include="RequestParamSpec.cs" />

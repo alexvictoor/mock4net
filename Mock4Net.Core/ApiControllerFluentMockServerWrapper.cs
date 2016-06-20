@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Mock4Net.Core.Models;
+using Mock4Net.MockServerController.Models;
 
 namespace Mock4Net.Core
 {
@@ -17,7 +17,7 @@ namespace Mock4Net.Core
         }
 
 
-        public void AddMock(Mock4Net.Core.Models.RequestCondition requestCondition, Mock4Net.Core.Models.Response response)
+        public void AddMock(MockServerController.Models.RequestCondition requestCondition, MockServerController.Models.Response response)
         {
             var condition = MapMock4NetCondition(requestCondition);
             var mockResponse = MapMock4NetResponse(response);
@@ -32,7 +32,7 @@ namespace Mock4Net.Core
         {
             _mockServer.Reset();
         }
-        public List<Mock4Net.Core.Models.Request> SearchLogsFor(Mock4Net.Core.Models.RequestCondition condition)
+        public List<MockServerController.Models.Request> SearchLogsFor(MockServerController.Models.RequestCondition condition)
         {
             var m4NetCondition = MapMock4NetCondition(condition);
             var result = _mockServer.SearchLogsFor(m4NetCondition)
@@ -61,9 +61,9 @@ namespace Mock4Net.Core
 
         }
 
-        private Mock4Net.Core.Models.Request MapMock4NetRequest(Mock4Net.Core.Request arg)
+        private MockServerController.Models.Request MapMock4NetRequest(Mock4Net.Core.Request arg)
         {
-            var request = new Mock4Net.Core.Models.Request()
+            var request = new MockServerController.Models.Request()
             {
 
                 Body = arg.Body,
@@ -92,7 +92,7 @@ namespace Mock4Net.Core
             return request;
 
         }
-        private Responses MapMock4NetResponse(Mock4Net.Core.Models.Response response)
+        private Responses MapMock4NetResponse(MockServerController.Models.Response response)
         {
             var mockResponse = (Responses)Responses.WithStatusCode(response.StatusCode);
 
@@ -116,7 +116,7 @@ namespace Mock4Net.Core
             return mockResponse;
         }
 
-        private Requests MapMock4NetCondition(Mock4Net.Core.Models.RequestCondition requestCondition)
+        private Requests MapMock4NetCondition(MockServerController.Models.RequestCondition requestCondition)
         {
             var condition = (Requests)(String.IsNullOrWhiteSpace(requestCondition.URl) ? Requests.WithPath(requestCondition.Path) : Requests.WithUrl(requestCondition.URl));
 

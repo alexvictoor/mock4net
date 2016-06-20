@@ -4,8 +4,8 @@ namespace Mock4Net.Core
 {
     public interface IMockServerManager   
     {
-        void AddMock(Mock4Net.Core.Models.RequestCondition requestCondition, Mock4Net.Core.Models.Response response);
+        void AddMock(MockServerController.Models.RequestCondition requestCondition, MockServerController.Models.Response response);
         void Reset();
-        List<Mock4Net.Core.Models.Request> SearchLogsFor(Mock4Net.Core.Models.RequestCondition condition);
+        List<MockServerController.Models.Request> SearchLogsFor(MockServerController.Models.RequestCondition condition);
     }
 }

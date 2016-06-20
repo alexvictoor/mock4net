@@ -18,6 +18,7 @@ namespace Mock4Net.Core.Http
         public override async Task Invoke(IOwinContext context)
         {
             context.Set("FluentMockServer", _mockServerManager);
+            
             await Next.Invoke(context);
         }
     }

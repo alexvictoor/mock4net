@@ -7,40 +7,37 @@ namespace Mock4Net.Core.Http
 {
     public class OwinHostedHttpServer : IHttpServer
     {
-        //private IDisposable _server;
         private IAppBuilder _appBuilder;
+        private readonly string _apiKey;
         private IFluentMockServer _mockServer;
 
-        private OwinHostedHttpServer(IAppBuilder appBuilder)
+        private OwinHostedHttpServer(IAppBuilder appBuilder, string apiKey)
         {
             _appBuilder = appBuilder;
+            _apiKey = apiKey;
         }
-        public static OwinHostedHttpServer New(IAppBuilder appBuilder)
+
+        /// <summary>
+        /// Setup a new mock server and Api managager
+        /// </summary>
+        /// <param name="appBuilder">The IAppBuilder to configure</param>
+        /// <param name="apiKey">They key to use to authenticate all requests to the management api</param>
+        /// <returns></returns>
+        public static OwinHostedHttpServer New(IAppBuilder appBuilder, string apiKey)
         {
-            return new OwinHostedHttpServer(appBuilder);
+            return new OwinHostedHttpServer(appBuilder, apiKey);
         }
 
         public void Start(string urlPrefix, IFluentMockServer mockServer)
         {
             _mockServer = mockServer;
-            //Mapp API Mock Server controls
-            _appBuilder.MapWhen(context => context.IsServerControllerApiRequest(), app =>
-            {
-                app.Use<OwinMockServerControllerApiMiddleware>(new ApiControllerFluentMockServerWrapper(mockServer));
-
-                ApiServerControllerStartup.ConfigureApp(app);
-            });
-
-            Action<IOwinContext> act = context => _mockServer.HandleRequest(context);
-            var bla = _appBuilder.Use<OwinHttpMockServerMiddleware>(act);
+            OwinStartup.Configure(mockServer, _appBuilder, _apiKey);
         }
-
-       
-
+        
         public void Stop()
         {
             
-            //managed by SF
+            //managed by host
         }
 
     }

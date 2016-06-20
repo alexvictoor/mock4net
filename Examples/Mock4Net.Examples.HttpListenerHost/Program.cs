@@ -14,8 +14,9 @@ namespace Mock4Net.Examples.HttpListenerHost
         static void Main(string[] args)
         {
 
-            //var httpServer = new TinyHttpServer();
-            var httpServer = new OwinSelfHostedHttpServer();
+
+            var apiKey = "06E9D3E64FB7E7C8B2C554A634792624";
+            var httpServer = OwinSelfHostedHttpServer.New(apiKey);
             
             var mockServer = FluentMockServer.Start(httpServer, 8666);
 
@@ -29,7 +30,6 @@ namespace Mock4Net.Examples.HttpListenerHost
 
             mockServer.Given(requestSpec)
                 .RespondWith(responseSpec);
-
 
 
             Console.ReadKey();
