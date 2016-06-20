@@ -17,7 +17,7 @@ namespace Mock4Net.Core.Tests
     //[Timeout(5000)]
     public class FluentMockServerTest
     {
-        private FluentMockServer _server;
+        private IFluentMockServer _server;
 
         [Test]
         public async void Should_respond_to_request()

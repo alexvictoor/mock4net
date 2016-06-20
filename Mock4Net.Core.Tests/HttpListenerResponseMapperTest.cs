@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Mock4Net.Core.Http;
+using Moq;
 using NFluent;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
@@ -82,11 +83,18 @@ namespace Mock4Net.Core.Tests
             var responseReady = new AutoResetEvent(false);
             HttpListenerResponse response = null;
             _server = new TinyHttpServer();
-            _server.Start(urlPrefix, context =>
-            {
-                response = context.Response;
-                responseReady.Set();
-            });
+
+
+            var mockMockServer = new Mock<IFluentMockServer>();
+            mockMockServer.Setup(fluentServer => fluentServer.HandleRequest(It.IsAny<HttpListenerContext>()))
+                   .Callback((HttpListenerContext context) =>
+                   {
+                       response = context.Response;
+                       responseReady.Set();
+                   });
+
+            
+            _server.Start(urlPrefix, mockMockServer.Object);
             _responseMsgTask = new HttpClient().GetAsync(urlPrefix);
             responseReady.WaitOne();
             return response;

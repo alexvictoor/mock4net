@@ -5,7 +5,8 @@ namespace Mock4Net.Core.Http
 {
     public interface IHttpServer
     {
-        void Start(string urlPrefix, Action<HttpListenerContext> httpHandler);
         void Stop();
+        //void Start(string v, Action<object> handleRequest, IFluentMockServer fluentMockServer);
+        void Start(string v, IFluentMockServer fluentMockServer);
     }
 }

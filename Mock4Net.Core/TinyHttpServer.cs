@@ -10,18 +10,19 @@ namespace Mock4Net.Core.Http
 {
     public class TinyHttpServer : IHttpServer
     {
-        private  Action<HttpListenerContext> _httpHandler;
         private  HttpListener _listener;
         private CancellationTokenSource _cts;
+        private IFluentMockServer _mockServer;
 
         public TinyHttpServer()
         {
        
         }
 
-        public void Start(string urlPrefix, Action<HttpListenerContext> httpHandler)
+        public void Start(string urlPrefix,  IFluentMockServer mockServer)
         {
-            _httpHandler = httpHandler;
+           // _httpHandler = httpHandler;
+            _mockServer = mockServer;
             /*  .Net Framework is not supportted on XP or Server 2003, so no need for the check
                         if (!HttpListener.IsSupported)
                         {
@@ -42,7 +43,7 @@ namespace Mock4Net.Core.Http
                     while (!_cts.Token.IsCancellationRequested)
                     {
                         HttpListenerContext context = await _listener.GetContextAsync();
-                        _httpHandler(context);
+                        _mockServer.HandleRequest(context);
                         context.Response.Close();
                     }
                 }
@@ -55,5 +56,6 @@ namespace Mock4Net.Core.Http
             _cts.Cancel();
 
         }
+
     }
 }

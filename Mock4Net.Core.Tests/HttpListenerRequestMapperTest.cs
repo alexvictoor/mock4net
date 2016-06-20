@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Mock4Net.Core.Http;
+using Moq;
 using NFluent;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
@@ -112,11 +113,15 @@ namespace Mock4Net.Core.Tests
                 var port = Ports.FindFreeTcpPort();
                 UrlPrefix = "http://localhost:" + port + "/";
                 var server = new MapperServer();
-                ((TinyHttpServer)server).Start(UrlPrefix, context =>
-                {
-                    LastRequest = new HttpListenerRequestMapper().Map(context.Request);
-                    context.Response.Close();
-                });
+                var mockMockServer = new Mock<IFluentMockServer>();
+                mockMockServer.Setup(fluentServer => fluentServer.HandleRequest(It.IsAny<HttpListenerContext>()))
+                    .Callback((HttpListenerContext context) =>
+                    {
+                        LastRequest = new HttpListenerRequestMapper().Map(context.Request);
+                        context.Response.Close();
+                    });
+
+                ((TinyHttpServer)server).Start(UrlPrefix,mockMockServer.Object);
                 return server;
             }
 

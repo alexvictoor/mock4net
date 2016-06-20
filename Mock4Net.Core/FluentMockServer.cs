@@ -7,12 +7,26 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Owin;
 using Mock4Net.Core.Http;
 using Newtonsoft.Json;
 
 namespace Mock4Net.Core
 {
-    public class FluentMockServer
+    public interface IFluentMockServer
+    {
+        int Port { get; }
+        IEnumerable<Request> RequestLogs { get; }
+        void Reset();
+        IEnumerable<Request> SearchLogsFor(ISpecifyRequests spec);
+        void AddRequestProcessingDelay(TimeSpan delay);
+        void Stop();
+        FluentMockServer.IRespondWithAProvider Given(ISpecifyRequests requestSpec);
+        void HandleRequest(HttpListenerContext ctx);
+        void HandleRequest(IOwinContext ctx);
+    }
+
+    public class FluentMockServer : IFluentMockServer
     {
 
         private readonly IHttpServer _httpServer;
@@ -33,7 +47,7 @@ namespace Mock4Net.Core
             string protocol = ssl ? "https" : "http";
             _httpServer = httpServer;
             _port = port;
-            _httpServer.Start(protocol + "://+:" + port + "/", HandleRequest);
+            _httpServer.Start(protocol + "://+:" + port + "/", this);
         }
 
         public int Port
@@ -96,7 +110,7 @@ namespace Mock4Net.Core
             }
         }
 
-        private async void HandleRequest(HttpListenerContext ctx)
+        public async void HandleRequest(HttpListenerContext ctx)
         {
 
             var request = _requestMapper.Map(ctx.Request);
@@ -127,6 +141,37 @@ namespace Mock4Net.Core
             //ctx.Response.Close();
         }
 
+        public async void HandleRequest(IOwinContext ctx)
+        {
+
+            var request = _requestMapper.Map(ctx.Request);
+
+          //  if (HandleLogRequest(ctx, request)) return;
+
+
+            lock (_syncRoot)
+            {
+                Task.Delay(_requestProcessingDelay).Wait();
+            }
+
+            LogRequest(request);
+            var targetRoute = _routes.FirstOrDefault(route => route.IsRequestHandled(request));
+            if (targetRoute == null)
+            {
+                ctx.Response.StatusCode = 404;
+                var content = Encoding.UTF8.GetBytes("<html><body>Mock Server: page not found</body></html>");
+                ctx.Response.Body.Write(content, 0, content.Length);
+            }
+            else
+            {
+                var response = await targetRoute.ResponseTo(request);
+
+                _responseMapper.Map(response, ctx.Response);
+            }
+
+            //ctx.Response.Close();
+        }
+
         private bool HandleLogRequest(HttpListenerContext ctx, Request request)
         {
             if (request.Path == "/RequestLogs" && request.Verb == "get")
@@ -142,7 +187,7 @@ namespace Mock4Net.Core
             return false;
         }
 
-        public static FluentMockServer Start(int port = 0, bool ssl = false)
+        public static IFluentMockServer Start(int port = 0, bool ssl = false)
         {
            return Start(new TinyHttpServer(),port,ssl);
         }
