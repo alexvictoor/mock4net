@@ -13,7 +13,10 @@ namespace OwinWebHost
         public void Configuration(IAppBuilder app)
         {
            var httpServer = OwinHostedHttpServer.New(app);
+            //TODO. How to capture current port without request to get it from
             Mock4Net.Core.FluentMockServer.Start(httpServer, 80, false);
+            //Mock4Net.Core.FluentMockServer.Start(httpServer, 43420, false); //Debug settings
+
         }
     }
 }
