@@ -2,11 +2,12 @@
 using System.Net.Http;
 using System.Web.Http;
 using Mock4Net.Core;
-using Mock4Net.Core.Models;
+using Mock4Net.MockServerController.Models;
 
 
-namespace Mock4Net.MockServer.Controllers
+namespace Mock4Net.MockServerController.Controllers
 {
+    [Authorize]
     public class MockserverController : ApiController
     {
         [HttpPost]
@@ -30,7 +31,7 @@ namespace Mock4Net.MockServer.Controllers
 
 
         [HttpPost]
-        public List<Mock4Net.Core.Models.Request> SearchLogsFor(RequestCondition condition)
+        public List<Models.Request> SearchLogsFor(RequestCondition condition)
         {
             var server = GetMockServer();
             return server.SearchLogsFor(condition);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Threading.Tasks;
 using Microsoft.Owin;
 using Mock4Net.Core.Http;
@@ -12,10 +13,10 @@ namespace OwinWebHost
     {
         public void Configuration(IAppBuilder app)
         {
-           var httpServer = OwinHostedHttpServer.New(app);
-            //TODO. How to capture current port without request to get it from
-            Mock4Net.Core.FluentMockServer.Start(httpServer, 80, false);
-            //Mock4Net.Core.FluentMockServer.Start(httpServer, 43420, false); //Debug settings
+            var apiKey = ConfigurationManager.AppSettings["MockServerControllerApiKey"];
+
+            var httpServer = OwinHostedHttpServer.New(app, apiKey);
+            Mock4Net.Core.FluentMockServer.Start(httpServer, 1234, false); //Port is ignored as this is set by this host
 
         }
     }

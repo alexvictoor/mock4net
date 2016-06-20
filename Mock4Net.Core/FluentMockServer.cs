@@ -187,11 +187,19 @@ namespace Mock4Net.Core
             return false;
         }
 
+        /// <summary>
+        /// Starts an instance of the Fluent mock server in proc. Used for in proc requests
+        /// </summary>
+        /// <returns></returns>
         public static IFluentMockServer Start(int port = 0, bool ssl = false)
         {
            return Start(new TinyHttpServer(),port,ssl);
         }
 
+        /// <summary>
+        /// Starts an instance of the Fluent mock server using the IHttpServer. this can be an in proc IHttpServer such as <see cref="TinyHttpServer"/>, <see cref="OwinSelfHostedHttpServer"/>,<see cref="OwinHostedHttpServer"/> 
+        /// </summary>
+        /// <returns></returns>
         public static FluentMockServer Start(IHttpServer server, int port = 0, bool ssl = false)
         {
             if (port == 0)

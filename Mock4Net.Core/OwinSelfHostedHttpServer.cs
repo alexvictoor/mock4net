@@ -1,17 +1,35 @@
 using System;
 using System.Net;
-using System.Web.Http;
 using Microsoft.Owin;
 using Microsoft.Owin.Hosting;
 using Mock4Net.Core.Http;
-using Owin;
 
 namespace Mock4Net.Core.Http
 {
-    public class OwinSelfHostedHttpServer : IHttpServer
+    /// <summary>
+    /// Self hosted owin IHttpServer used for hosting a full mock server in any process. This server will start also start up a management api that can be used via the ApiClient library.
+    /// </summary>
+     public class OwinSelfHostedHttpServer : IHttpServer
     {
         private IDisposable _server;
         private IFluentMockServer _mockServer;
+        private string _apiKey;
+
+        private OwinSelfHostedHttpServer(string apiKey)
+        {
+            _apiKey = apiKey;
+        }
+
+        /// <summary>
+        /// Setup a new mock server and Api managager
+        /// </summary>
+        /// <param name="apiKey">They key to use to authenticate all requests to the management api</param>
+        /// <returns></returns>
+        public static OwinSelfHostedHttpServer New(string apiKey)
+        {
+            return new OwinSelfHostedHttpServer( apiKey);
+        }
+
 
         public void Start(string urlPrefix, IFluentMockServer mockServer)
         {
@@ -19,19 +37,12 @@ namespace Mock4Net.Core.Http
             Stop();
             _server = WebApp.Start(new StartOptions(urlPrefix), builder =>
             {
-                builder.MapWhen(context => context.IsServerControllerApiRequest(), app =>
-                {
-                    app.Use<OwinMockServerControllerApiMiddleware>(new ApiControllerFluentMockServerWrapper(mockServer));
-
-                    ApiServerControllerStartup.ConfigureApp(app);
-                });
-
-                Action<IOwinContext> act = new Action<IOwinContext>(context => _mockServer.HandleRequest(context));
-                builder.Use<OwinHttpMockServerMiddleware>(act);
-
+                OwinStartup.Configure(mockServer, builder,_apiKey);
             });
 
         }
+
+        
 
         public void Stop()
         {
@@ -56,27 +67,8 @@ namespace Mock4Net.Core.Http
 
         public static bool IsServerControllerApiRequest(this IOwinContext context)
         {
-            //TODO: Add some form of Key validation for basic security...
+            //TODO: Add proper (OAuth2) owin auth!
             return context.Request.Headers.ContainsKey("X-MockServerControllerApiKey");
-        }
-    }
-
-    public static class ApiServerControllerStartup
-    {
-        // This code configures Web API. The Startup class is specified as a type
-        // parameter in the WebApp.Start method.
-        public static void ConfigureApp(IAppBuilder appBuilder)
-        {
-            // Configure Web API for self-host. 
-            HttpConfiguration config = new HttpConfiguration();
-
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{action}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-                );
-
-            appBuilder.UseWebApi(config);
         }
     }
 }

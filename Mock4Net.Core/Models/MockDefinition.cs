@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mock4Net.Core.Models
+namespace Mock4Net.MockServerController.Models
 {
     public class MockDefinition
     {
-        public Mock4Net.Core.Models.RequestCondition RequestCondition { get; set; }
-        public Mock4Net.Core.Models.Response Response { get; set; }
+        public RequestCondition RequestCondition { get; set; }
+        public Response Response { get; set; }
     }
 }

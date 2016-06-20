@@ -17,11 +17,20 @@ namespace Mock4Net.ApiClient
 
     public class Mock4NetAPIClient
     {
+        private readonly string _apiKey;
         private readonly string _baseUrl;
+        private UriBuilder _baseUri;
 
-        public Mock4NetAPIClient(string baseUrl)
+        public Mock4NetAPIClient(string baseUrl, string apiKey)
         {
-            _baseUrl = baseUrl.Last() == '/' ? baseUrl : baseUrl + "/";
+            _apiKey = apiKey;
+            var baseUri = new UriBuilder(baseUrl);
+
+            if (!baseUri.Path.ToLower().EndsWith("api/mockserver"))
+                baseUri.Path = "api/mockserver";
+
+            _baseUrl = baseUri.ToString();
+            _baseUrl = _baseUrl.Last() == '/' ? _baseUrl : _baseUrl + "/";
         }
 
 
@@ -34,19 +43,19 @@ namespace Mock4Net.ApiClient
           
             var result = HttpPost(uri, entity);
         }
-        public string GetMockServerAddress()
-        {
-            var uri = GetUriForPath("GetMockServerAddress");
+        //public string GetMockServerAddress()
+        //{
+        //    var uri = GetUriForPath("GetMockServerAddress");
 
-            var result = HttpPost(uri, "");
+        //    var result = HttpPost(uri, "");
 
-            var typedResult = JsonConvert.DeserializeObject<string>(result);
-            var apiUri = new Uri(_baseUrl);
-            var mockeServerUri = new UriBuilder(typedResult);
-            mockeServerUri.Host = apiUri.Host;
+        //    var typedResult = JsonConvert.DeserializeObject<string>(result);
+        //    var apiUri = new Uri(_baseUrl);
+        //    var mockeServerUri = new UriBuilder(typedResult);
+        //    mockeServerUri.Host = apiUri.Host;
             
-            return mockeServerUri.Uri.ToString();
-        }
+        //    return mockeServerUri.Uri.ToString();
+        //}
 
        
 
@@ -73,17 +82,19 @@ namespace Mock4Net.ApiClient
             return uri;
         }
 
-        private static string HttpPost(string URI, string entity)
+        private string HttpPost(string URI, string entity)
         {
 
             HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(URI);
-
+            //myReq.Credentials = new NetworkCredential("myUser", "myPassword");
+            //request.CookieContainer = myContainer;
+           // myReq.PreAuthenticate = true;
 
             byte[] byteArray = Encoding.UTF8.GetBytes(entity);
             myReq.Method = "POST";
             myReq.ContentType = "application/json";
             myReq.ContentLength = byteArray.Length;
-            myReq.Headers.Add("X-MockServerControllerApiKey", "ANUSNDLJNS9343y94ndfNDJFNJDK383nSNS");
+            myReq.Headers.Add("X-MockServerControllerApiKey", _apiKey);
             Stream requestStream = myReq.GetRequestStream();
             requestStream.Write(byteArray, 0, byteArray.Length);
             requestStream.Close();
