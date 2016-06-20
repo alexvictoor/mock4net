@@ -23,15 +23,7 @@ namespace Mock4Net.Core.Http
                 {
                     app.Use<OwinMockServerControllerApiMiddleware>(new ApiControllerFluentMockServerWrapper(mockServer));
 
-                    HttpConfiguration config = new HttpConfiguration();
-                    
-                    config.Routes.MapHttpRoute(
-                        name: "DefaultApi",
-                        routeTemplate: "api/{controller}/{action}/{id}",
-                        defaults: new { id = RouteParameter.Optional }
-                    );
-
-                    app.UseWebApi(config);
+                    ApiServerControllerStartup.ConfigureApp(app);
                 });
 
                 Action<IOwinContext> act = new Action<IOwinContext>(context => _mockServer.HandleRequest(context));
@@ -59,54 +51,6 @@ namespace Mock4Net.Core.Http
     }
 
 
-    public class OwinHostedHttpServer : IHttpServer
-    {
-        //private IDisposable _server;
-        private IAppBuilder _appBuilder;
-        private IFluentMockServer _mockServer;
-
-        private OwinHostedHttpServer(IAppBuilder appBuilder)
-        {
-            _appBuilder = appBuilder;
-        }
-        public static OwinHostedHttpServer New(IAppBuilder appBuilder)
-        {
-            return new OwinHostedHttpServer(appBuilder);
-        }
-
-        public void Start(string urlPrefix, IFluentMockServer mockServer)
-        {
-            _mockServer = mockServer;
-            //Mapp API Mock Server controls
-            _appBuilder.MapWhen(context => context.IsServerControllerApiRequest(), app =>
-            {
-                app.Use<OwinMockServerControllerApiMiddleware>(new ApiControllerFluentMockServerWrapper(mockServer));
-
-                HttpConfiguration config = new HttpConfiguration();
-
-                config.Routes.MapHttpRoute(
-                    name: "DefaultApi",
-                    routeTemplate: "api/{controller}/{action}/{id}",
-                    defaults: new { id = RouteParameter.Optional }
-                );
-
-                app.UseWebApi(config);
-            });
-
-            Action<IOwinContext> act = context => _mockServer.HandleRequest(context);
-            var bla = _appBuilder.Use<OwinHttpMockServerMiddleware>(act);
-        }
-
-       
-
-        public void Stop()
-        {
-            
-            //managed by SF
-        }
-
-    }
-
     public static class Helpers
     {
 
@@ -130,8 +74,7 @@ namespace Mock4Net.Core.Http
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
-            );
-
+                );
 
             appBuilder.UseWebApi(config);
         }

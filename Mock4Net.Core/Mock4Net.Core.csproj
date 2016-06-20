@@ -86,6 +86,8 @@
     <Compile Include="Models\RequestCondition.cs" />
     <Compile Include="Models\RequestVerb.cs" />
     <Compile Include="Models\Response.cs" />
+    <Compile Include="OwinHostedHttpServer.cs" />
+    <Compile Include="OwinMockServerControllerApiMiddleware.cs" />
     <Compile Include="OwinSelfHostedHttpServer.cs" />
     <Compile Include="OwinHttpMockServerMiddleware.cs" />
     <Compile Include="RequestBodySpec.cs" />
