@@ -14,8 +14,8 @@ namespace Mock4Net.ApiClient
         {
             var apiKey = "06E9D3E64FB7E7C8B2C554A634792624";
 
-            //var baseAddress = new Uri("http://xxxxxxxxxx-mock4net.azurewebsites.net/");
-            var baseAddress = new Uri("http://localhost:43420/");
+            var baseAddress = new Uri("http://vmob-dev-2-workflow-mock4net.azurewebsites.net/");
+            //var baseAddress = new Uri("http://localhost:11824/");
             var clientAddress = new UriBuilder(baseAddress);
             var client = new Mock4NetAPIClient(clientAddress.ToString(), apiKey);
 

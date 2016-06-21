@@ -16,7 +16,7 @@ namespace OwinWebHost
             var apiKey = ConfigurationManager.AppSettings["MockServerControllerApiKey"];
 
             var httpServer = OwinHostedHttpServer.New(app, apiKey);
-            Mock4Net.Core.FluentMockServer.Start(httpServer, 1234, false); //Port is ignored as this is set by this host
+            Mock4Net.Core.FluentMockServer.Start(httpServer, 80, false); //Port is ignored as this is set by this host
 
         }
     }
