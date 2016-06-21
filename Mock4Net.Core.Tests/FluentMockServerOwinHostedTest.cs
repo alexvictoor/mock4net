@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Mock4Net.Core.Http;
 using Newtonsoft.Json;
 using NFluent;
 using NUnit.Framework;
@@ -15,16 +16,15 @@ namespace Mock4Net.Core.Tests
 {
     [TestFixture]
     //[Timeout(5000)]
-    public class FluentMockServerTest
+    public class FluentMockServerOwinHostedTest
     {
         private IFluentMockServer _server;
-
 
         [Test]
         public async void Should_respond_to_request()
         {
             // given
-            _server = FluentMockServer.Start();
+            _server.Reset();;
 
             _server
                 .Given(
@@ -38,7 +38,7 @@ namespace Mock4Net.Core.Tests
                     );
 
             // when
-            var response 
+            var response
                 = await new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/foo");
             // then
             Check.That(response).IsEqualTo(@"{ msg: ""Hello world!""}");
@@ -48,7 +48,7 @@ namespace Mock4Net.Core.Tests
         public async void Should_respond_404_for_unexpected_request()
         {
             // given
-            _server = FluentMockServer.Start();
+            _server.Reset();
             // when
             var response
                 = await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/foo");
@@ -61,7 +61,7 @@ namespace Mock4Net.Core.Tests
         public async void Should_record_requests_in_the_requestlogs()
         {
             // given
-            _server = FluentMockServer.Start();
+            _server.Reset();
             // when
             await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/foo");
             // then
@@ -72,36 +72,17 @@ namespace Mock4Net.Core.Tests
 
         }
 
-        [Test]
-        public async void Should_provide_requestlogs_viaHttpGet()
-        {
-            // given
-            _server = FluentMockServer.Start();
-            await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/foo");
-            
-            
-            // when
-            var logResponseBody = await new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/RequestLogs");
-            var requestLogs = JsonConvert.DeserializeObject< IEnumerable<Request>>(logResponseBody);
-
-            // then
-            Check.That(requestLogs).HasSize(1);
-            var requestLogged = requestLogs.First();
-            Check.That(requestLogged.Verb).IsEqualTo("get");
-            Check.That(requestLogged.Body).IsEmpty();
-
-        }
-
+        
         [Test]
         public async void Should_find_a_request_satisfying_a_request_spec()
         {
             // given
-            _server = FluentMockServer.Start();
+            _server.Reset();
             // when
             await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/foo");
             await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/bar");
             // then
-            var result = _server.SearchLogsFor(Requests.WithUrl("/b*")); 
+            var result = _server.SearchLogsFor(Requests.WithUrl("/b*"));
             Check.That(result).HasSize(1);
             var requestLogged = result.First();
             Check.That(requestLogged.Url).IsEqualTo("/bar");
@@ -112,10 +93,10 @@ namespace Mock4Net.Core.Tests
         public async void Should_reset_requestlogs()
         {
             // given
-            _server = FluentMockServer.Start();
+            _server.Reset();
             // when
             await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/foo");
-            _server.Reset();
+            _server.Reset();;
             // then
             Check.That(_server.RequestLogs).IsEmpty();
 
@@ -125,7 +106,7 @@ namespace Mock4Net.Core.Tests
         public async void Should_reset_routes()
         {
             // given
-            _server = FluentMockServer.Start();
+            _server.Reset();
 
             _server
                 .Given(
@@ -139,7 +120,7 @@ namespace Mock4Net.Core.Tests
                     );
 
             // when
-            _server.Reset();
+            _server.Reset();;
 
             // then
             Check.ThatAsyncCode(() => new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/foo"))
@@ -150,7 +131,7 @@ namespace Mock4Net.Core.Tests
         public async void Should_respond_a_redirect_without_body()
         {
             // given
-            _server = FluentMockServer.Start();
+            _server.Reset();
 
             _server
                 .Given(
@@ -185,7 +166,7 @@ namespace Mock4Net.Core.Tests
         public async void Should_delay_responses_for_a_given_route()
         {
             // given
-            _server = FluentMockServer.Start();
+            _server.Reset();
 
             _server
                 .Given(
@@ -213,7 +194,7 @@ namespace Mock4Net.Core.Tests
         public async void Should_delay_responses()
         {
             // given
-            _server = FluentMockServer.Start();
+            _server.Reset();
             _server.AddRequestProcessingDelay(TimeSpan.FromMilliseconds(2000));
             _server
                 .Given(
@@ -237,13 +218,20 @@ namespace Mock4Net.Core.Tests
             Check.That(watch.ElapsedMilliseconds).IsGreaterThan(2000);
         }
 
-        [TearDown]
-        public void ShutdownServer()
+        [TestFixtureSetUp]
+        public void SetupServer()
+        {
+            var apiKey = "06E9D3E64FB7E7C8B2C554A634792624";
+            var httpServer = OwinSelfHostedHttpServer.New(apiKey);
+
+            _server = FluentMockServer.Start(httpServer);
+            
+        }
+
+        [TestFixtureTearDown]
+        public void TeardownServer()
         {
             _server.Stop();
         }
-
-        
-       
     }
 }
