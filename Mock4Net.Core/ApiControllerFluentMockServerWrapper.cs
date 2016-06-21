@@ -17,7 +17,7 @@ namespace Mock4Net.Core
         }
 
 
-        public void AddMock(MockServerController.Models.RequestCondition requestCondition, MockServerController.Models.Response response)
+        public void AddMock(RequestCondition requestCondition, MockServerController.Models.Response response)
         {
             var condition = MapMock4NetCondition(requestCondition);
             var mockResponse = MapMock4NetResponse(response);
@@ -32,7 +32,7 @@ namespace Mock4Net.Core
         {
             _mockServer.Reset();
         }
-        public List<MockServerController.Models.Request> SearchLogsFor(MockServerController.Models.RequestCondition condition)
+        public List<MockServerController.Models.Request> SearchLogsFor(RequestCondition condition)
         {
             var m4NetCondition = MapMock4NetCondition(condition);
             var result = _mockServer.SearchLogsFor(m4NetCondition)
@@ -61,7 +61,7 @@ namespace Mock4Net.Core
 
         }
 
-        private MockServerController.Models.Request MapMock4NetRequest(Mock4Net.Core.Request arg)
+        private MockServerController.Models.Request MapMock4NetRequest(Request arg)
         {
             var request = new MockServerController.Models.Request()
             {
@@ -116,7 +116,7 @@ namespace Mock4Net.Core
             return mockResponse;
         }
 
-        private Requests MapMock4NetCondition(MockServerController.Models.RequestCondition requestCondition)
+        private Requests MapMock4NetCondition(RequestCondition requestCondition)
         {
             var condition = (Requests)(String.IsNullOrWhiteSpace(requestCondition.URl) ? Requests.WithPath(requestCondition.Path) : Requests.WithUrl(requestCondition.URl));
 

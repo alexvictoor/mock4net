@@ -78,6 +78,7 @@
     <Compile Include="FluentMockServer.cs" />
     <Compile Include="HttpListenerRequestMapper.cs" />
     <Compile Include="HttpListenerResponseMapper.cs" />
+    <Compile Include="IFluentMockServer.cs" />
     <Compile Include="IHttpServer.cs" />
     <Compile Include="IMockServerManager.cs" />
     <Compile Include="IProvideResponses.cs" />

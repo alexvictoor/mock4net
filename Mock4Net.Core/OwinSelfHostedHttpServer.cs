@@ -37,7 +37,7 @@ namespace Mock4Net.Core.Http
             Stop();
             _server = WebApp.Start(new StartOptions(urlPrefix), builder =>
             {
-                OwinStartup.Configure(mockServer, builder,_apiKey);
+                OwinStartup.Configure(_mockServer, builder,_apiKey);
             });
 
         }
@@ -54,6 +54,7 @@ namespace Mock4Net.Core.Http
                 }
                 catch
                 {
+                    //Do nothing
                 }
             }
             _server = null;

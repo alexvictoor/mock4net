@@ -56,7 +56,7 @@ namespace Mock4Net.Core.Http
         public void Start(string urlPrefix, IFluentMockServer mockServer)
         {
             _mockServer = mockServer;
-            OwinStartup.Configure(mockServer, _appBuilder, _apiKey);
+            OwinStartup.Configure(_mockServer, _appBuilder, _apiKey);
         }
         
         public void Stop()

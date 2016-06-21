@@ -65,12 +65,8 @@ namespace Mock4Net.Core.Tests
         [TearDown]
         public void StopServer()
         {
-            if (_server != null)
-            {
-                _server.Stop();
-            }
+            _server?.Stop();
         }
-
 
 
         /// <summary>

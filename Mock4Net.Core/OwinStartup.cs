@@ -31,7 +31,7 @@ namespace Mock4Net.Core.Http
                 ConfigureControllerApi(app);
             });
 
-            Action<IOwinContext> act = new Action<IOwinContext>(context => mockServer.HandleRequest(context));
+            var act = new Action<IOwinContext>(mockServer.HandleRequest);
             builder.Use<OwinHttpMockServerMiddleware>(act);
         }
     }

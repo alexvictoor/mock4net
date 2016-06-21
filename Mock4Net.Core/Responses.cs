@@ -14,7 +14,7 @@ namespace Mock4Net.Core
 
         public Responses(Response response)
         {
-            this._response = response;
+            _response = response;
         }
 
         public static IHeadersResponseBuilder WithStatusCode(int code)

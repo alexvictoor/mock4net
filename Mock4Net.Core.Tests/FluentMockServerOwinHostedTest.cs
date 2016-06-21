@@ -24,7 +24,7 @@ namespace Mock4Net.Core.Tests
         public async void Should_respond_to_request()
         {
             // given
-            _server.Reset();;
+            _server.Reset();
 
             _server
                 .Given(
@@ -82,7 +82,7 @@ namespace Mock4Net.Core.Tests
             await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/foo");
             await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/bar");
             // then
-            var result = _server.SearchLogsFor(Requests.WithUrl("/b*"));
+            var result = _server.SearchLogsFor(Requests.WithUrl("/b*")).ToList();
             Check.That(result).HasSize(1);
             var requestLogged = result.First();
             Check.That(requestLogged.Url).IsEqualTo("/bar");
@@ -96,7 +96,7 @@ namespace Mock4Net.Core.Tests
             _server.Reset();
             // when
             await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/foo");
-            _server.Reset();;
+            _server.Reset();
             // then
             Check.That(_server.RequestLogs).IsEmpty();
 
@@ -120,7 +120,7 @@ namespace Mock4Net.Core.Tests
                     );
 
             // when
-            _server.Reset();;
+            _server.Reset();
 
             // then
             Check.ThatAsyncCode(() => new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/foo"))

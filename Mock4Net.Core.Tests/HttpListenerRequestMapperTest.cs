@@ -108,7 +108,7 @@ namespace Mock4Net.Core.Tests
             {
             }
 
-            public new static MapperServer Start()
+            public static MapperServer Start()
             {
                 var port = Ports.FindFreeTcpPort();
                 UrlPrefix = "http://localhost:" + port + "/";
@@ -121,7 +121,7 @@ namespace Mock4Net.Core.Tests
                         context.Response.Close();
                     });
 
-                ((TinyHttpServer)server).Start(UrlPrefix,mockMockServer.Object);
+                server.Start(UrlPrefix,mockMockServer.Object);
                 return server;
             }
 

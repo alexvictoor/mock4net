@@ -19,7 +19,6 @@ namespace Mock4Net.ApiClient
     {
         private readonly string _apiKey;
         private readonly string _baseUrl;
-        private UriBuilder _baseUri;
 
         public Mock4NetAPIClient(string baseUrl, string apiKey)
         {
@@ -43,19 +42,7 @@ namespace Mock4Net.ApiClient
           
             var result = HttpPost(uri, entity);
         }
-        //public string GetMockServerAddress()
-        //{
-        //    var uri = GetUriForPath("GetMockServerAddress");
-
-        //    var result = HttpPost(uri, "");
-
-        //    var typedResult = JsonConvert.DeserializeObject<string>(result);
-        //    var apiUri = new Uri(_baseUrl);
-        //    var mockeServerUri = new UriBuilder(typedResult);
-        //    mockeServerUri.Host = apiUri.Host;
-            
-        //    return mockeServerUri.Uri.ToString();
-        //}
+       
 
        
 
@@ -101,8 +88,6 @@ namespace Mock4Net.ApiClient
 
             using (WebResponse wr = myReq.GetResponse())
             {
-                HttpWebResponse httpResponse = (HttpWebResponse)wr;
-
                 using (Stream receiveStream = wr.GetResponseStream())
                 {
                     StreamReader reader = new StreamReader(receiveStream, Encoding.UTF8);

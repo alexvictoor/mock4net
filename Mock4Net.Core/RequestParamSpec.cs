@@ -19,7 +19,7 @@ namespace Mock4Net.Core
 
         public bool IsSatisfiedBy(Request request)
         {
-            return request.GetParameter(_key).Intersect(_values).Count() == _values.Count();
+            return request.GetParameter(_key).Intersect(_values).Count() == _values.Count;
         }
     }
 }

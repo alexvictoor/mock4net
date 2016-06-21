@@ -82,7 +82,7 @@ namespace Mock4Net.Core.Tests
             
             // when
             var logResponseBody = await new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/RequestLogs");
-            var requestLogs = JsonConvert.DeserializeObject< IEnumerable<Request>>(logResponseBody);
+            var requestLogs = JsonConvert.DeserializeObject< IEnumerable<Request>>(logResponseBody).ToList();
 
             // then
             Check.That(requestLogs).HasSize(1);
@@ -101,7 +101,7 @@ namespace Mock4Net.Core.Tests
             await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/foo");
             await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/bar");
             // then
-            var result = _server.SearchLogsFor(Requests.WithUrl("/b*")); 
+            var result = _server.SearchLogsFor(Requests.WithUrl("/b*")).ToList(); 
             Check.That(result).HasSize(1);
             var requestLogged = result.First();
             Check.That(requestLogged.Url).IsEqualTo("/bar");
