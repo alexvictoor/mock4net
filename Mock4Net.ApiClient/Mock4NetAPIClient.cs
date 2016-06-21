@@ -15,6 +15,40 @@ namespace Mock4Net.ApiClient
         public Response Response { get; set; }
     }
 
+    /// <summary>
+    /// APi Cient library for managing mocks on a VMob Mock4Net Server
+    /// <example>
+    /// <code>
+    ///  var apiKey = "06E9D3E64FB7E7C8B2C554A634792624";
+    ///  var baseAddress = new Uri("http://localhost:43420/");
+    ///  var client = new Mock4NetAPIClient(baseAddress, apiKey)
+    /// 
+    /// //Reset the mocks on the server
+    ///  client.Reset();
+    /// 
+    /// //Create the request and response conditions
+    /// var requestCondition = RequestConditionBuilder
+    ///    .WithUrl("/HelloWorld")
+    ///    .WithVerb(RequestVerb.Get);
+    ///
+    ///  var response = ResponseBuilder
+    ///    .WithStatusCode(200)
+    ///    .WithBody(@"{ msg: ""Hello world!""}")
+    ///    .WithHeader("x-MyHeader", "Hi!");
+    /// 
+    /// //Add the mock definition to the server
+    /// client.AddMock(requestCondition, response);
+    /// 
+    /// // test call of the mock
+    /// var url = new UriBuilder(baseAddress);
+    /// url.Path = requestCondition.URl;
+    /// var responseBody = new HttpClient().GetStringAsync(url.Uri);
+    ///
+    /// // Check the mock server logs for a matching request..
+    /// var logs = client.SearchLogsFor(requestCondition);
+    /// </code>
+    /// </example>
+    /// </summary>
     public class Mock4NetAPIClient
     {
         private readonly string _apiKey;
