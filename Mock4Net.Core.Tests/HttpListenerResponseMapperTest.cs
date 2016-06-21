@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Mock4Net.Core.Http;
+using Moq;
 using NFluent;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
@@ -41,7 +42,6 @@ namespace Mock4Net.Core.Tests
             // when
             new HttpListenerResponseMapper().Map(response, httpListenerResponse);
             // then
-            Check.That(httpListenerResponse.Headers).HasSize(1);
             Check.That(httpListenerResponse.Headers.Keys).Contains("cache-control");
             Check.That(httpListenerResponse.Headers.Get("cache-control")).Contains("no-cache");
         }
@@ -65,12 +65,8 @@ namespace Mock4Net.Core.Tests
         [TearDown]
         public void StopServer()
         {
-            if (_server != null)
-            {
-                _server.Stop();
-            }
+            _server?.Stop();
         }
-
 
 
         /// <summary>
@@ -82,12 +78,19 @@ namespace Mock4Net.Core.Tests
             var urlPrefix = "http://localhost:" + port + "/";
             var responseReady = new AutoResetEvent(false);
             HttpListenerResponse response = null;
-            _server = new TinyHttpServer(urlPrefix, context =>
-            {
-                response = context.Response;
-                responseReady.Set();
-            });
-            _server.Start();
+            _server = new TinyHttpServer();
+
+
+            var mockMockServer = new Mock<IFluentMockServer>();
+            mockMockServer.Setup(fluentServer => fluentServer.HandleRequest(It.IsAny<HttpListenerContext>()))
+                   .Callback((HttpListenerContext context) =>
+                   {
+                       response = context.Response;
+                       responseReady.Set();
+                   });
+
+            
+            _server.Start(urlPrefix, mockMockServer.Object);
             _responseMsgTask = new HttpClient().GetAsync(urlPrefix);
             responseReady.WaitOne();
             return response;

@@ -7,16 +7,18 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using NFluent;
 using NUnit.Framework;
 
 namespace Mock4Net.Core.Tests
 {
     [TestFixture]
-    [Timeout(5000)]
+    //[Timeout(5000)]
     public class FluentMockServerTest
     {
-        private FluentMockServer _server;
+        private IFluentMockServer _server;
+
 
         [Test]
         public async void Should_respond_to_request()
@@ -71,6 +73,26 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
+        public async void Should_provide_requestlogs_viaHttpGet()
+        {
+            // given
+            _server = FluentMockServer.Start();
+            await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/foo");
+            
+            
+            // when
+            var logResponseBody = await new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/RequestLogs");
+            var requestLogs = JsonConvert.DeserializeObject< IEnumerable<Request>>(logResponseBody).ToList();
+
+            // then
+            Check.That(requestLogs).HasSize(1);
+            var requestLogged = requestLogs.First();
+            Check.That(requestLogged.Verb).IsEqualTo("get");
+            Check.That(requestLogged.Body).IsEmpty();
+
+        }
+
+        [Test]
         public async void Should_find_a_request_satisfying_a_request_spec()
         {
             // given
@@ -79,7 +101,7 @@ namespace Mock4Net.Core.Tests
             await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/foo");
             await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/bar");
             // then
-            var result = _server.SearchLogsFor(Requests.WithUrl("/b*")); 
+            var result = _server.SearchLogsFor(Requests.WithUrl("/b*")).ToList(); 
             Check.That(result).HasSize(1);
             var requestLogged = result.First();
             Check.That(requestLogged.Url).IsEqualTo("/bar");
@@ -220,5 +242,8 @@ namespace Mock4Net.Core.Tests
         {
             _server.Stop();
         }
+
+        
+       
     }
 }

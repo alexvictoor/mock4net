@@ -18,7 +18,7 @@ namespace Mock4Net.Core
 
         private readonly string _body;
 
-        public Request(string path, string query, string verb, string body, IDictionary<string, string> headers)
+        internal Request(string path, string query, string verb, string body, IDictionary<string, string> headers)
         {
             if (!string.IsNullOrEmpty(query))
             {
@@ -40,7 +40,7 @@ namespace Mock4Net.Core
             _body = body==null ? "" : body.Trim();
         }
 
-        public string Url
+        internal string Url
         {
             get
             {
@@ -50,31 +50,36 @@ namespace Mock4Net.Core
             }
         }
 
-        public string Path
+        internal string Path
         {
             get { return _path; }
         }
 
-        public List<string> GetParameter(string key)
+        internal List<string> GetParameter(string key)
         {
             if (_params.ContainsKey(key))
                 return _params[key];
             return new List<string>();
         }
 
-        public string Verb
+        internal string Verb
         {
             get { return _verb; }
         }
 
-        public IDictionary<string, string> Headers
+        internal IDictionary<string, string> Headers
         {
             get { return _headers; }
         }
 
-        public string Body
+        internal string Body
         {
             get { return _body; }
+        }
+
+        internal Dictionary<string, List<string>> Params
+        {
+            get { return _params; }
         }
     }
 }

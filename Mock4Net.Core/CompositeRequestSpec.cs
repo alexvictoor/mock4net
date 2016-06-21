@@ -10,7 +10,7 @@ namespace Mock4Net.Core
     {
         private readonly IEnumerable<ISpecifyRequests> _requestSpecs;
 
-        public CompositeRequestSpec(IEnumerable<ISpecifyRequests> requestSpecs)
+        internal CompositeRequestSpec(IEnumerable<ISpecifyRequests> requestSpecs)
         {
             _requestSpecs = requestSpecs;
         }

@@ -2,11 +2,11 @@ using System;
 
 namespace Mock4Net.Core
 {
-    public class RequestBodySpec : ISpecifyRequests
+    internal class RequestBodySpec : ISpecifyRequests
     {
         private string _body;
 
-        public RequestBodySpec(string body)
+        internal RequestBodySpec(string body)
         {
             _body = body.Trim();
         }

@@ -8,29 +8,32 @@ using System.Threading.Tasks;
 
 namespace Mock4Net.Core.Http
 {
-    public class TinyHttpServer
+    public class TinyHttpServer : IHttpServer
     {
-        private readonly Action<HttpListenerContext> _httpHandler;
-        private readonly HttpListener _listener;
+        private  HttpListener _listener;
         private CancellationTokenSource _cts;
+        private IFluentMockServer _mockServer;
 
-        public TinyHttpServer(string urlPrefix, Action<HttpListenerContext> httpHandler)
+        public TinyHttpServer()
         {
-            _httpHandler = httpHandler;
-/*  .Net Framework is not supportted on XP or Server 2003, so no need for the check
-            if (!HttpListener.IsSupported)
-            {
-                Console.WriteLine("Windows XP SP2 or Server 2003 is required to use the HttpListener class.");
-                return;
-            }
- */
+       
+        }
+
+        public void Start(string urlPrefix,  IFluentMockServer mockServer)
+        {
+           // _httpHandler = httpHandler;
+            _mockServer = mockServer;
+            /*  .Net Framework is not supportted on XP or Server 2003, so no need for the check
+                        if (!HttpListener.IsSupported)
+                        {
+                            Console.WriteLine("Windows XP SP2 or Server 2003 is required to use the HttpListener class.");
+                            return;
+                        }
+             */
             // Create a listener.
             _listener = new HttpListener();
             _listener.Prefixes.Add(urlPrefix);
-        }
 
-        public void Start()
-        {
             _listener.Start();
             _cts = new CancellationTokenSource();
             Task.Run(async () =>
@@ -40,7 +43,8 @@ namespace Mock4Net.Core.Http
                     while (!_cts.Token.IsCancellationRequested)
                     {
                         HttpListenerContext context = await _listener.GetContextAsync();
-                        _httpHandler(context);
+                        _mockServer.HandleRequest(context);
+                        context.Response.Close();
                     }
                 }
             }
@@ -52,5 +56,6 @@ namespace Mock4Net.Core.Http
             _cts.Cancel();
 
         }
+
     }
 }

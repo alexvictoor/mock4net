@@ -7,23 +7,23 @@ using System.Threading.Tasks;
 
 namespace Mock4Net.Core
 {
-    public class Route
+    internal class Route
     {
         private readonly ISpecifyRequests _requestSpec;
         private readonly IProvideResponses _provider;
 
-        public Route(ISpecifyRequests requestSpec, IProvideResponses provider)
+        internal Route(ISpecifyRequests requestSpec, IProvideResponses provider)
         {
             _requestSpec = requestSpec;
             _provider = provider;
         }
 
-        public Task<Response> ResponseTo(Request request)
+        internal Task<Response> ResponseTo(Request request)
         {
             return _provider.ProvideResponse(request);
         }
 
-        public bool IsRequestHandled(Request request)
+        internal bool IsRequestHandled(Request request)
         {
             return _requestSpec.IsSatisfiedBy(request);
         }

@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Mock4Net.Core
 {
-    public class RequestParamSpec : ISpecifyRequests
+    internal class RequestParamSpec : ISpecifyRequests
     {
         private readonly string _key;
         private readonly List<string> _values;
 
-        public RequestParamSpec(string key, List<string> values)
+        internal RequestParamSpec(string key, List<string> values)
         {
             _key = key;
             _values = values;
@@ -19,7 +19,7 @@ namespace Mock4Net.Core
 
         public bool IsSatisfiedBy(Request request)
         {
-            return request.GetParameter(_key).Intersect(_values).Count() == _values.Count();
+            return request.GetParameter(_key).Intersect(_values).Count() == _values.Count;
         }
     }
 }

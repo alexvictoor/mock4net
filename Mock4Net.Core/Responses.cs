@@ -12,9 +12,9 @@ namespace Mock4Net.Core
         private TimeSpan _delay = TimeSpan.Zero;
 
 
-        public Responses(Response response)
+        internal Responses(Response response)
         {
-            this._response = response;
+            _response = response;
         }
 
         public static IHeadersResponseBuilder WithStatusCode(int code)

@@ -23,7 +23,7 @@ namespace Mock4Net.Core
             return requests;
         }
 
-        public static IVerbRequestBuilder WithPath(string path)
+        internal static IVerbRequestBuilder WithPath(string path)
         {
             var specs = new List<ISpecifyRequests>();
             var requests = new Requests(specs);
