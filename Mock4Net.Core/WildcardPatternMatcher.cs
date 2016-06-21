@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Mock4Net.Core
 {
-    public class WildcardPatternMatcher
+    internal class WildcardPatternMatcher
     {
         /// <summary>
         /// Copy/paste from http://www.codeproject.com/Tips/57304/Use-wildcard-characters-and-to-compare-strings
         /// 
         /// </summary>
-        public static bool MatchWildcardString(String pattern, String input, bool ignoreCase = false)
+        internal static bool MatchWildcardString(String pattern, String input, bool ignoreCase = false)
         {
             if (ignoreCase && String.Compare(pattern, input, StringComparison.InvariantCultureIgnoreCase) == 0)
             {

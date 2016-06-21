@@ -9,10 +9,10 @@ using Microsoft.Owin;
 
 namespace Mock4Net.Core
 {
-    public class HttpListenerResponseMapper
+    internal class HttpListenerResponseMapper
     {
 
-        public void Map(Response response, HttpListenerResponse result)
+        internal void Map(Response response, HttpListenerResponse result)
         {
             result.StatusCode = response.StatusCode;
             response.Headers.ToList().ForEach(pair => result.AddHeader(pair.Key, pair.Value));

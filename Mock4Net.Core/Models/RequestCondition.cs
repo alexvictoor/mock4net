@@ -10,7 +10,7 @@ namespace Mock4Net.MockServerController.Models
         public RequestVerb Verb
         {
             get { return _verb; }
-            protected set { _verb = value; }
+            set { _verb = value; }
         }
 
         public Dictionary<string, string> Headers { get; set; }

@@ -12,7 +12,7 @@ namespace Mock4Net.Core
         private TimeSpan _delay = TimeSpan.Zero;
 
 
-        public Responses(Response response)
+        internal Responses(Response response)
         {
             _response = response;
         }

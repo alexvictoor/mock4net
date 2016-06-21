@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Mock4Net.Core
 {
-    class RequestVerbSpec : ISpecifyRequests
+    internal class RequestVerbSpec : ISpecifyRequests
     {
         private readonly string _verb;
 
-        public RequestVerbSpec(string verb)
+        internal RequestVerbSpec(string verb)
         {
             _verb = verb.ToLower();
         }

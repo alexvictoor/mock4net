@@ -9,7 +9,7 @@ namespace Mock4Net.Core.Http
     /// <summary>
     /// Self hosted owin IHttpServer used for hosting a full mock server in any process. This server will start also start up a management api that can be used via the ApiClient library.
     /// </summary>
-     public class OwinSelfHostedHttpServer : IHttpServer
+    public class OwinSelfHostedHttpServer : IHttpServer
     {
         private IDisposable _server;
         private IFluentMockServer _mockServer;
@@ -42,7 +42,7 @@ namespace Mock4Net.Core.Http
 
         }
 
-        
+
 
         public void Stop()
         {
@@ -63,10 +63,10 @@ namespace Mock4Net.Core.Http
     }
 
 
-    public static class Helpers
+    internal static class Helpers
     {
 
-        public static bool IsServerControllerApiRequest(this IOwinContext context)
+        internal static bool IsServerControllerApiRequest(this IOwinContext context)
         {
             //TODO: Add proper (OAuth2) owin auth!
             return context.Request.Headers.ContainsKey("X-MockServerControllerApiKey");

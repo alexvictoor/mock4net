@@ -31,6 +31,7 @@ namespace Mock4Net.Examples.HttpListenerHost
             mockServer.Given(requestSpec)
                 .RespondWith(responseSpec);
 
+            var logs = mockServer.SearchLogsFor(requestSpec);
 
             Console.ReadKey();
         }

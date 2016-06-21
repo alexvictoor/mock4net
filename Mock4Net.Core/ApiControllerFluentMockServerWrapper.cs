@@ -11,7 +11,7 @@ namespace Mock4Net.Core
     {
         private readonly IFluentMockServer _mockServer;
 
-        public ApiControllerFluentMockServerWrapper(IFluentMockServer mockServer)
+        internal ApiControllerFluentMockServerWrapper(IFluentMockServer mockServer)
         {
             _mockServer = mockServer;
         }

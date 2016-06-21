@@ -16,9 +16,9 @@ namespace Mock4Net.Core.Http
     //[assembly: OwinStartup(typeof(OwinWebHost.Startup))]
     //namespace OwinWebHost
     // {
-    //     public class Startup
+    //     internal class Startup
     //     {
-    //         public void Configuration(IAppBuilder app)
+    //         internal void Configuration(IAppBuilder app)
     //         {
     //             var apiKey = ConfigurationManager.AppSettings["MockServerControllerApiKey"];
     //   
@@ -58,7 +58,7 @@ namespace Mock4Net.Core.Http
             _mockServer = mockServer;
             OwinStartup.Configure(_mockServer, _appBuilder, _apiKey);
         }
-        
+
         public void Stop()
         {
             

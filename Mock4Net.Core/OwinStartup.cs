@@ -5,9 +5,9 @@ using Owin;
 
 namespace Mock4Net.Core.Http
 {
-    public static class OwinStartup
+    internal static class OwinStartup
     {
-        private static void ConfigureControllerApi(IAppBuilder appBuilder)
+        internal static void ConfigureControllerApi(IAppBuilder appBuilder)
         {
             // Configure Web API for self-host. 
             HttpConfiguration config = new HttpConfiguration();
@@ -21,7 +21,7 @@ namespace Mock4Net.Core.Http
             appBuilder.UseWebApi(config);
         }
 
-        public static void Configure(IFluentMockServer mockServer, IAppBuilder builder, string apiKey)
+        internal static void Configure(IFluentMockServer mockServer, IAppBuilder builder, string apiKey)
         {
             builder.MapWhen(context => context.IsServerControllerApiRequest(), app =>
             {

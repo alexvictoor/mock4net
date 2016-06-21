@@ -9,17 +9,17 @@ namespace Mock4Net.Core
 
         private readonly IDictionary<string, string> _headers = new ConcurrentDictionary<string, string>();
 
-        public volatile int StatusCode = 200;
+        internal volatile int StatusCode = 200;
 
-        public volatile string Body;
+        internal volatile string Body;
 
 
-        public IDictionary<string, string> Headers
+        internal IDictionary<string, string> Headers
         {
             get { return _headers; }
         }
 
-        public void AddHeader(string name, string value)
+        internal void AddHeader(string name, string value)
         {
             _headers.Add(name, value);
         }

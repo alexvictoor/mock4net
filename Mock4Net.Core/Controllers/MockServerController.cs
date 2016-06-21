@@ -17,18 +17,12 @@ namespace Mock4Net.MockServerController.Controllers
             server.AddMock(mock.RequestCondition, mock.Response);
         }
 
-        private IMockServerManager GetMockServer()
-        {
-            return Request.GetOwinContext().Get<IMockServerManager>("FluentMockServer");
-        }
-
         [HttpPost]
         public void ResetMocks()
         {
             var server = GetMockServer();
             server.Reset();
         }
-
 
         [HttpPost]
         public List<Models.Request> SearchLogsFor(RequestCondition condition)
@@ -38,7 +32,10 @@ namespace Mock4Net.MockServerController.Controllers
         }
 
 
-       
+        private IMockServerManager GetMockServer()
+        {
+            return Request.GetOwinContext().Get<IMockServerManager>("FluentMockServer");
+        }
 
     }
 

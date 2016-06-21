@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Mock4Net.Core
 {
-   
     public interface IHeadersResponseBuilder : IBodyResponseBuilder
     {
         IHeadersResponseBuilder WithHeader(string name, string value);

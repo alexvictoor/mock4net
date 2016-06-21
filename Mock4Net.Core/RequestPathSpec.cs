@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Mock4Net.Core
 {
-    public class RequestPathSpec : ISpecifyRequests
+    internal class RequestPathSpec : ISpecifyRequests
     {
         private readonly string _path;
 
-        public RequestPathSpec(string path)
+        internal RequestPathSpec(string path)
         {
             _path = path;
         }

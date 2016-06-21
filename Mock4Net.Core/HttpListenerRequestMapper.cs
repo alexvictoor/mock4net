@@ -9,10 +9,10 @@ using Microsoft.Owin;
 
 namespace Mock4Net.Core
 {
-    public class HttpListenerRequestMapper 
+    internal class HttpListenerRequestMapper 
     {
 
-        public Request Map(HttpListenerRequest listenerRequest)
+        internal Request Map(HttpListenerRequest listenerRequest)
         {
             var path = listenerRequest.Url.AbsolutePath;
             var query = listenerRequest.Url.Query;

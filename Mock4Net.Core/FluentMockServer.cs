@@ -211,12 +211,12 @@ namespace Mock4Net.Core
             void RespondWith(IProvideResponses provider);
         }
 
-        class RespondWithAProvider : IRespondWithAProvider
+        public class RespondWithAProvider : IRespondWithAProvider
         {
             private readonly RegistrationCallback _registrationCallback;
             private readonly ISpecifyRequests _requestSpec;
 
-            public RespondWithAProvider(RegistrationCallback registrationCallback, ISpecifyRequests requestSpec)
+            internal RespondWithAProvider(RegistrationCallback registrationCallback, ISpecifyRequests requestSpec)
             {
                 _registrationCallback = registrationCallback;
                 _requestSpec = requestSpec;
