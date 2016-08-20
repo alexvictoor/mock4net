@@ -1,13 +1,13 @@
-﻿using System.Net;
-using System.Net.Sockets;
-
-[module:
+﻿[module:
     System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules",
         "SA1633:FileMustHaveHeader",
         Justification = "Reviewed. Suppression is OK here, as unknown copyright and company.")]
 
 namespace Mock4Net.Core.Http
 {
+    using System.Net;
+    using System.Net.Sockets;
+
     /// <summary>
     /// The ports.
     /// </summary>
@@ -20,6 +20,7 @@ namespace Mock4Net.Core.Http
         /// The <see cref="int"/>.
         /// </returns>
         /// <remarks>see http://stackoverflow.com/questions/138043/find-the-next-tcp-port-in-net. </remarks>
+        // ReSharper disable once StyleCop.SA1650
         public static int FindFreeTcpPort()
         {
             TcpListener l = new TcpListener(IPAddress.Loopback, 0);

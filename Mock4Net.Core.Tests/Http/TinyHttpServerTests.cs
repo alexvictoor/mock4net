@@ -1,9 +1,4 @@
-﻿using System.Net.Http;
-using Mock4Net.Core.Http;
-using NFluent;
-using NUnit.Framework;
-
-[module:
+﻿[module:
     System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules",
         "SA1600:ElementsMustBeDocumented",
         Justification = "Reviewed. Suppression is OK here, as it's a tests class.")]
@@ -14,6 +9,14 @@ using NUnit.Framework;
 
 namespace Mock4Net.Core.Tests.Http
 {
+    using System.Net.Http;
+
+    using Mock4Net.Core.Http;
+
+    using NFluent;
+
+    using NUnit.Framework;
+
     [TestFixture]
     public class TinyHttpServerTests
     {

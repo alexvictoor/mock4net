@@ -1,9 +1,4 @@
-﻿using System;
-using System.Net;
-using System.Threading;
-using System.Threading.Tasks;
-
-[module:
+﻿[module:
     System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.ReadabilityRules",
         "SA1101:PrefixLocalCallsWithThis",
         Justification = "Reviewed. Suppression is OK here, as it conflicts with internal naming rules.")]
@@ -19,6 +14,11 @@ using System.Threading.Tasks;
 // ReSharper disable InconsistentNaming
 namespace Mock4Net.Core.Http
 {
+    using System;
+    using System.Net;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// The tiny http server.
     /// </summary>
@@ -50,7 +50,7 @@ namespace Mock4Net.Core.Http
         /// </param>
         public TinyHttpServer(string urlPrefix, Action<HttpListenerContext> httpHandler)
         {
-            _httpHandler = httpHandler;
+            this._httpHandler = httpHandler;
 
             // .Net Framework is not supportted on XP or Server 2003, so no need for the check
             /*if (!HttpListener.IsSupported)
@@ -60,8 +60,8 @@ namespace Mock4Net.Core.Http
             }*/
 
             // Create a listener.
-            _listener = new HttpListener();
-            _listener.Prefixes.Add(urlPrefix);
+            this._listener = new HttpListener();
+            this._listener.Prefixes.Add(urlPrefix);
         }
 
         /// <summary>
@@ -69,21 +69,21 @@ namespace Mock4Net.Core.Http
         /// </summary>
         public void Start()
         {
-            _listener.Start();
-            _cts = new CancellationTokenSource();
+            this._listener.Start();
+            this._cts = new CancellationTokenSource();
             Task.Run(
                 async () =>
                     {
-                        using (_listener)
+                        using (this._listener)
                         {
-                            while (!_cts.Token.IsCancellationRequested)
+                            while (!this._cts.Token.IsCancellationRequested)
                             {
-                                HttpListenerContext context = await _listener.GetContextAsync();
-                                _httpHandler(context);
+                                HttpListenerContext context = await this._listener.GetContextAsync();
+                                this._httpHandler(context);
                             }
                         }
                     }, 
-                _cts.Token);
+                this._cts.Token);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Mock4Net.Core.Http
         /// </summary>
         public void Stop()
         {
-            _cts.Cancel();
+            this._cts.Cancel();
         }
     }
 }
