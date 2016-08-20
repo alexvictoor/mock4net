@@ -60,14 +60,14 @@ namespace Mock4Net.Core
         private readonly int _port;
 
         /// <summary>
+        /// The _sync root.
+        /// </summary>
+        private readonly object _syncRoot = new object();
+
+        /// <summary>
         /// The _request processing delay.
         /// </summary>
         private TimeSpan _requestProcessingDelay = TimeSpan.Zero;
-
-        /// <summary>
-        /// The _sync root.
-        /// </summary>
-        private object _syncRoot = new object();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FluentMockServer"/> class.
