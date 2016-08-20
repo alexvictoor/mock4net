@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using NFluent;
+using NUnit.Framework;
 
 namespace Mock4Net.Core.Tests
 {
@@ -10,29 +11,29 @@ namespace Mock4Net.Core.Tests
         public void Should_evaluate_patterns()
         {
             // Positive Tests
-            Assert.IsTrue(WildcardPatternMatcher.MatchWildcardString("*", ""));
-            Assert.IsTrue(WildcardPatternMatcher.MatchWildcardString("?", " "));
-            Assert.IsTrue(WildcardPatternMatcher.MatchWildcardString("*", "a"));
-            Assert.IsTrue(WildcardPatternMatcher.MatchWildcardString("*", "ab"));
-            Assert.IsTrue(WildcardPatternMatcher.MatchWildcardString("?", "a"));
-            Assert.IsTrue(WildcardPatternMatcher.MatchWildcardString("*?", "abc"));
-            Assert.IsTrue(WildcardPatternMatcher.MatchWildcardString("?*", "abc"));
-            Assert.IsTrue(WildcardPatternMatcher.MatchWildcardString("*abc", "abc"));
-            Assert.IsTrue(WildcardPatternMatcher.MatchWildcardString("*abc*", "abc"));
-            Assert.IsTrue(WildcardPatternMatcher.MatchWildcardString("*a*bc*", "aXXXbc"));
+            Check.That(WildcardPatternMatcher.MatchWildcardString("*", string.Empty)).IsTrue();
+            Check.That(WildcardPatternMatcher.MatchWildcardString("?", " ")).IsTrue();
+            Check.That(WildcardPatternMatcher.MatchWildcardString("*", "a")).IsTrue();
+            Check.That(WildcardPatternMatcher.MatchWildcardString("*", "ab")).IsTrue();
+            Check.That(WildcardPatternMatcher.MatchWildcardString("?", "a")).IsTrue();
+            Check.That(WildcardPatternMatcher.MatchWildcardString("*?", "abc")).IsTrue();
+            Check.That(WildcardPatternMatcher.MatchWildcardString("?*", "abc")).IsTrue();
+            Check.That(WildcardPatternMatcher.MatchWildcardString("*abc", "abc")).IsTrue();
+            Check.That(WildcardPatternMatcher.MatchWildcardString("*abc*", "abc")).IsTrue();
+            Check.That(WildcardPatternMatcher.MatchWildcardString("*a*bc*", "aXXXbc")).IsTrue();
 
             // Negative Tests
-            Assert.IsFalse(WildcardPatternMatcher.MatchWildcardString("*a", ""));
-            Assert.IsFalse(WildcardPatternMatcher.MatchWildcardString("a*", ""));
-            Assert.IsFalse(WildcardPatternMatcher.MatchWildcardString("?", ""));
-            Assert.IsFalse(WildcardPatternMatcher.MatchWildcardString("*b*", "a"));
-            Assert.IsFalse(WildcardPatternMatcher.MatchWildcardString("b*a", "ab"));
-            Assert.IsFalse(WildcardPatternMatcher.MatchWildcardString("??", "a"));
-            Assert.IsFalse(WildcardPatternMatcher.MatchWildcardString("*?", ""));
-            Assert.IsFalse(WildcardPatternMatcher.MatchWildcardString("??*", "a"));
-            Assert.IsFalse(WildcardPatternMatcher.MatchWildcardString("*abc", "abX"));
-            Assert.IsFalse(WildcardPatternMatcher.MatchWildcardString("*abc*", "Xbc"));
-            Assert.IsFalse(WildcardPatternMatcher.MatchWildcardString("*a*bc*", "ac"));
+            Check.That(WildcardPatternMatcher.MatchWildcardString("*a", string.Empty)).IsFalse();
+            Check.That(WildcardPatternMatcher.MatchWildcardString("a*", string.Empty)).IsFalse();
+            Check.That(WildcardPatternMatcher.MatchWildcardString("?", string.Empty)).IsFalse();
+            Check.That(WildcardPatternMatcher.MatchWildcardString("*b*", "a")).IsFalse();
+            Check.That(WildcardPatternMatcher.MatchWildcardString("b*a", "ab")).IsFalse();
+            Check.That(WildcardPatternMatcher.MatchWildcardString("??", "a")).IsFalse();
+            Check.That(WildcardPatternMatcher.MatchWildcardString("*?", string.Empty)).IsFalse();
+            Check.That(WildcardPatternMatcher.MatchWildcardString("??*", "a")).IsFalse();
+            Check.That(WildcardPatternMatcher.MatchWildcardString("*abc", "abX")).IsFalse();
+            Check.That(WildcardPatternMatcher.MatchWildcardString("*abc*", "Xbc")).IsFalse();
+            Check.That(WildcardPatternMatcher.MatchWildcardString("*a*bc*", "ac")).IsFalse();
         }
     }
 }
