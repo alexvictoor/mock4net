@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace Mock4Net.Core.Tests
 {
     [TestFixture]
-    public class HttpListenerResponseMapperTest
+    public class HttpListenerResponseMapperTests
     {
         private TinyHttpServer _server;
         private Task<HttpResponseMessage> _responseMsgTask;

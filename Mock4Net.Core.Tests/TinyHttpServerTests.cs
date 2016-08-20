@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace Mock4Net.Core.Tests.Http
 {
     [TestFixture]
-    public class TinyHttpServerTest
+    public class TinyHttpServerTests
     {
         [Test]
         public void Should_Call_Handler_on_Request()

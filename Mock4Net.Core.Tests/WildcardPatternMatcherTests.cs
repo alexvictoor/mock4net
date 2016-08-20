@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace Mock4Net.Core.Tests
 {
     [NUnit.Framework.TestFixture]
-    public class WildcardPatternMatcherTest
+    public class WildcardPatternMatcherTests
     {
         [Test]
         public void Should_evaluate_patterns()

@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace Mock4Net.Core.Tests
 {
     [TestFixture]
-    public class RequestTest
+    public class RequestTests
     {
         [Test]
         public void Should_handle_empty_query()

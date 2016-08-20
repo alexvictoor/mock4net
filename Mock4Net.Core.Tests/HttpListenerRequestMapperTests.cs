@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace Mock4Net.Core.Tests
 {
     [TestFixture]
-    public class HttpListenerRequestMapperTest
+    public class HttpListenerRequestMapperTests
     {
         private MapperServer _server;
 

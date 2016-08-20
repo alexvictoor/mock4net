@@ -51,14 +51,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FluentMockServerTest.cs" />
-    <Compile Include="HttpListenerResponseMapperTest.cs" />
-    <Compile Include="HttpListenerRequestMapperTest.cs" />
-    <Compile Include="RequestTest.cs" />
-    <Compile Include="RequestsTest.cs" />
-    <Compile Include="TinyHttpServerTest.cs" />
+    <Compile Include="FluentMockServerTests.cs" />
+    <Compile Include="HttpListenerResponseMapperTests.cs" />
+    <Compile Include="HttpListenerRequestMapperTests.cs" />
+    <Compile Include="RequestTests.cs" />
+    <Compile Include="RequestsTests.cs" />
+    <Compile Include="TinyHttpServerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WildcardPatternMatcherTest.cs" />
+    <Compile Include="WildcardPatternMatcherTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

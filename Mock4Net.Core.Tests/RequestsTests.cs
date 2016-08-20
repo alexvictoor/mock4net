@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace Mock4Net.Core.Tests
 {
     [TestFixture]
-    public class RequestsTest
+    public class RequestsTests
     {
         [Test]
         public void Should_specify_requests_matching_given_url()

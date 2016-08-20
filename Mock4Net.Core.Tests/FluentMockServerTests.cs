@@ -10,7 +10,7 @@ namespace Mock4Net.Core.Tests
 {
     [TestFixture]
     [Timeout(5000)]
-    public class FluentMockServerTest
+    public class FluentMockServerTests
     {
         private FluentMockServer _server;
 
