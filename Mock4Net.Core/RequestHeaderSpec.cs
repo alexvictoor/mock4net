@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Mock4Net.Core
+﻿namespace Mock4Net.Core
 {
     public class RequestHeaderSpec : ISpecifyRequests
     {

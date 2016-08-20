@@ -1,5 +1,3 @@
-using System;
-
 namespace Mock4Net.Core
 {
     public class RequestBodySpec : ISpecifyRequests
