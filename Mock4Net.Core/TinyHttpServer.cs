@@ -4,10 +4,14 @@ using System.Threading;
 using System.Threading.Tasks;
 
 [module:
+    System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.NamingRules",
+        "SA1309:FieldNamesMustNotBeginWithUnderscore",
+        Justification = "Reviewed. Suppression is OK here, as it conflicts with internal naming rules.")]
+[module:
     System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules",
         "SA1633:FileMustHaveHeader",
         Justification = "Reviewed. Suppression is OK here, as unknown copyright and company.")]
-
+// ReSharper disable InconsistentNaming
 namespace Mock4Net.Core.Http
 {
     /// <summary>

@@ -11,7 +11,7 @@ using NUnit.Framework;
     System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules",
         "SA1633:FileMustHaveHeader",
         Justification = "Reviewed. Suppression is OK here, as unknown copyright and company.")]
-
+// ReSharper disable InconsistentNaming
 namespace Mock4Net.Core.Tests
 {
     [TestFixture]
