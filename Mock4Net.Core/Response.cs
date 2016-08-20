@@ -23,11 +23,6 @@ namespace Mock4Net.Core
     public class Response
     {
         /// <summary>
-        /// The _headers.
-        /// </summary>
-        private readonly IDictionary<string, string> _headers = new ConcurrentDictionary<string, string>();
-
-        /// <summary>
         /// The status code.
         /// </summary>
         public volatile int StatusCode = 200;
@@ -36,6 +31,11 @@ namespace Mock4Net.Core
         /// The body.
         /// </summary>
         public volatile string Body;
+
+        /// <summary>
+        /// The _headers.
+        /// </summary>
+        private readonly IDictionary<string, string> _headers = new ConcurrentDictionary<string, string>();
 
         /// <summary>
         /// Gets the headers.

@@ -87,6 +87,20 @@ namespace Mock4Net.Core
         }
 
         /// <summary>
+        /// The RespondWithAProvider interface.
+        /// </summary>
+        public interface IRespondWithAProvider
+        {
+            /// <summary>
+            /// The respond with.
+            /// </summary>
+            /// <param name="provider">
+            /// The provider.
+            /// </param>
+            void RespondWith(IProvideResponses provider);
+        }
+
+        /// <summary>
         /// Gets the port.
         /// </summary>
         public int Port
@@ -106,6 +120,28 @@ namespace Mock4Net.Core
                     return new ReadOnlyCollection<Request>(_requestLogs);
                 }
             }
+        }
+
+        /// <summary>
+        /// The start.
+        /// </summary>
+        /// <param name="port">
+        /// The port.
+        /// </param>
+        /// <param name="ssl">
+        /// The SSL support.
+        /// </param>
+        /// <returns>
+        /// The <see cref="FluentMockServer"/>.
+        /// </returns>
+        public static FluentMockServer Start(int port = 0, bool ssl = false)
+        {
+            if (port == 0)
+            {
+                port = Ports.FindFreeTcpPort();
+            }
+
+            return new FluentMockServer(port, ssl);
         }
 
         /// <summary>
@@ -153,6 +189,28 @@ namespace Mock4Net.Core
             {
                 _requestProcessingDelay = delay;
             }
+        }
+
+        /// <summary>
+        /// The stop.
+        /// </summary>
+        public void Stop()
+        {
+            _httpServer.Stop();
+        }
+
+        /// <summary>
+        /// The given.
+        /// </summary>
+        /// <param name="requestSpec">
+        /// The request spec.
+        /// </param>
+        /// <returns>
+        /// The <see cref="IRespondWithAProvider"/>.
+        /// </returns>
+        public IRespondWithAProvider Given(ISpecifyRequests requestSpec)
+        {
+            return new RespondWithAProvider(RegisterRoute, requestSpec);
         }
 
         /// <summary>
@@ -213,64 +271,6 @@ namespace Mock4Net.Core
             }
 
             ctx.Response.Close();
-        }
-
-        /// <summary>
-        /// The start.
-        /// </summary>
-        /// <param name="port">
-        /// The port.
-        /// </param>
-        /// <param name="ssl">
-        /// The SSL support.
-        /// </param>
-        /// <returns>
-        /// The <see cref="FluentMockServer"/>.
-        /// </returns>
-        public static FluentMockServer Start(int port = 0, bool ssl = false)
-        {
-            if (port == 0)
-            {
-                port = Ports.FindFreeTcpPort();
-            }
-
-            return new FluentMockServer(port, ssl);
-        }
-
-        /// <summary>
-        /// The stop.
-        /// </summary>
-        public void Stop()
-        {
-            _httpServer.Stop();
-        }
-
-        /// <summary>
-        /// The given.
-        /// </summary>
-        /// <param name="requestSpec">
-        /// The request spec.
-        /// </param>
-        /// <returns>
-        /// The <see cref="IRespondWithAProvider"/>.
-        /// </returns>
-        public IRespondWithAProvider Given(ISpecifyRequests requestSpec)
-        {
-            return new RespondWithAProvider(RegisterRoute, requestSpec);
-        }
-
-        /// <summary>
-        /// The RespondWithAProvider interface.
-        /// </summary>
-        public interface IRespondWithAProvider
-        {
-            /// <summary>
-            /// The respond with.
-            /// </summary>
-            /// <param name="provider">
-            /// The provider.
-            /// </param>
-            void RespondWith(IProvideResponses provider);
         }
 
         /// <summary>

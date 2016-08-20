@@ -122,25 +122,6 @@ namespace Mock4Net.Core
         }
 
         /// <summary>
-        /// The get parameter.
-        /// </summary>
-        /// <param name="key">
-        /// The key.
-        /// </param>
-        /// <returns>
-        /// The <see cref="List"/>.
-        /// </returns>
-        public List<string> GetParameter(string key)
-        {
-            if (_params.ContainsKey(key))
-            {
-                return _params[key];
-            }
-
-            return new List<string>();
-        }
-
-        /// <summary>
         /// Gets the verb.
         /// </summary>
         public string Verb
@@ -162,6 +143,25 @@ namespace Mock4Net.Core
         public string Body
         {
             get { return _body; }
+        }
+
+        /// <summary>
+        /// The get parameter.
+        /// </summary>
+        /// <param name="key">
+        /// The key.
+        /// </param>
+        /// <returns>
+        /// The <see cref="List"/>.
+        /// </returns>
+        public List<string> GetParameter(string key)
+        {
+            if (_params.ContainsKey(key))
+            {
+                return _params[key];
+            }
+
+            return new List<string>();
         }
     }
 }
