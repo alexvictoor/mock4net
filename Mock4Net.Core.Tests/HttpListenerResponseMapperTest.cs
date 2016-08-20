@@ -20,8 +20,10 @@ namespace Mock4Net.Core.Tests
             // given
             var response = new Response() {StatusCode = 404};
             var httpListenerResponse = CreateHttpListenerResponse();
+
             // when
             new HttpListenerResponseMapper().Map(response, httpListenerResponse);
+
             // then
             Check.That(httpListenerResponse.StatusCode).IsEqualTo(404);
         }
@@ -33,8 +35,10 @@ namespace Mock4Net.Core.Tests
             var response = new Response();
             response.AddHeader("cache-control", "no-cache");
             var httpListenerResponse = CreateHttpListenerResponse();
+
             // when
             new HttpListenerResponseMapper().Map(response, httpListenerResponse);
+
             // then
             Check.That(httpListenerResponse.Headers).HasSize(1);
             Check.That(httpListenerResponse.Headers.Keys).Contains("cache-control");
@@ -48,8 +52,10 @@ namespace Mock4Net.Core.Tests
             var response = new Response();
             response.Body = "Hello !!!";
             var httpListenerResponse = CreateHttpListenerResponse();
+
             // when
             new HttpListenerResponseMapper().Map(response, httpListenerResponse);
+
             // then
             var responseMessage = ToResponseMessage(httpListenerResponse);
             Check.That(responseMessage).IsNotNull();
@@ -65,8 +71,6 @@ namespace Mock4Net.Core.Tests
                 _server.Stop();
             }
         }
-
-
 
         /// <summary>
         /// Dirty HACK to get HttpListenerResponse instances
@@ -94,6 +98,5 @@ namespace Mock4Net.Core.Tests
             _responseMsgTask.Wait();
             return _responseMsgTask.Result;
         }
-
     }
 }

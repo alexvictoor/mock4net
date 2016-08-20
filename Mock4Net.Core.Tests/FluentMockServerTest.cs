@@ -34,6 +34,7 @@ namespace Mock4Net.Core.Tests
             // when
             var response 
                 = await new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/foo");
+
             // then
             Check.That(response).IsEqualTo(@"{ msg: ""Hello world!""}");
         }
@@ -43,9 +44,11 @@ namespace Mock4Net.Core.Tests
         {
             // given
             _server = FluentMockServer.Start();
+
             // when
             var response
                 = await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/foo");
+
             // then
             Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.NotFound);
             Check.That((int)response.StatusCode).IsEqualTo(404);
@@ -56,14 +59,15 @@ namespace Mock4Net.Core.Tests
         {
             // given
             _server = FluentMockServer.Start();
+
             // when
             await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/foo");
+
             // then
             Check.That(_server.RequestLogs).HasSize(1);
             var requestLogged = _server.RequestLogs.First();
             Check.That(requestLogged.Verb).IsEqualTo("get");
             Check.That(requestLogged.Body).IsEmpty();
-
         }
 
         [Test]
@@ -71,15 +75,16 @@ namespace Mock4Net.Core.Tests
         {
             // given
             _server = FluentMockServer.Start();
+
             // when
             await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/foo");
             await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/bar");
+
             // then
             var result = _server.SearchLogsFor(Requests.WithUrl("/b*")); 
             Check.That(result).HasSize(1);
             var requestLogged = result.First();
             Check.That(requestLogged.Url).IsEqualTo("/bar");
-
         }
 
         [Test]
@@ -87,12 +92,13 @@ namespace Mock4Net.Core.Tests
         {
             // given
             _server = FluentMockServer.Start();
+
             // when
             await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/foo");
             _server.Reset();
+
             // then
             Check.That(_server.RequestLogs).IsEmpty();
-
         }
 
         [Test]
@@ -147,10 +153,10 @@ namespace Mock4Net.Core.Tests
                         .WithBody("REDIRECT SUCCESSFUL")
                     );
 
-
             // when
             var response
                 = await new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/foo");
+
             // then
             Check.That(response).IsEqualTo("REDIRECT SUCCESSFUL");
         }
@@ -179,6 +185,7 @@ namespace Mock4Net.Core.Tests
             var response
                 = await new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/foo");
             watch.Stop();
+
             // then
             Check.That(watch.ElapsedMilliseconds).IsGreaterThan(2000);
         }

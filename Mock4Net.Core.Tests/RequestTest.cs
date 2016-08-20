@@ -8,12 +8,12 @@ namespace Mock4Net.Core.Tests
     [TestFixture]
     public class RequestTest
     {
-
         [Test]
         public void Should_handle_empty_query()
         {
             // given
             var request = new Request("/foo", "", "blabla", "whatever", new Dictionary<string, string>());
+
             // then
             Check.That(request.GetParameter("foo")).IsEmpty();
         }
@@ -23,6 +23,7 @@ namespace Mock4Net.Core.Tests
         {
             // given
             var request = new Request("/foo", "foo=bar&multi=1&multi=2", "blabla", "whatever", new Dictionary<string, string>());
+
             // then
             Check.That(request.GetParameter("foo")).Contains("bar");
             Check.That(request.GetParameter("multi")).Contains("1");

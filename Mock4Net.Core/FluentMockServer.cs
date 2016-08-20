@@ -12,7 +12,6 @@ namespace Mock4Net.Core
 {
     public class FluentMockServer
     {
-
         private readonly TinyHttpServer _httpServer;
         private readonly IList<Route> _routes = new List<Route>(); 
         private readonly IList<Request> _requestLogs = new List<Request>(); 
@@ -52,6 +51,7 @@ namespace Mock4Net.Core
             {
                 _requestLogs.Clear();
             }
+
             lock (((ICollection)_routes).SyncRoot)
             {
                 _routes.Clear();
@@ -96,6 +96,7 @@ namespace Mock4Net.Core
             {
                 Task.Delay(_requestProcessingDelay).Wait();
             }
+
             var request = _requestMapper.Map(ctx.Request);
             LogRequest(request);
             var targetRoute = _routes.FirstOrDefault(route => route.IsRequestHandled(request));
@@ -111,6 +112,7 @@ namespace Mock4Net.Core
 
                 _responseMapper.Map(response, ctx.Response);
             }
+
             ctx.Response.Close();
         }
 
@@ -120,6 +122,7 @@ namespace Mock4Net.Core
             {
                 port = Ports.FindFreeTcpPort();
             }
+
             return new FluentMockServer(port, ssl);
         }
 

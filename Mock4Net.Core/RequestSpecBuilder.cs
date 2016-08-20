@@ -2,12 +2,16 @@
 {
     public interface IVerbRequestBuilder : ISpecifyRequests, IHeadersRequestBuilder
     {
-
         IHeadersRequestBuilder UsingGet();
+
         IHeadersRequestBuilder UsingPost();
+
         IHeadersRequestBuilder UsingPut();
+
         IHeadersRequestBuilder UsingHead();
+
         IHeadersRequestBuilder UsingAnyVerb();
+
         IHeadersRequestBuilder UsingVerb(string verb);
     }
 
@@ -25,5 +29,4 @@
     {
         ISpecifyRequests WithParam(string key, params string[] values);
     }
-
 }

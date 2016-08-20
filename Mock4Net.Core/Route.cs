@@ -22,7 +22,5 @@ namespace Mock4Net.Core
         {
             return _requestSpec.IsSatisfiedBy(request);
         }
-
-
     }
 }

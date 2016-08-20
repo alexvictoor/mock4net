@@ -20,17 +20,24 @@ namespace Mock4Net.Core
             if (!string.IsNullOrEmpty(query))
             {
                 if (query.StartsWith("?"))
+                {
                     query = query.Substring(1);
+                }
+
                 _params = query.Split('&')
                     .Aggregate(new Dictionary<string, List<string>>(), (dict, term) =>
                     {
                         var key = term.Split('=')[0];
                         if (!dict.ContainsKey(key))
+                        {
                             dict.Add(key, new List<string>());
+                        }
+
                         dict[key].Add(term.Split('=')[1]);
                         return dict;
                     });
             }
+
             _path = path;
             _headers = headers.ToDictionary(kv => kv.Key.ToLower(), kv => kv.Value.ToLower());
             _verb = verb.ToLower();
@@ -42,7 +49,10 @@ namespace Mock4Net.Core
             get
             {
                 if (!_params.Any())
+                {
                     return _path;
+                }
+
                 return _path + "?" + string.Join("&", _params.SelectMany(kv => kv.Value.Select(value => kv.Key + "=" + value)));
             }
         }
@@ -55,7 +65,10 @@ namespace Mock4Net.Core
         public List<string> GetParameter(string key)
         {
             if (_params.ContainsKey(key))
+            {
                 return _params[key];
+            }
+
             return new List<string>();
         }
 

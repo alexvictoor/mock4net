@@ -11,7 +11,6 @@ namespace Mock4Net.Core.Tests
     [TestFixture]
     public class HttpListenerRequestMapperTest
     {
-
         private MapperServer _server;
 
         [SetUp]
@@ -25,12 +24,13 @@ namespace Mock4Net.Core.Tests
         {
             // given
             var client  = new HttpClient();
+
             // when 
             await client.GetAsync(MapperServer.UrlPrefix + "toto");
+
             // then
             Check.That(MapperServer.LastRequest).IsNotNull();
             Check.That(MapperServer.LastRequest.Url).IsEqualTo("/toto");
-
         }
 
         [Test]
@@ -38,12 +38,13 @@ namespace Mock4Net.Core.Tests
         {
             // given
             var client = new HttpClient();
+
             // when 
             await client.PutAsync(MapperServer.UrlPrefix, new StringContent("Hello!"));
+
             // then
             Check.That(MapperServer.LastRequest).IsNotNull();
             Check.That(MapperServer.LastRequest.Verb).IsEqualTo("put");
-
         }
 
         [Test]
@@ -51,12 +52,13 @@ namespace Mock4Net.Core.Tests
         {
             // given
             var client = new HttpClient();
+
             // when 
             await client.PutAsync(MapperServer.UrlPrefix, new StringContent("Hello!"));
+
             // then
             Check.That(MapperServer.LastRequest).IsNotNull();
             Check.That(MapperServer.LastRequest.Body).IsEqualTo("Hello!");
-
         }
 
         [Test]
@@ -65,13 +67,14 @@ namespace Mock4Net.Core.Tests
             // given
             var client = new HttpClient();
             client.DefaultRequestHeaders.Add("X-Alex", "1706");
+
             // when 
             await client.GetAsync(MapperServer.UrlPrefix);
+
             // then
             Check.That(MapperServer.LastRequest).IsNotNull();
             Check.That(MapperServer.LastRequest.Headers).Not.IsNullOrEmpty();
             Check.That(MapperServer.LastRequest.Headers.Contains(new KeyValuePair<string, string>("x-alex", "1706"))).IsTrue();
-
         }
 
         [Test]
@@ -79,13 +82,14 @@ namespace Mock4Net.Core.Tests
         {
             // given
             var client = new HttpClient();
+
             // when 
             await client.GetAsync(MapperServer.UrlPrefix + "index.html?id=toto");
+
             // then
             Check.That(MapperServer.LastRequest).IsNotNull();
             Check.That(MapperServer.LastRequest.Path).EndsWith("/index.html");
             Check.That(MapperServer.LastRequest.GetParameter("id")).HasSize(1);
-
         }
 
         [TearDown]

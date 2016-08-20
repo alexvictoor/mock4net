@@ -5,7 +5,6 @@ namespace Mock4Net.Core.Http
 {
     public static class Ports
     {
-
         // see http://stackoverflow.com/questions/138043/find-the-next-tcp-port-in-net
         public static int FindFreeTcpPort()
         {

@@ -21,6 +21,7 @@ namespace Mock4Net.Core.Http
                 return;
             }
  */
+
             // Create a listener.
             _listener = new HttpListener();
             _listener.Prefixes.Add(urlPrefix);
@@ -41,13 +42,13 @@ namespace Mock4Net.Core.Http
                     }
                 }
             }
+
             , _cts.Token);
         }
 
         public void Stop()
         {
             _cts.Cancel();
-
         }
     }
 }

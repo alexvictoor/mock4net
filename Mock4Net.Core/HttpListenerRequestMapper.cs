@@ -4,9 +4,8 @@ using System.Net;
 
 namespace Mock4Net.Core
 {
-    public class HttpListenerRequestMapper 
+    public class HttpListenerRequestMapper
     {
-
         public Request Map(HttpListenerRequest listenerRequest)
         {
             var path = listenerRequest.Url.AbsolutePath;
@@ -25,6 +24,7 @@ namespace Mock4Net.Core
             {
                 return null;
             }
+
             using (var body = request.InputStream)
             {
                 using (var reader = new StreamReader(body, request.ContentEncoding))

@@ -8,7 +8,6 @@ namespace Mock4Net.Core.Tests.Http
     [TestFixture]
     public class TinyHttpServerTest
     {
-
         [Test]
         public void Should_Call_Handler_on_Request()
         {
@@ -18,9 +17,11 @@ namespace Mock4Net.Core.Tests.Http
             var urlPrefix = "http://localhost:" + port + "/";
             var server = new TinyHttpServer(urlPrefix, ctx => called = true);
             server.Start();
+
             // when
             var httpClient = new HttpClient();
             httpClient.GetAsync(urlPrefix).Wait(3000);
+
             // then
             Check.That(called).IsTrue();
         }

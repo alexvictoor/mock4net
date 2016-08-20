@@ -5,13 +5,11 @@ namespace Mock4Net.Core
 {
     public class Response
     {
-
         private readonly IDictionary<string, string> _headers = new ConcurrentDictionary<string, string>();
 
         public volatile int StatusCode = 200;
 
         public volatile string Body;
-
 
         public IDictionary<string, string> Headers
         {
@@ -22,6 +20,5 @@ namespace Mock4Net.Core
         {
             _headers.Add(name, value);
         }
-
     }
 }

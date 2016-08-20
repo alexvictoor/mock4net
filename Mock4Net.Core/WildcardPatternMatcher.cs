@@ -4,7 +4,6 @@ namespace Mock4Net.Core
 {
     public class WildcardPatternMatcher
     {
-
         /// <summary>
         /// Copy/paste from http://www.codeproject.com/Tips/57304/Use-wildcard-characters-and-to-compare-strings
         /// 
@@ -64,6 +63,7 @@ namespace Mock4Net.Core
             {
                 return MatchWildcardString(pattern.Substring(1), input.Substring(1));
             }
+
             return false;
         }
     }

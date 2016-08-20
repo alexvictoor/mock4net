@@ -6,7 +6,6 @@ namespace Mock4Net.Core
 {
     public class HttpListenerResponseMapper
     {
-
         public void Map(Response response, HttpListenerResponse result)
         {
             result.StatusCode = response.StatusCode;

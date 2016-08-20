@@ -6,7 +6,6 @@ namespace Mock4Net.Core.Tests
     [NUnit.Framework.TestFixture]
     public class WildcardPatternMatcherTest
     {
-
         [Test]
         public void Should_evaluate_patterns()
         {

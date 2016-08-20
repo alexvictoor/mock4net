@@ -7,14 +7,15 @@ namespace Mock4Net.Core.Tests
     [TestFixture]
     public class RequestsTest
     {
-
         [Test]
         public void Should_specify_requests_matching_given_url()
         {
             // given
             var spec = Requests.WithUrl("/foo");
+
             // when
             var request = new Request("/foo", "", "blabla", "whatever", new Dictionary<string, string>());
+
             // then
             Check.That(spec.IsSatisfiedBy(request)).IsTrue();
         }
@@ -24,8 +25,10 @@ namespace Mock4Net.Core.Tests
         {
             // given
             var spec = Requests.WithUrl("/foo*");
+
             // when
             var request = new Request("/foo/bar", "", "blabla", "whatever", new Dictionary<string, string>());
+
             // then
             Check.That(spec.IsSatisfiedBy(request)).IsTrue();
         }
@@ -35,8 +38,10 @@ namespace Mock4Net.Core.Tests
         {
             // given
             var spec = Requests.WithUrl("/foo");
+
             // when
             var request = new Request("/bar", "", "blabla", "whatever", new Dictionary<string, string>());
+
             // then
             Check.That(spec.IsSatisfiedBy(request)).IsFalse();
         }
@@ -46,8 +51,10 @@ namespace Mock4Net.Core.Tests
         {
             // given
             var spec = Requests.WithPath("/foo");
+
             // when
             var request = new Request("/foo", "?param=1", "blabla", "whatever", new Dictionary<string, string>());
+
             // then
             Check.That(spec.IsSatisfiedBy(request)).IsTrue();
         }
@@ -57,8 +64,10 @@ namespace Mock4Net.Core.Tests
         {
             // given
             var spec = Requests.WithUrl("/foo").UsingPut();
+
             // when
             var request = new Request("/foo", "", "PUT", "whatever", new Dictionary<string, string>());
+
             // then
             Check.That(spec.IsSatisfiedBy(request)).IsTrue();
         }
@@ -68,8 +77,10 @@ namespace Mock4Net.Core.Tests
         {
             // given
             var spec = Requests.WithUrl("/foo").UsingPut();
+
             // when
             var request = new Request("/foo", "", "POST", "whatever", new Dictionary<string, string>());
+
             // then
             Check.That(spec.IsSatisfiedBy(request)).IsFalse();
         }
@@ -79,8 +90,10 @@ namespace Mock4Net.Core.Tests
         {
             // given
             var spec = Requests.WithUrl("/bar").UsingPut();
+
             // when
             var request = new Request("/foo", "", "PUT", "whatever", new Dictionary<string, string>());
+
             // then
             Check.That(spec.IsSatisfiedBy(request)).IsFalse();
         }
@@ -90,8 +103,10 @@ namespace Mock4Net.Core.Tests
         {
             // given
             var spec = Requests.WithUrl("/foo").UsingAnyVerb().WithHeader("X-toto", "tata");
+
             // when
             var request = new Request("/foo", "", "PUT", "whatever", new Dictionary<string, string>() { { "X-toto", "tata" } });
+            
             // then
             Check.That(spec.IsSatisfiedBy(request)).IsTrue();
         }
@@ -101,8 +116,10 @@ namespace Mock4Net.Core.Tests
         {
             // given
             var spec = Requests.WithUrl("/foo").UsingAnyVerb().WithHeader("X-toto", "tatata");
+
             // when
             var request = new Request("/foo", "", "PUT", "whatever", new Dictionary<string, string>() { { "X-toto", "tata" } });
+
             // then
             Check.That(spec.IsSatisfiedBy(request)).IsFalse();
         }
@@ -112,8 +129,10 @@ namespace Mock4Net.Core.Tests
         {
             // given
             var spec = Requests.WithUrl("/foo").UsingAnyVerb().WithHeader("X-toto", "tata*");
+
             // when
             var request = new Request("/foo", "", "PUT", "whatever", new Dictionary<string, string>() { { "X-toto", "tatata" } });
+
             // then
             Check.That(spec.IsSatisfiedBy(request)).IsTrue();
         }
@@ -123,8 +142,10 @@ namespace Mock4Net.Core.Tests
         {
             // given
             var spec = Requests.WithUrl("/foo").UsingAnyVerb().WithBody("      Hello world!   ");
+
             // when
             var request = new Request("/foo", "", "PUT", "Hello world!", new Dictionary<string, string>() { { "X-toto", "tatata" } });
+
             // then
             Check.That(spec.IsSatisfiedBy(request)).IsTrue();
         }
@@ -134,8 +155,10 @@ namespace Mock4Net.Core.Tests
         {
             // given
             var spec = Requests.WithUrl("/foo").UsingAnyVerb().WithBody("H*o wor?d!");
+
             // when
             var request = new Request("/foo", "", "PUT", "Hello world!", new Dictionary<string, string>() { { "X-toto", "tatata" } });
+
             // then
             Check.That(spec.IsSatisfiedBy(request)).IsTrue();
         }
@@ -145,21 +168,23 @@ namespace Mock4Net.Core.Tests
         {
             // given
             var spec = Requests.WithUrl("/foo").UsingAnyVerb().WithBody("      Hello world!   ");
+
             // when
             var request = new Request("/foo", "", "PUT", "XXXXXXXXXXX", new Dictionary<string, string>() { { "X-toto", "tatata" } });
+
             // then
             Check.That(spec.IsSatisfiedBy(request)).IsFalse();
         }
-
-
 
         [Test]
         public void Should_specify_requests_matching_given_params()
         {
             // given
             var spec = Requests.WithPath("/foo").WithParam("bar", "1", "2");
+
             // when
             var request = new Request("/foo", "bar=1&bar=2", "Get", "Hello world!", new Dictionary<string, string>());
+
             // then
             Check.That(spec.IsSatisfiedBy(request)).IsTrue();
         }
@@ -169,11 +194,12 @@ namespace Mock4Net.Core.Tests
         {
             // given
             var spec = Requests.WithPath("/foo").WithParam("bar", "1");
+
             // when
             var request = new Request("/foo", "", "PUT", "XXXXXXXXXXX", new Dictionary<string, string>());
+
             // then
             Check.That(spec.IsSatisfiedBy(request)).IsFalse();
         }
-
     }
 }

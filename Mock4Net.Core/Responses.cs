@@ -8,7 +8,6 @@ namespace Mock4Net.Core
         private readonly Response _response;
         private TimeSpan _delay = TimeSpan.Zero;
 
-
         public Responses(Response response)
         {
             this._response = response;

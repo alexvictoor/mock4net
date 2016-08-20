@@ -80,8 +80,5 @@ namespace Mock4Net.Core
             _requestSpecs.Add(new RequestHeaderSpec(name, value));
             return this;
         }
-
-        
-
     }
 }

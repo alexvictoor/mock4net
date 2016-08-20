@@ -2,11 +2,9 @@
 
 namespace Mock4Net.Core
 {
-   
     public interface IHeadersResponseBuilder : IBodyResponseBuilder
     {
         IHeadersResponseBuilder WithHeader(string name, string value);
-
     }
 
     public interface IBodyResponseBuilder : IDelayResponseBuilder
@@ -18,5 +16,4 @@ namespace Mock4Net.Core
     {
         IProvideResponses AfterDelay(TimeSpan delay);
     }
-
 }
