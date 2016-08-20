@@ -8,19 +8,67 @@ using System.Text;
 using System.Threading.Tasks;
 using Mock4Net.Core.Http;
 
+[module:
+    System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules",
+        "SA1633:FileMustHaveHeader",
+        Justification = "Reviewed. Suppression is OK here, as unknown copyright and company.")]
+
 namespace Mock4Net.Core
 {
+    /// <summary>
+    /// The fluent mock server.
+    /// </summary>
     public class FluentMockServer
     {
+        /// <summary>
+        /// The _http server.
+        /// </summary>
         private readonly TinyHttpServer _httpServer;
-        private readonly IList<Route> _routes = new List<Route>(); 
-        private readonly IList<Request> _requestLogs = new List<Request>(); 
+
+        /// <summary>
+        /// The _routes.
+        /// </summary>
+        private readonly IList<Route> _routes = new List<Route>();
+
+        /// <summary>
+        /// The _request logs.
+        /// </summary>
+        private readonly IList<Request> _requestLogs = new List<Request>();
+
+        /// <summary>
+        /// The _request mapper.
+        /// </summary>
         private readonly HttpListenerRequestMapper _requestMapper = new HttpListenerRequestMapper();
+
+        /// <summary>
+        /// The _response mapper.
+        /// </summary>
         private readonly HttpListenerResponseMapper _responseMapper = new HttpListenerResponseMapper();
+
+        /// <summary>
+        /// The _port.
+        /// </summary>
         private readonly int _port;
+
+        /// <summary>
+        /// The _request processing delay.
+        /// </summary>
         private TimeSpan _requestProcessingDelay = TimeSpan.Zero;
+
+        /// <summary>
+        /// The _sync root.
+        /// </summary>
         private object _syncRoot = new object();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FluentMockServer"/> class.
+        /// </summary>
+        /// <param name="port">
+        /// The port.
+        /// </param>
+        /// <param name="ssl">
+        /// The SSL support.
+        /// </param>
         private FluentMockServer(int port, bool ssl)
         {
             string protocol = ssl ? "https" : "http";
@@ -29,11 +77,17 @@ namespace Mock4Net.Core
             _httpServer.Start();
         }
 
+        /// <summary>
+        /// Gets the port.
+        /// </summary>
         public int Port
         {
             get { return _port; }
         }
 
+        /// <summary>
+        /// Gets the request logs.
+        /// </summary>
         public IEnumerable<Request> RequestLogs
         {
             get
@@ -45,6 +99,9 @@ namespace Mock4Net.Core
             }
         }
 
+        /// <summary>
+        /// The reset.
+        /// </summary>
         public void Reset()
         {
             lock (((ICollection) _requestLogs).SyncRoot)
@@ -58,6 +115,15 @@ namespace Mock4Net.Core
             }
         }
 
+        /// <summary>
+        /// The search logs for.
+        /// </summary>
+        /// <param name="spec">
+        /// The spec.
+        /// </param>
+        /// <returns>
+        /// The <see cref="IEnumerable"/>.
+        /// </returns>
         public IEnumerable<Request> SearchLogsFor(ISpecifyRequests spec)
         {
             lock (((ICollection)_requestLogs).SyncRoot)
@@ -66,6 +132,12 @@ namespace Mock4Net.Core
             }
         }
 
+        /// <summary>
+        /// The add request processing delay.
+        /// </summary>
+        /// <param name="delay">
+        /// The delay.
+        /// </param>
         public void AddRequestProcessingDelay(TimeSpan delay)
         {
             lock (_syncRoot)
@@ -74,6 +146,12 @@ namespace Mock4Net.Core
             }
         }
 
+        /// <summary>
+        /// The register route.
+        /// </summary>
+        /// <param name="route">
+        /// The route.
+        /// </param>
         private void RegisterRoute(Route route)
         {
             lock (((ICollection)_routes).SyncRoot)
@@ -82,6 +160,12 @@ namespace Mock4Net.Core
             }
         }
 
+        /// <summary>
+        /// The log request.
+        /// </summary>
+        /// <param name="request">
+        /// The request.
+        /// </param>
         private void LogRequest(Request request)
         {
             lock (((ICollection)_requestLogs).SyncRoot)
@@ -90,6 +174,12 @@ namespace Mock4Net.Core
             }
         }
 
+        /// <summary>
+        /// The handle request.
+        /// </summary>
+        /// <param name="ctx">
+        /// The context.
+        /// </param>
         private async void HandleRequest(HttpListenerContext ctx)
         {
             lock (_syncRoot)
@@ -116,6 +206,18 @@ namespace Mock4Net.Core
             ctx.Response.Close();
         }
 
+        /// <summary>
+        /// The start.
+        /// </summary>
+        /// <param name="port">
+        /// The port.
+        /// </param>
+        /// <param name="ssl">
+        /// The SSL support.
+        /// </param>
+        /// <returns>
+        /// The <see cref="FluentMockServer"/>.
+        /// </returns>
         public static FluentMockServer Start(int port = 0, bool ssl = false)
         {
             if (port == 0)
@@ -126,32 +228,78 @@ namespace Mock4Net.Core
             return new FluentMockServer(port, ssl);
         }
 
+        /// <summary>
+        /// The stop.
+        /// </summary>
         public void Stop()
         {
             _httpServer.Stop();
         }
 
+        /// <summary>
+        /// The given.
+        /// </summary>
+        /// <param name="requestSpec">
+        /// The request spec.
+        /// </param>
+        /// <returns>
+        /// The <see cref="IRespondWithAProvider"/>.
+        /// </returns>
         public IRespondWithAProvider Given(ISpecifyRequests requestSpec)
         {
             return new RespondWithAProvider(RegisterRoute, requestSpec);
         }
 
+        /// <summary>
+        /// The RespondWithAProvider interface.
+        /// </summary>
         public interface IRespondWithAProvider
         {
+            /// <summary>
+            /// The respond with.
+            /// </summary>
+            /// <param name="provider">
+            /// The provider.
+            /// </param>
             void RespondWith(IProvideResponses provider);
         }
 
+        /// <summary>
+        /// The respond with a provider.
+        /// </summary>
         class RespondWithAProvider : IRespondWithAProvider
         {
+            /// <summary>
+            /// The _registration callback.
+            /// </summary>
             private readonly RegistrationCallback _registrationCallback;
+
+            /// <summary>
+            /// The _request spec.
+            /// </summary>
             private readonly ISpecifyRequests _requestSpec;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="RespondWithAProvider"/> class.
+            /// </summary>
+            /// <param name="registrationCallback">
+            /// The registration callback.
+            /// </param>
+            /// <param name="requestSpec">
+            /// The request spec.
+            /// </param>
             public RespondWithAProvider(RegistrationCallback registrationCallback, ISpecifyRequests requestSpec)
             {
                 _registrationCallback = registrationCallback;
                 _requestSpec = requestSpec;
             }
 
+            /// <summary>
+            /// The respond with.
+            /// </summary>
+            /// <param name="provider">
+            /// The provider.
+            /// </param>
             public void RespondWith(IProvideResponses provider)
             {
                 _registrationCallback(new Route(_requestSpec, provider));

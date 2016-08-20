@@ -1,20 +1,61 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
+[module:
+    System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules",
+        "SA1633:FileMustHaveHeader",
+        Justification = "Reviewed. Suppression is OK here, as unknown copyright and company.")]
+
 namespace Mock4Net.Core
 {
+    /// <summary>
+    /// The request.
+    /// </summary>
     public class Request
     {
+        /// <summary>
+        /// The _path.
+        /// </summary>
         private readonly string _path;
 
+        /// <summary>
+        /// The _params.
+        /// </summary>
         private readonly Dictionary<string, List<string>>_params = new Dictionary<string, List<string>>();
 
+        /// <summary>
+        /// The _verb.
+        /// </summary>
         private readonly string _verb;
 
+        /// <summary>
+        /// The _headers.
+        /// </summary>
         private readonly IDictionary<string, string> _headers;
 
+        /// <summary>
+        /// The _body.
+        /// </summary>
         private readonly string _body;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Request"/> class.
+        /// </summary>
+        /// <param name="path">
+        /// The path.
+        /// </param>
+        /// <param name="query">
+        /// The query.
+        /// </param>
+        /// <param name="verb">
+        /// The verb.
+        /// </param>
+        /// <param name="body">
+        /// The body.
+        /// </param>
+        /// <param name="headers">
+        /// The headers.
+        /// </param>
         public Request(string path, string query, string verb, string body, IDictionary<string, string> headers)
         {
             if (!string.IsNullOrEmpty(query))
@@ -44,6 +85,9 @@ namespace Mock4Net.Core
             _body = body==null ? "" : body.Trim();
         }
 
+        /// <summary>
+        /// Gets the url.
+        /// </summary>
         public string Url
         {
             get
@@ -57,11 +101,23 @@ namespace Mock4Net.Core
             }
         }
 
+        /// <summary>
+        /// Gets the path.
+        /// </summary>
         public string Path
         {
             get { return _path; }
         }
 
+        /// <summary>
+        /// The get parameter.
+        /// </summary>
+        /// <param name="key">
+        /// The key.
+        /// </param>
+        /// <returns>
+        /// The <see cref="List"/>.
+        /// </returns>
         public List<string> GetParameter(string key)
         {
             if (_params.ContainsKey(key))
@@ -72,16 +128,25 @@ namespace Mock4Net.Core
             return new List<string>();
         }
 
+        /// <summary>
+        /// Gets the verb.
+        /// </summary>
         public string Verb
         {
             get { return _verb; }
         }
 
+        /// <summary>
+        /// Gets the headers.
+        /// </summary>
         public IDictionary<string, string> Headers
         {
             get { return _headers; }
         }
 
+        /// <summary>
+        /// Gets the body.
+        /// </summary>
         public string Body
         {
             get { return _body; }

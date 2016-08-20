@@ -6,6 +6,15 @@ using Mock4Net.Core.Http;
 using NFluent;
 using NUnit.Framework;
 
+[module:
+    System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules",
+        "SA1600:ElementsMustBeDocumented",
+        Justification = "Reviewed. Suppression is OK here, as it's a tests class.")]
+[module:
+    System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules",
+        "SA1633:FileMustHaveHeader",
+        Justification = "Reviewed. Suppression is OK here, as unknown copyright and company.")]
+
 namespace Mock4Net.Core.Tests
 {
     [TestFixture]
@@ -75,6 +84,9 @@ namespace Mock4Net.Core.Tests
         /// <summary>
         /// Dirty HACK to get HttpListenerResponse instances
         /// </summary>
+        /// <returns>
+        /// The <see cref="HttpListenerResponse"/>.
+        /// </returns>
         public HttpListenerResponse CreateHttpListenerResponse()
         {
             var port = Ports.FindFreeTcpPort();

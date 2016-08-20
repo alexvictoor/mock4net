@@ -2,6 +2,15 @@
 using NFluent;
 using NUnit.Framework;
 
+[module:
+    System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules",
+        "SA1600:ElementsMustBeDocumented",
+        Justification = "Reviewed. Suppression is OK here, as it's a tests class.")]
+[module:
+    System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules",
+        "SA1633:FileMustHaveHeader",
+        Justification = "Reviewed. Suppression is OK here, as unknown copyright and company.")]
+
 namespace Mock4Net.Core.Tests
 {
     [TestFixture]

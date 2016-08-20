@@ -2,10 +2,27 @@
 using System.Linq;
 using System.Net;
 
+[module:
+    System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules",
+        "SA1633:FileMustHaveHeader",
+        Justification = "Reviewed. Suppression is OK here, as unknown copyright and company.")]
+
 namespace Mock4Net.Core
 {
+    /// <summary>
+    /// The http listener request mapper.
+    /// </summary>
     public class HttpListenerRequestMapper
     {
+        /// <summary>
+        /// The map.
+        /// </summary>
+        /// <param name="listenerRequest">
+        /// The listener request.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Request"/>.
+        /// </returns>
         public Request Map(HttpListenerRequest listenerRequest)
         {
             var path = listenerRequest.Url.AbsolutePath;
@@ -18,6 +35,15 @@ namespace Mock4Net.Core
             return new Request(path, query, verb, body, headers);
         }
 
+        /// <summary>
+        /// The get request body.
+        /// </summary>
+        /// <param name="request">
+        /// The request.
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// </returns>
         private string GetRequestBody(HttpListenerRequest request)
         {
             if (!request.HasEntityBody)
