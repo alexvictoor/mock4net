@@ -27,15 +27,15 @@ namespace Mock4Net.Core
         /// <remarks>
         /// Copy/paste from http://www.codeproject.com/Tips/57304/Use-wildcard-characters-and-to-compare-strings
         /// </remarks>
-        public static bool MatchWildcardString(String pattern, String input)
+        public static bool MatchWildcardString(string pattern, string input)
         {
-            if (String.Compare(pattern, input) == 0)
+            if (string.Compare(pattern, input) == 0)
             {
                 return true;
             }
-            else if (String.IsNullOrEmpty(input))
+            else if (string.IsNullOrEmpty(input))
             {
-                if (String.IsNullOrEmpty(pattern.Trim(new Char[1] { '*' })))
+                if (string.IsNullOrEmpty(pattern.Trim(new char[1] { '*' })))
                 {
                     return true;
                 }

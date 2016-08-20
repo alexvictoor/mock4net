@@ -21,7 +21,7 @@ namespace Mock4Net.Core.Tests
         public void Should_handle_empty_query()
         {
             // given
-            var request = new Request("/foo", "", "blabla", "whatever", new Dictionary<string, string>());
+            var request = new Request("/foo", string.Empty, "blabla", "whatever", new Dictionary<string, string>());
 
             // then
             Check.That(request.GetParameter("foo")).IsEmpty();

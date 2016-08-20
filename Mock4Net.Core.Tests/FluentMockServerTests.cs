@@ -7,6 +7,10 @@ using NFluent;
 using NUnit.Framework;
 
 [module:
+    System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.ReadabilityRules",
+        "SA1101:PrefixLocalCallsWithThis",
+        Justification = "Reviewed. Suppression is OK here, as it conflicts with internal naming rules.")]
+[module:
     System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.NamingRules",
         "SA1309:FieldNamesMustNotBeginWithUnderscore",
         Justification = "Reviewed. Suppression is OK here, as it conflicts with internal naming rules.")]
@@ -18,6 +22,7 @@ using NUnit.Framework;
     System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules",
         "SA1633:FileMustHaveHeader",
         Justification = "Reviewed. Suppression is OK here, as unknown copyright and company.")]
+// ReSharper disable ArrangeThisQualifier
 // ReSharper disable InconsistentNaming
 namespace Mock4Net.Core.Tests
 {
@@ -34,18 +39,15 @@ namespace Mock4Net.Core.Tests
             _server = FluentMockServer.Start();
 
             _server
-                .Given(
-                    Requests
-                        .WithUrl("/foo")
-                        .UsingGet())
-                .RespondWith(
-                    Responses
-                        .WithStatusCode(200)
-                        .WithBody(@"{ msg: ""Hello world!""}")
-                    );
+                .Given(Requests
+                    .WithUrl("/foo")
+                    .UsingGet())
+                .RespondWith(Responses
+                    .WithStatusCode(200)
+                    .WithBody(@"{ msg: ""Hello world!""}"));
 
             // when
-            var response 
+            var response
                 = await new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/foo");
 
             // then
@@ -94,7 +96,7 @@ namespace Mock4Net.Core.Tests
             await new HttpClient().GetAsync("http://localhost:" + _server.Port + "/bar");
 
             // then
-            var result = _server.SearchLogsFor(Requests.WithUrl("/b*")); 
+            var result = _server.SearchLogsFor(Requests.WithUrl("/b*"));
             Check.That(result).HasSize(1);
             var requestLogged = result.First();
             Check.That(requestLogged.Url).IsEqualTo("/bar");
@@ -121,15 +123,12 @@ namespace Mock4Net.Core.Tests
             _server = FluentMockServer.Start();
 
             _server
-                .Given(
-                    Requests
-                        .WithUrl("/foo")
-                        .UsingGet())
-                .RespondWith(
-                    Responses
-                        .WithStatusCode(200)
-                        .WithBody(@"{ msg: ""Hello world!""}")
-                    );
+                .Given(Requests
+                    .WithUrl("/foo")
+                    .UsingGet())
+                .RespondWith(Responses
+                    .WithStatusCode(200)
+                    .WithBody(@"{ msg: ""Hello world!""}"));
 
             // when
             _server.Reset();
@@ -146,25 +145,19 @@ namespace Mock4Net.Core.Tests
             _server = FluentMockServer.Start();
 
             _server
-                .Given(
-                    Requests
-                        .WithUrl("/foo")
-                        .UsingGet())
-                .RespondWith(
-                    Responses
-                        .WithStatusCode(307)
-                        .WithHeader("Location", "/bar")
-                    );
+                .Given(Requests
+                    .WithUrl("/foo")
+                    .UsingGet())
+                .RespondWith(Responses
+                    .WithStatusCode(307)
+                    .WithHeader("Location", "/bar"));
             _server
-                .Given(
-                    Requests
-                        .WithUrl("/bar")
-                        .UsingGet())
-                .RespondWith(
-                    Responses
-                        .WithStatusCode(200)
-                        .WithBody("REDIRECT SUCCESSFUL")
-                    );
+                .Given(Requests
+                    .WithUrl("/bar")
+                    .UsingGet())
+                .RespondWith(Responses
+                    .WithStatusCode(200)
+                    .WithBody("REDIRECT SUCCESSFUL"));
 
             // when
             var response
@@ -181,16 +174,12 @@ namespace Mock4Net.Core.Tests
             _server = FluentMockServer.Start();
 
             _server
-                .Given(
-                    Requests
-                        .WithUrl("/*")
-                    )
-                .RespondWith(
-                    Responses
-                        .WithStatusCode(200)
-                        .WithBody(@"{ msg: ""Hello world!""}")
-                        .AfterDelay(TimeSpan.FromMilliseconds(2000))
-                    );
+                .Given(Requests
+                    .WithUrl("/*"))
+                .RespondWith(Responses
+                    .WithStatusCode(200)
+                    .WithBody(@"{ msg: ""Hello world!""}")
+                    .AfterDelay(TimeSpan.FromMilliseconds(2000)));
 
             // when
             var watch = new Stopwatch();
@@ -210,15 +199,11 @@ namespace Mock4Net.Core.Tests
             _server = FluentMockServer.Start();
             _server.AddRequestProcessingDelay(TimeSpan.FromMilliseconds(2000));
             _server
-                .Given(
-                    Requests
-                        .WithUrl("/*")
-                    )
-                .RespondWith(
-                    Responses
-                        .WithStatusCode(200)
-                        .WithBody(@"{ msg: ""Hello world!""}")
-                    );
+                .Given(Requests
+                    .WithUrl("/*"))
+                .RespondWith(Responses
+                    .WithStatusCode(200)
+                    .WithBody(@"{ msg: ""Hello world!""}"));
 
             // when
             var watch = new Stopwatch();

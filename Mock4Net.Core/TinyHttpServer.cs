@@ -4,6 +4,10 @@ using System.Threading;
 using System.Threading.Tasks;
 
 [module:
+    System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.ReadabilityRules",
+        "SA1101:PrefixLocalCallsWithThis",
+        Justification = "Reviewed. Suppression is OK here, as it conflicts with internal naming rules.")]
+[module:
     System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.NamingRules",
         "SA1309:FieldNamesMustNotBeginWithUnderscore",
         Justification = "Reviewed. Suppression is OK here, as it conflicts with internal naming rules.")]
@@ -11,6 +15,7 @@ using System.Threading.Tasks;
     System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules",
         "SA1633:FileMustHaveHeader",
         Justification = "Reviewed. Suppression is OK here, as unknown copyright and company.")]
+// ReSharper disable ArrangeThisQualifier
 // ReSharper disable InconsistentNaming
 namespace Mock4Net.Core.Http
 {
@@ -46,13 +51,13 @@ namespace Mock4Net.Core.Http
         public TinyHttpServer(string urlPrefix, Action<HttpListenerContext> httpHandler)
         {
             _httpHandler = httpHandler;
-/*  .Net Framework is not supportted on XP or Server 2003, so no need for the check
-            if (!HttpListener.IsSupported)
+
+            // .Net Framework is not supportted on XP or Server 2003, so no need for the check
+            /*if (!HttpListener.IsSupported)
             {
                 Console.WriteLine("Windows XP SP2 or Server 2003 is required to use the HttpListener class.");
                 return;
-            }
- */
+            }*/
 
             // Create a listener.
             _listener = new HttpListener();
@@ -66,19 +71,19 @@ namespace Mock4Net.Core.Http
         {
             _listener.Start();
             _cts = new CancellationTokenSource();
-            Task.Run(async () =>
-            {
-                using (_listener)
-                {
-                    while (!_cts.Token.IsCancellationRequested)
+            Task.Run(
+                async () =>
                     {
-                        HttpListenerContext context = await _listener.GetContextAsync();
-                        _httpHandler(context);
-                    }
-                }
-            }
-
-            , _cts.Token);
+                        using (_listener)
+                        {
+                            while (!_cts.Token.IsCancellationRequested)
+                            {
+                                HttpListenerContext context = await _listener.GetContextAsync();
+                                _httpHandler(context);
+                            }
+                        }
+                    },
+                _cts.Token);
         }
 
         /// <summary>

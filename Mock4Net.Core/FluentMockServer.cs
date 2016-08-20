@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 using Mock4Net.Core.Http;
 
 [module:
+    System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.ReadabilityRules",
+        "SA1101:PrefixLocalCallsWithThis",
+        Justification = "Reviewed. Suppression is OK here, as it conflicts with internal naming rules.")]
+[module:
     System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.NamingRules",
         "SA1309:FieldNamesMustNotBeginWithUnderscore",
         Justification = "Reviewed. Suppression is OK here, as it conflicts with internal naming rules.")]
@@ -16,6 +20,7 @@ using Mock4Net.Core.Http;
     System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules",
         "SA1633:FileMustHaveHeader",
         Justification = "Reviewed. Suppression is OK here, as unknown copyright and company.")]
+// ReSharper disable ArrangeThisQualifier
 // ReSharper disable InconsistentNaming
 namespace Mock4Net.Core
 {

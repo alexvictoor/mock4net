@@ -7,6 +7,10 @@ using NFluent;
 using NUnit.Framework;
 
 [module:
+    System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.ReadabilityRules",
+        "SA1101:PrefixLocalCallsWithThis",
+        Justification = "Reviewed. Suppression is OK here, as it conflicts with internal naming rules.")]
+[module:
     System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.NamingRules",
         "SA1309:FieldNamesMustNotBeginWithUnderscore",
         Justification = "Reviewed. Suppression is OK here, as it conflicts with internal naming rules.")]
@@ -18,6 +22,7 @@ using NUnit.Framework;
     System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules",
         "SA1633:FileMustHaveHeader",
         Justification = "Reviewed. Suppression is OK here, as unknown copyright and company.")]
+// ReSharper disable ArrangeThisQualifier
 // ReSharper disable InconsistentNaming
 namespace Mock4Net.Core.Tests
 {
@@ -31,7 +36,7 @@ namespace Mock4Net.Core.Tests
         public void Should_map_status_code_from_original_response()
         {
             // given
-            var response = new Response() {StatusCode = 404};
+            var response = new Response() { StatusCode = 404 };
             var httpListenerResponse = CreateHttpListenerResponse();
 
             // when
@@ -97,11 +102,13 @@ namespace Mock4Net.Core.Tests
             var urlPrefix = "http://localhost:" + port + "/";
             var responseReady = new AutoResetEvent(false);
             HttpListenerResponse response = null;
-            _server = new TinyHttpServer(urlPrefix, context =>
-            {
-                response = context.Response;
-                responseReady.Set();
-            });
+            _server = new TinyHttpServer(
+                urlPrefix,
+                context =>
+                    {
+                        response = context.Response;
+                        responseReady.Set();
+                    });
             _server.Start();
             _responseMsgTask = new HttpClient().GetAsync(urlPrefix);
             responseReady.WaitOne();
