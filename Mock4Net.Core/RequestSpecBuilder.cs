@@ -100,7 +100,7 @@ namespace Mock4Net.Core
     }
 
     /// <summary>
-    /// The ParamsRequestBuilder interface.
+    /// The ParametersRequestBuilder interface.
     /// </summary>
     public interface IParamsRequestBuilder
     {

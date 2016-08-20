@@ -13,6 +13,10 @@ using System.Linq;
     System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules",
         "SA1633:FileMustHaveHeader",
         Justification = "Reviewed. Suppression is OK here, as unknown copyright and company.")]
+[module:
+    System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules",
+        "SA1650:ElementDocumentationMustBeSpelledCorrectly",
+        Justification = "Reviewed. Suppression is OK here.")]
 // ReSharper disable ArrangeThisQualifier
 // ReSharper disable InconsistentNaming
 namespace Mock4Net.Core
@@ -152,7 +156,7 @@ namespace Mock4Net.Core
         /// The key.
         /// </param>
         /// <returns>
-        /// The <see cref="List"/>.
+        /// The parameter.
         /// </returns>
         public List<string> GetParameter(string key)
         {

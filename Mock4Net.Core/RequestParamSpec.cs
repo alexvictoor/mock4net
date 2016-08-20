@@ -18,7 +18,7 @@ using System.Linq;
 namespace Mock4Net.Core
 {
     /// <summary>
-    /// The request param spec.
+    /// The request parameters spec.
     /// </summary>
     public class RequestParamSpec : ISpecifyRequests
     {
