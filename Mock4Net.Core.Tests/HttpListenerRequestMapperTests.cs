@@ -116,14 +116,28 @@ namespace Mock4Net.Core.Tests
             _server.Stop();
         }
 
-        class MapperServer : TinyHttpServer
+        private class MapperServer : TinyHttpServer
         {
-            public static volatile Request LastRequest;
-            public static string UrlPrefix;
+            private static volatile Request _lastRequest;
 
             private MapperServer(string urlPrefix, Action<HttpListenerContext> httpHandler) : base(urlPrefix, httpHandler)
             {
             }
+
+            public static Request LastRequest
+            {
+                get
+                {
+                    return _lastRequest;
+                }
+
+                private set
+                {
+                    _lastRequest = value;
+                }
+            }
+
+            public static string UrlPrefix { get; private set; }
 
             public static new MapperServer Start()
             {

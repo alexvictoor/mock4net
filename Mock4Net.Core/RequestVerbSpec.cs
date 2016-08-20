@@ -17,7 +17,7 @@ namespace Mock4Net.Core
     /// <summary>
     /// The request verb spec.
     /// </summary>
-    class RequestVerbSpec : ISpecifyRequests
+    internal class RequestVerbSpec : ISpecifyRequests
     {
         /// <summary>
         /// The _verb.

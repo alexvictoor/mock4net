@@ -276,7 +276,7 @@ namespace Mock4Net.Core
         /// <summary>
         /// The respond with a provider.
         /// </summary>
-        class RespondWithAProvider : IRespondWithAProvider
+        private class RespondWithAProvider : IRespondWithAProvider
         {
             /// <summary>
             /// The _registration callback.
