@@ -1,10 +1,12 @@
-﻿[module:
-    System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules",
-        "SA1633:FileMustHaveHeader",
+﻿using System.Diagnostics.CodeAnalysis;
+
+[module:
+    SuppressMessage("StyleCop.CSharp.DocumentationRules", 
+        "SA1633:FileMustHaveHeader", 
         Justification = "Reviewed. Suppression is OK here, as unknown copyright and company.")]
 [module:
-    System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules",
-        "SA1650:ElementDocumentationMustBeSpelledCorrectly",
+    SuppressMessage("StyleCop.CSharp.DocumentationRules", 
+        "SA1650:ElementDocumentationMustBeSpelledCorrectly", 
         Justification = "Reviewed. Suppression is OK here.")]
 
 namespace Mock4Net.Core

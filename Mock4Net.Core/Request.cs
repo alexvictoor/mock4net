@@ -1,21 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
 
 [module:
-    System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.ReadabilityRules",
-        "SA1101:PrefixLocalCallsWithThis",
+    SuppressMessage("StyleCop.CSharp.ReadabilityRules", 
+        "SA1101:PrefixLocalCallsWithThis", 
         Justification = "Reviewed. Suppression is OK here, as it conflicts with internal naming rules.")]
 [module:
-    System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.NamingRules",
-        "SA1309:FieldNamesMustNotBeginWithUnderscore",
+    SuppressMessage("StyleCop.CSharp.NamingRules", 
+        "SA1309:FieldNamesMustNotBeginWithUnderscore", 
         Justification = "Reviewed. Suppression is OK here, as it conflicts with internal naming rules.")]
 [module:
-    System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules",
-        "SA1633:FileMustHaveHeader",
+    SuppressMessage("StyleCop.CSharp.DocumentationRules", 
+        "SA1633:FileMustHaveHeader", 
         Justification = "Reviewed. Suppression is OK here, as unknown copyright and company.")]
 [module:
-    System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules",
-        "SA1650:ElementDocumentationMustBeSpelledCorrectly",
+    SuppressMessage("StyleCop.CSharp.DocumentationRules", 
+        "SA1650:ElementDocumentationMustBeSpelledCorrectly", 
         Justification = "Reviewed. Suppression is OK here.")]
 // ReSharper disable ArrangeThisQualifier
 // ReSharper disable InconsistentNaming
@@ -79,7 +80,7 @@ namespace Mock4Net.Core
                 }
 
                 _params = query.Split('&').Aggregate(
-                    new Dictionary<string, List<string>>(),
+                    new Dictionary<string, List<string>>(), 
                     (dict, term) =>
                         {
                             var key = term.Split('=')[0];

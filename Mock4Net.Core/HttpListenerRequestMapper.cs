@@ -1,14 +1,15 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Net;
+﻿using System.Diagnostics.CodeAnalysis;
 
 [module:
-    System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.ReadabilityRules",
-        "SA1101:PrefixLocalCallsWithThis",
+    SuppressMessage("StyleCop.CSharp.ReadabilityRules", 
+        "SA1101:PrefixLocalCallsWithThis", 
         Justification = "Reviewed. Suppression is OK here, as it conflicts with internal naming rules.")]
 [module:
-    System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules",
-        "SA1633:FileMustHaveHeader",
+    SuppressMessage("StyleCop.CSharp.DocumentationRules", 
+        "SA1633:FileMustHaveHeader", 
         Justification = "Reviewed. Suppression is OK here, as unknown copyright and company.")]
 // ReSharper disable ArrangeThisQualifier
 namespace Mock4Net.Core
