@@ -54,7 +54,7 @@ namespace Mock4Net.Core
         /// </returns>
         public static IHeadersResponseBuilder WithStatusCode(int code)
         {
-            var response = new Response(){StatusCode = code}; 
+            var response = new Response { StatusCode = code };
             return new Responses(response);
         }
 

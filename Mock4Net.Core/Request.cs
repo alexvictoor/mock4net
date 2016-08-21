@@ -30,7 +30,7 @@ namespace Mock4Net.Core
         /// <summary>
         /// The _params.
         /// </summary>
-        private readonly Dictionary<string, List<string>>_params = new Dictionary<string, List<string>>();
+        private readonly Dictionary<string, List<string>> _params = new Dictionary<string, List<string>>();
 
         /// <summary>
         /// The _verb.
@@ -79,20 +79,22 @@ namespace Mock4Net.Core
                     (dict, term) =>
                         {
                             var key = term.Split('=')[0];
-                        if (!dict.ContainsKey(key))
-                        {
-                            dict.Add(key, new List<string>());
-                        }
+                            if (!dict.ContainsKey(key))
+                            {
+                                dict.Add(key, new List<string>());
+                            }
 
-                        dict[key].Add(term.Split('=')[1]);
-                        return dict;
-                    });
+                            dict[key].Add(term.Split('=')[1]);
+                            return dict;
+                        });
             }
 
             _path = path;
             _headers = headers.ToDictionary(kv => kv.Key.ToLower(), kv => kv.Value.ToLower());
             _verb = verb.ToLower();
-            _body = body==null ? string.Empty : body.Trim();
+            _body = body == null
+                ? string.Empty
+                : body.Trim();
         }
 
         /// <summary>

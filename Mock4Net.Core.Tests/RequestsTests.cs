@@ -114,7 +114,7 @@ namespace Mock4Net.Core.Tests
             var spec = Requests.WithUrl("/foo").UsingAnyVerb().WithHeader("X-toto", "tata");
 
             // when
-            var request = new Request("/foo", string.Empty, "PUT", "whatever", new Dictionary<string, string>() { { "X-toto", "tata" } });
+            var request = new Request("/foo", string.Empty, "PUT", "whatever", new Dictionary<string, string> { { "X-toto", "tata" } });
             
             // then
             Check.That(spec.IsSatisfiedBy(request)).IsTrue();
@@ -127,7 +127,7 @@ namespace Mock4Net.Core.Tests
             var spec = Requests.WithUrl("/foo").UsingAnyVerb().WithHeader("X-toto", "tatata");
 
             // when
-            var request = new Request("/foo", string.Empty, "PUT", "whatever", new Dictionary<string, string>() { { "X-toto", "tata" } });
+            var request = new Request("/foo", string.Empty, "PUT", "whatever", new Dictionary<string, string> { { "X-toto", "tata" } });
 
             // then
             Check.That(spec.IsSatisfiedBy(request)).IsFalse();
@@ -140,7 +140,7 @@ namespace Mock4Net.Core.Tests
             var spec = Requests.WithUrl("/foo").UsingAnyVerb().WithHeader("X-toto", "tata*");
 
             // when
-            var request = new Request("/foo", string.Empty, "PUT", "whatever", new Dictionary<string, string>() { { "X-toto", "tatata" } });
+            var request = new Request("/foo", string.Empty, "PUT", "whatever", new Dictionary<string, string> { { "X-toto", "tatata" } });
 
             // then
             Check.That(spec.IsSatisfiedBy(request)).IsTrue();
@@ -153,7 +153,7 @@ namespace Mock4Net.Core.Tests
             var spec = Requests.WithUrl("/foo").UsingAnyVerb().WithBody("      Hello world!   ");
 
             // when
-            var request = new Request("/foo", string.Empty, "PUT", "Hello world!", new Dictionary<string, string>() { { "X-toto", "tatata" } });
+            var request = new Request("/foo", string.Empty, "PUT", "Hello world!", new Dictionary<string, string> { { "X-toto", "tatata" } });
 
             // then
             Check.That(spec.IsSatisfiedBy(request)).IsTrue();
@@ -166,7 +166,7 @@ namespace Mock4Net.Core.Tests
             var spec = Requests.WithUrl("/foo").UsingAnyVerb().WithBody("H*o wor?d!");
 
             // when
-            var request = new Request("/foo", string.Empty, "PUT", "Hello world!", new Dictionary<string, string>() { { "X-toto", "tatata" } });
+            var request = new Request("/foo", string.Empty, "PUT", "Hello world!", new Dictionary<string, string> { { "X-toto", "tatata" } });
 
             // then
             Check.That(spec.IsSatisfiedBy(request)).IsTrue();
@@ -179,7 +179,7 @@ namespace Mock4Net.Core.Tests
             var spec = Requests.WithUrl("/foo").UsingAnyVerb().WithBody("      Hello world!   ");
 
             // when
-            var request = new Request("/foo", string.Empty, "PUT", "XXXXXXXXXXX", new Dictionary<string, string>() { { "X-toto", "tatata" } });
+            var request = new Request("/foo", string.Empty, "PUT", "XXXXXXXXXXX", new Dictionary<string, string> { { "X-toto", "tatata" } });
 
             // then
             Check.That(spec.IsSatisfiedBy(request)).IsFalse();

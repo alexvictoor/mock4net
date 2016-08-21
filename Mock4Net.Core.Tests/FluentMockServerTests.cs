@@ -117,7 +117,7 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
-        public async void Should_reset_routes()
+        public void Should_reset_routes()
         {
             // given
             _server = FluentMockServer.Start();
@@ -184,8 +184,7 @@ namespace Mock4Net.Core.Tests
             // when
             var watch = new Stopwatch();
             watch.Start();
-            var response
-                = await new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/foo");
+            await new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/foo");
             watch.Stop();
 
             // then
@@ -208,8 +207,7 @@ namespace Mock4Net.Core.Tests
             // when
             var watch = new Stopwatch();
             watch.Start();
-            var response
-                = await new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/foo");
+            await new HttpClient().GetStringAsync("http://localhost:" + _server.Port + "/foo");
             watch.Stop();
 
             // then

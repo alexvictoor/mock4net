@@ -101,7 +101,7 @@ namespace Mock4Net.Core
         {
             get
             {
-                lock (((ICollection) _requestLogs).SyncRoot)
+                lock (((ICollection)_requestLogs).SyncRoot)
                 {
                     return new ReadOnlyCollection<Request>(_requestLogs);
                 }
@@ -113,7 +113,7 @@ namespace Mock4Net.Core
         /// </summary>
         public void Reset()
         {
-            lock (((ICollection) _requestLogs).SyncRoot)
+            lock (((ICollection)_requestLogs).SyncRoot)
             {
                 _requestLogs.Clear();
             }

@@ -36,7 +36,7 @@ namespace Mock4Net.Core.Tests
         public void Should_map_status_code_from_original_response()
         {
             // given
-            var response = new Response() { StatusCode = 404 };
+            var response = new Response { StatusCode = 404 };
             var httpListenerResponse = CreateHttpListenerResponse();
 
             // when
