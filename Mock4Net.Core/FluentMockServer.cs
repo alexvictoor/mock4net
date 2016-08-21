@@ -1,12 +1,3 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using Mock4Net.Core.Http;
 ﻿using System.Diagnostics.CodeAnalysis;
 
 [module:
@@ -25,6 +16,17 @@ using Mock4Net.Core.Http;
 // ReSharper disable InconsistentNaming
 namespace Mock4Net.Core
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Net;
+    using System.Text;
+    using System.Threading.Tasks;
+
+    using Mock4Net.Core.Http;
+
     /// <summary>
     /// The fluent mock server.
     /// </summary>

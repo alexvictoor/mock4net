@@ -1,5 +1,3 @@
-﻿using System.Collections.Concurrent;
-using System.Collections.Generic;
 ﻿using System.Diagnostics.CodeAnalysis;
 
 [module:
@@ -18,6 +16,9 @@ using System.Collections.Generic;
 // ReSharper disable InconsistentNaming
 namespace Mock4Net.Core
 {
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
+
     /// <summary>
     /// The response.
     /// </summary>

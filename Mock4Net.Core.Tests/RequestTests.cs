@@ -1,7 +1,3 @@
-﻿using System.Collections.Generic;
-
-using NFluent;
-using NUnit.Framework;
 ﻿using System.Diagnostics.CodeAnalysis;
 
 [module:
@@ -15,6 +11,12 @@ using NUnit.Framework;
 // ReSharper disable InconsistentNaming
 namespace Mock4Net.Core.Tests
 {
+    using System.Collections.Generic;
+
+    using NFluent;
+
+    using NUnit.Framework;
+
     [TestFixture]
     public class RequestTests
     {

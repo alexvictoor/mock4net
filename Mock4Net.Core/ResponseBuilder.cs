@@ -1,4 +1,3 @@
-﻿using System;
 ﻿using System.Diagnostics.CodeAnalysis;
 
 [module:
@@ -8,6 +7,8 @@
 
 namespace Mock4Net.Core
 {
+    using System;
+
     /// <summary>
     /// The HeadersResponseBuilder interface.
     /// </summary>

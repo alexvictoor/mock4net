@@ -1,5 +1,3 @@
-﻿using System.Collections.Generic;
-using System.Linq;
 ﻿using System.Diagnostics.CodeAnalysis;
 
 [module:
@@ -22,6 +20,9 @@ using System.Linq;
 // ReSharper disable InconsistentNaming
 namespace Mock4Net.Core
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     /// <summary>
     /// The requests.
     /// </summary>

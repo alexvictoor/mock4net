@@ -1,4 +1,3 @@
-﻿using System.Threading.Tasks;
 ﻿using System.Diagnostics.CodeAnalysis;
 
 [module:
@@ -17,6 +16,8 @@
 // ReSharper disable InconsistentNaming
 namespace Mock4Net.Core
 {
+    using System.Threading.Tasks;
+
     /// <summary>
     /// The route.
     /// </summary>

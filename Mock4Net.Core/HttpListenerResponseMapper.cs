@@ -1,6 +1,3 @@
-﻿using System.Linq;
-using System.Net;
-using System.Text;
 ﻿using System.Diagnostics.CodeAnalysis;
 
 [module:
@@ -10,6 +7,10 @@ using System.Text;
 
 namespace Mock4Net.Core
 {
+    using System.Linq;
+    using System.Net;
+    using System.Text;
+
     /// <summary>
     /// The http listener response mapper.
     /// </summary>

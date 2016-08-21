@@ -1,10 +1,3 @@
-﻿using System.Net;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using Mock4Net.Core.Http;
-using NFluent;
-using NUnit.Framework;
 ﻿using System.Diagnostics.CodeAnalysis;
 
 [module:
@@ -27,6 +20,17 @@ using NUnit.Framework;
 // ReSharper disable InconsistentNaming
 namespace Mock4Net.Core.Tests
 {
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading;
+    using System.Threading.Tasks;
+
+    using Mock4Net.Core.Http;
+
+    using NFluent;
+
+    using NUnit.Framework;
+
     [TestFixture]
     public class HttpListenerResponseMapperTests
     {

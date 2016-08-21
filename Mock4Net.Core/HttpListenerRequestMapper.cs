@@ -1,6 +1,3 @@
-﻿using System.IO;
-using System.Linq;
-using System.Net;
 ﻿using System.Diagnostics.CodeAnalysis;
 
 [module:
@@ -14,6 +11,10 @@ using System.Net;
 // ReSharper disable ArrangeThisQualifier
 namespace Mock4Net.Core
 {
+    using System.IO;
+    using System.Linq;
+    using System.Net;
+
     /// <summary>
     /// The http listener request mapper.
     /// </summary>

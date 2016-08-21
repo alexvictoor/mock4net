@@ -1,5 +1,3 @@
-﻿using System;
-using System.Threading.Tasks;
 ﻿using System.Diagnostics.CodeAnalysis;
 
 [module:
@@ -18,6 +16,9 @@ using System.Threading.Tasks;
 // ReSharper disable InconsistentNaming
 namespace Mock4Net.Core
 {
+    using System;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// The responses.
     /// </summary>

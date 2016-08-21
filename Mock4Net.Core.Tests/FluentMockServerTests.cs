@@ -1,10 +1,3 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using NFluent;
-using NUnit.Framework;
 ﻿using System.Diagnostics.CodeAnalysis;
 
 [module:
@@ -27,6 +20,16 @@ using NUnit.Framework;
 // ReSharper disable InconsistentNaming
 namespace Mock4Net.Core.Tests
 {
+    using System;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+
+    using NFluent;
+
+    using NUnit.Framework;
+
     [TestFixture]
     [Timeout(5000)]
     public class FluentMockServerTests
