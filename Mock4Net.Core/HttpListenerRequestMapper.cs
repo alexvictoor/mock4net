@@ -1,16 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics.CodeAnalysis;
 
+[module:
+    SuppressMessage("StyleCop.CSharp.ReadabilityRules", 
+        "SA1101:PrefixLocalCallsWithThis", 
+        Justification = "Reviewed. Suppression is OK here, as it conflicts with internal naming rules.")]
+[module:
+    SuppressMessage("StyleCop.CSharp.DocumentationRules", 
+        "SA1633:FileMustHaveHeader", 
+        Justification = "Reviewed. Suppression is OK here, as unknown copyright and company.")]
+// ReSharper disable ArrangeThisQualifier
 namespace Mock4Net.Core
 {
-    public class HttpListenerRequestMapper 
-    {
+    using System.IO;
+    using System.Linq;
+    using System.Net;
 
+    /// <summary>
+    /// The http listener request mapper.
+    /// </summary>
+    public class HttpListenerRequestMapper
+    {
+        /// <summary>
+        /// The map.
+        /// </summary>
+        /// <param name="listenerRequest">
+        /// The listener request.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Request"/>.
+        /// </returns>
         public Request Map(HttpListenerRequest listenerRequest)
         {
             var path = listenerRequest.Url.AbsolutePath;
@@ -23,12 +41,22 @@ namespace Mock4Net.Core
             return new Request(path, query, verb, body, headers);
         }
 
+        /// <summary>
+        /// The get request body.
+        /// </summary>
+        /// <param name="request">
+        /// The request.
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// </returns>
         private string GetRequestBody(HttpListenerRequest request)
         {
             if (!request.HasEntityBody)
             {
                 return null;
             }
+
             using (var body = request.InputStream)
             {
                 using (var reader = new StreamReader(body, request.ContentEncoding))
