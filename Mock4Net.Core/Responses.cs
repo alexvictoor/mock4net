@@ -35,6 +35,14 @@ namespace Mock4Net.Core
             return this;
         }
 
+        public IHeadersResponseBuilder WithHeader(string header)
+        {
+            var name = header.Replace(": ", ":").Split(':')[0];
+            var value = header.Replace(": ", ":").Split(':')[1];
+            _response.AddHeader(name, value);
+            return this;
+        }
+
         public IDelayResponseBuilder WithBody(string body)
         {
             _response.Body = body;
