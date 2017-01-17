@@ -15,7 +15,7 @@ server
   .RespondWith(
     Responses
       .WithStatusCode(200)
-      .WithBody(@"{ msg: ""Hello world!""}")
+      .WithBody(@"{ ""msg"": ""Hello world!""}")
   );
 ```
 
@@ -41,7 +41,7 @@ server
   .RespondWith(
     Responses
       .WithStatusCode(200)
-      .WithBody(@"{ result: ""Some data""}")
+      .WithBody(@"{ ""result"": ""Some data""}")
   ); 
 ```
 
@@ -54,13 +54,13 @@ server
       .WithUrl("/api")
       .UsingPost()
       .WithHeader("X-version", "42")
-      .WithBody("   { msg: \"Hello Body, I will be stripped anyway!!\" }   ");
+      .WithBody(@"{ ""msg"": "Hello Body, I will be stripped anyway!!" }");
   )
   .RespondWith(
     Responses
       .WithStatusCode(200)
       .WithHeader("content-type", "application/json")
-      .WithBody(@"{ result: ""Some data""}")
+      .WithBody(@"{ ""result"": ""Some data""}")
   ); 
 ```
 
@@ -108,7 +108,7 @@ public async void Should_respond_to_request()
         .RespondWith(
             Responses
                 .WithStatusCode(200)
-                .WithBody(@"{ msg: ""Hello world!""}")
+                .WithBody(@"{ ""msg"": ""Hello world!"" }")
             );
 
     // when
@@ -177,7 +177,7 @@ server
   .RespondWith(
     Responses
       .WithStatusCode(200)
-      .WithBody(@"{ msg: ""Hello I'am a little bit slow!""}")
+      .WithBody(@"{ ""msg"": ""Hello I'am a little bit slow!"" }")
       .AfterDelay(TimeSpan.FromSeconds(10)
     )
   );
