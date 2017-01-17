@@ -1,4 +1,12 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Mock4Net.Core.Http;
+using NFluent;
+using NUnit.Framework;
 
 [module:
     SuppressMessage("StyleCop.CSharp.ReadabilityRules", 
@@ -20,17 +28,6 @@
 // ReSharper disable InconsistentNaming
 namespace Mock4Net.Core.Tests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Net;
-    using System.Net.Http;
-
-    using Mock4Net.Core.Http;
-
-    using NFluent;
-
-    using NUnit.Framework;
-
     [TestFixture]
     public class HttpListenerRequestMapperTests
     {
@@ -43,7 +40,7 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
-        public async void Should_map_uri_from_listener_request()
+        public async Task Should_map_uri_from_listener_request()
         {
             // given
             var client = new HttpClient();
@@ -57,7 +54,7 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
-        public async void Should_map_verb_from_listener_request()
+        public async Task Should_map_verb_from_listener_request()
         {
             // given
             var client = new HttpClient();
@@ -71,7 +68,7 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
-        public async void Should_map_body_from_listener_request()
+        public async Task Should_map_body_from_listener_request()
         {
             // given
             var client = new HttpClient();
@@ -85,7 +82,7 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
-        public async void Should_map_headers_from_listener_request()
+        public async Task Should_map_headers_from_listener_request()
         {
             // given
             var client = new HttpClient();
@@ -101,7 +98,7 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
-        public async void Should_map_params_from_listener_request()
+        public async Task Should_map_params_from_listener_request()
         {
             // given
             var client = new HttpClient();
