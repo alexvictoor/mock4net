@@ -1,74 +1,74 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics.CodeAnalysis;
+
+[module:
+    SuppressMessage("StyleCop.CSharp.DocumentationRules", 
+        "SA1633:FileMustHaveHeader", 
+        Justification = "Reviewed. Suppression is OK here, as unknown copyright and company.")]
+[module:
+    SuppressMessage("StyleCop.CSharp.DocumentationRules", 
+        "SA1650:ElementDocumentationMustBeSpelledCorrectly", 
+        Justification = "Reviewed. Suppression is OK here.")]
 
 namespace Mock4Net.Core
 {
-    public class WildcardPatternMatcher
+    /// <summary>
+    /// The wildcard pattern matcher.
+    /// </summary>
+    public static class WildcardPatternMatcher
     {
-
         /// <summary>
-        /// Copy/paste from http://www.codeproject.com/Tips/57304/Use-wildcard-characters-and-to-compare-strings
-        /// 
+        /// The match wildcard string.
         /// </summary>
-        public static bool MatchWildcardString(String pattern, String input)
+        /// <param name="pattern">
+        /// The pattern.
+        /// </param>
+        /// <param name="input">
+        /// The input.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
+        /// <remarks>
+        /// Copy/paste from http://www.codeproject.com/Tips/57304/Use-wildcard-characters-and-to-compare-strings
+        /// </remarks>
+        public static bool MatchWildcardString(string pattern, string input)
         {
-            if (String.Compare(pattern, input) == 0)
+            if (string.CompareOrdinal(pattern, input) == 0)
             {
                 return true;
             }
-            else if (String.IsNullOrEmpty(input))
+
+            if (string.IsNullOrEmpty(input))
             {
-                if (String.IsNullOrEmpty(pattern.Trim(new Char[1] { '*' })))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return string.IsNullOrEmpty(pattern.Trim('*'));
             }
-            else if (pattern.Length == 0)
+
+            if (pattern.Length == 0)
             {
                 return false;
             }
-            else if (pattern[0] == '?')
+
+            if (pattern[0] == '?')
             {
                 return MatchWildcardString(pattern.Substring(1), input.Substring(1));
             }
-            else if (pattern[pattern.Length - 1] == '?')
+
+            if (pattern[pattern.Length - 1] == '?')
             {
                 return MatchWildcardString(pattern.Substring(0, pattern.Length - 1), input.Substring(0, input.Length - 1));
             }
-            else if (pattern[0] == '*')
+
+            if (pattern[0] == '*')
             {
-                if (MatchWildcardString(pattern.Substring(1), input))
-                {
-                    return true;
-                }
-                else
-                {
-                    return MatchWildcardString(pattern, input.Substring(1));
-                }
+                return MatchWildcardString(pattern.Substring(1), input) || MatchWildcardString(pattern, input.Substring(1));
             }
-            else if (pattern[pattern.Length - 1] == '*')
+
+            if (pattern[pattern.Length - 1] == '*')
             {
-                if (MatchWildcardString(pattern.Substring(0, pattern.Length - 1), input))
-                {
-                    return true;
-                }
-                else
-                {
-                    return MatchWildcardString(pattern, input.Substring(0, input.Length - 1));
-                }
+                return MatchWildcardString(pattern.Substring(0, pattern.Length - 1), input) || MatchWildcardString(pattern, input.Substring(0, input.Length - 1));
             }
-            else if (pattern[0] == input[0])
-            {
-                return MatchWildcardString(pattern.Substring(1), input.Substring(1));
-            }
-            return false;
+
+            return pattern[0] == input[0] && MatchWildcardString(pattern.Substring(1), input.Substring(1));
         }
     }
 }

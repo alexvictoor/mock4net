@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildSupport", "BuildSupport\BuildSupport.csproj", "{D7922F2B-30C6-4681-BED5-E283CEFD385E}"
 EndProject
@@ -16,12 +16,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0A69B3
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mock4Net.Core.ConsoleApplication", "examples\Mock4Net.Core.ConsoleApplication\Mock4Net.Core.ConsoleApplication.csproj", "{668F689E-57B4-422E-8846-C0FF643CA268}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D7922F2B-30C6-4681-BED5-E283CEFD385E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7922F2B-30C6-4681-BED5-E283CEFD385E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7922F2B-30C6-4681-BED5-E283CEFD385E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7922F2B-30C6-4681-BED5-E283CEFD385E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9009D5F8-4E5B-4581-97F3-BD368B514F66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9009D5F8-4E5B-4581-97F3-BD368B514F66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9009D5F8-4E5B-4581-97F3-BD368B514F66}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -30,10 +36,10 @@ Global
 		{02BBF12A-CEF6-47DC-A5C4-A9B09A7EB861}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02BBF12A-CEF6-47DC-A5C4-A9B09A7EB861}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02BBF12A-CEF6-47DC-A5C4-A9B09A7EB861}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D7922F2B-30C6-4681-BED5-E283CEFD385E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D7922F2B-30C6-4681-BED5-E283CEFD385E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D7922F2B-30C6-4681-BED5-E283CEFD385E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D7922F2B-30C6-4681-BED5-E283CEFD385E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{668F689E-57B4-422E-8846-C0FF643CA268}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{668F689E-57B4-422E-8846-C0FF643CA268}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{668F689E-57B4-422E-8846-C0FF643CA268}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{668F689E-57B4-422E-8846-C0FF643CA268}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
