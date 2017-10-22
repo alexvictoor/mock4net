@@ -13,7 +13,7 @@ using NUnit.Framework;
 namespace Mock4Net.Core.Tests
 {
     [TestFixture]
-    [Timeout(5000)]
+    //[Timeout(5000)]
     public class FluentMockServerTest
     {
         private FluentMockServer _server;
