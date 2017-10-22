@@ -25,7 +25,7 @@ namespace Mock4Net.Core.Tests
         }
         
         [Test]
-        public async void Should_map_uri_from_listener_request()
+        public async Task Should_map_uri_from_listener_request()
         {
             // given
             var client  = new HttpClient();
@@ -38,7 +38,7 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
-        public async void Should_map_verb_from_listener_request()
+        public async Task Should_map_verb_from_listener_request()
         {
             // given
             var client = new HttpClient();
@@ -51,7 +51,7 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
-        public async void Should_map_body_from_listener_request()
+        public async Task Should_map_body_from_listener_request()
         {
             // given
             var client = new HttpClient();
@@ -64,7 +64,7 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
-        public async void Should_map_headers_from_listener_request()
+        public async Task Should_map_headers_from_listener_request()
         {
             // given
             var client = new HttpClient();
@@ -79,7 +79,7 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
-        public async void Should_map_params_from_listener_request()
+        public async Task Should_map_params_from_listener_request()
         {
             // given
             var client = new HttpClient();

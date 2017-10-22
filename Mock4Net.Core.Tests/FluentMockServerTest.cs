@@ -19,7 +19,7 @@ namespace Mock4Net.Core.Tests
         private FluentMockServer _server;
 
         [Test]
-        public async void Should_respond_to_request()
+        public async Task Should_respond_to_request()
         {
             // given
             _server = FluentMockServer.Start();
@@ -43,7 +43,7 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
-        public async void Should_respond_404_for_unexpected_request()
+        public async Task Should_respond_404_for_unexpected_request()
         {
             // given
             _server = FluentMockServer.Start();
@@ -56,7 +56,7 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
-        public async void Should_record_requests_in_the_requestlogs()
+        public async Task Should_record_requests_in_the_requestlogs()
         {
             // given
             _server = FluentMockServer.Start();
@@ -71,7 +71,7 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
-        public async void Should_find_a_request_satisfying_a_request_spec()
+        public async Task Should_find_a_request_satisfying_a_request_spec()
         {
             // given
             _server = FluentMockServer.Start();
@@ -87,7 +87,7 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
-        public async void Should_reset_requestlogs()
+        public async Task Should_reset_requestlogs()
         {
             // given
             _server = FluentMockServer.Start();
@@ -100,7 +100,7 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
-        public async void Should_reset_routes()
+        public async Task Should_reset_routes()
         {
             // given
             _server = FluentMockServer.Start();
@@ -125,7 +125,7 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
-        public async void Should_respond_a_redirect_without_body()
+        public async Task Should_respond_a_redirect_without_body()
         {
             // given
             _server = FluentMockServer.Start();
@@ -160,7 +160,7 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
-        public async void Should_delay_responses_for_a_given_route()
+        public async Task Should_delay_responses_for_a_given_route()
         {
             // given
             _server = FluentMockServer.Start();
@@ -188,7 +188,7 @@ namespace Mock4Net.Core.Tests
         }
 
         [Test]
-        public async void Should_delay_responses()
+        public async Task Should_delay_responses()
         {
             // given
             _server = FluentMockServer.Start();
