@@ -5,7 +5,7 @@ Mock4Net allows to get an HTTP server in a glance. No official release yet but a
 ```
 PM> Install-Package Mock4Net.Core -Version 1.0.0-beta1 -Pre
 ```
-A fluent API allows to specify the behavior of the server and hence easily stub and mock webservices and REST ressources.
+A fluent API allows to specify the behavior of the server and hence easily stub and mock webservices and REST resources.
 ```csharp
 server = FluentMockServer.Start();
 server
