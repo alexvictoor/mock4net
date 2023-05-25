@@ -1,11 +1,11 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/h2rb5mjk50u2n8hy?svg=true)](https://ci.appveyor.com/project/alexvictoor/mock4net)
 
 # Mock4Net
-Mock4Net allows to get an HTTP server in a glance. No official release yet but a  prerelease version is available on nuget.org:
+Mock4Net allows you to get an HTTP server at a glance. No official release yet but a  prerelease version is available on nuget.org:
 ```
 PM> Install-Package Mock4Net.Core -Version 1.0.0-beta1 -Pre
 ```
-A fluent API allows to specify the behavior of the server and hence easily stub and mock webservices and REST ressources.
+A fluent API allows to specify the behavior of the server and hence easily stub and mock webservices and REST resources.
 ```csharp
 server = FluentMockServer.Start();
 server
@@ -19,20 +19,20 @@ server
   );
 ```
 
-Based on class HttpListener from the .net framework, it is very lightweight and have no external dependencies. 
+Based on the class `HttpListener` from the .NET Framework, it is very lightweight and has no external dependencies. 
 
 # Mock4Net API in a nutshell
 
 ## Start a server
-First thing first, to start a server it is as easy as calling a static method, and your done!
+First thing first, to start a server it is as easy as calling a static method, and you're done!
 ```csharp
 server = FluentMockServer.Start();
 ```
-You can pass as an argument a port number but if you do not an available port will be chosen for you. Hence the above line of code start aserver bounded to locahost a random port.
+You can pass as an argument a port number but if you do not an available port will be chosen for you. Hence the above line of code starts a server bound to locahost a random port.
 To know on which port your server is listening, just use server property *Port*.
 
 ## Configure routes and behaviors
-By default the server returns a dummy message with a 404 status code for all requests. To define a route, you need to specify request for this route and the response you want the server to return. This can be done in a fluent way using classes *Requests* and *Responses* as shown in the example below:
+By default the server returns a dummy message with a 404 status code for all requests. To define a route, you need to specify a request for this route and the response you want the server to return. This can be done in a fluent way using classes *Requests* and *Responses* as shown in the example below:
 ```csharp
 server
   .Given(
@@ -70,7 +70,7 @@ To get all the request received by the server, you just need to read property *R
 ```csharp
 var allRequests = server.RequestLogs;
 ```
-If you need to be more specific on the requests that have been send to the server, you can use the very same fluent API that allows to define routes:
+If you need to be more specific on the requests that have been sent to the server, you can use the very same fluent API that allows to define routes:
 ```csharp
 var customerReadRequests 
   = server.SearchLogsFor(
@@ -83,7 +83,7 @@ var customerReadRequests
 # Mock4Net with your favourite test framework
 
 Obviously you can use your favourite test framework and use Mock4Net within your tests. In order to avoid flaky tests you should:
-  - let Mock4Net choose dynamicaly ports. It might seem common sens, avoid hard coded ports in your tests!
+  - let Mock4Net choose dynamicaly ports. It might seem common sense, avoid hard coded ports in your tests!
   - clean up the request log or shutdown the server at the end of each test
 
 Below a simple example using Nunit and NFluent test assertion library:
@@ -117,7 +117,7 @@ public async void Should_respond_to_request()
     
     // then
     Check.That(response).IsEqualTo(EXPECTED_RESULT);
-    // and optionnaly
+    // and optionally
     Check.That(_server.SearchLogsFor(Requests.WithUrl("/error*")).IsEmpty();
 }
 
@@ -133,7 +133,7 @@ public void ShutdownServer()
 
 # Mock4Net as a standalone process
 
-This is quite straight forward to launch a mock server within a console application. Below a simple "main" method that takes as a parameter from the commandline a port number and then start a mock server that will respond "Hello World" on every request:
+This is quite straightforward to launch a mock server within a console application. Below a simple "main" method that takes as a parameter from the commandline a port number and then start a mock server that will respond "Hello World" on every request:
 ```csharp
         static void Main(string[] args)
         {
@@ -177,7 +177,7 @@ server
   .RespondWith(
     Responses
       .WithStatusCode(200)
-      .WithBody(@"{ msg: ""Hello I'am a little bit slow!""}")
+      .WithBody(@"{ msg: ""Hello I'm a little bit slow!""}")
       .AfterDelay(TimeSpan.FromSeconds(10)
     )
   );
